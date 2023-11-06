@@ -1,5 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://m405luxpd4qr"]
+[gd_scene load_steps=4 format=3 uid="uid://m405luxpd4qr"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_welx0"]
+[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_b5nan"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_867cx"]
+size = Vector2(136, 134)
 
 [node name="Node2D" instance=ExtResource("1_welx0")]
+
+[node name="Bob" parent="." index="0"]
+position = Vector2(449, 132)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." index="2"]
+position = Vector2(641, 138)
+gravity_scale = 1.15
+
+[node name="Bobby" type="Sprite2D" parent="RigidBody2D" index="0"]
+texture = ExtResource("2_b5nan")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" index="1"]
+shape = SubResource("RectangleShape2D_867cx")
+
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
+position = Vector2(642, 143)
