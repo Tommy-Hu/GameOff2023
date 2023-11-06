@@ -27,6 +27,7 @@ public partial class PlayerController : Node2D
 		if (Input.IsKeyPressed(Key.S))
 		{
 			++movement.Y;
+			
 		}
 		if (Input.IsKeyPressed(Key.D))
 		{
