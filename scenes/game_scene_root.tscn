@@ -5,8 +5,11 @@
 
 [node name="Node2D" type="Node2D"]
 
+
 [node name="Bob" type="Sprite2D" parent="."]
 position = Vector2(534, 319)
+
+
 texture = ExtResource("1_qx3kp")
 script = ExtResource("2_5jpev")
 speed = 500.0
