@@ -1,25 +1,52 @@
-[gd_scene load_steps=4 format=3 uid="uid://m405luxpd4qr"]
+[gd_scene load_steps=7 format=3 uid="uid://m405luxpd4qr"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_welx0"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_b5nan"]
+[ext_resource type="Script" path="res://scenes/Frog.cs" id="2_b12m8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m55bd"]
+size = Vector2(127, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_867cx"]
 size = Vector2(136, 134)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ikro"]
+size = Vector2(126, 125.063)
+
 [node name="Node2D" instance=ExtResource("1_welx0")]
+position = Vector2(289, 145)
 
-[node name="Bob" parent="." index="0"]
-position = Vector2(449, 132)
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." index="2"]
-position = Vector2(641, 138)
+[node name="Frog" type="RigidBody2D" parent="." index="0"]
+position = Vector2(37, -188)
 gravity_scale = 1.15
+script = ExtResource("2_b12m8")
+metadata/_edit_group_ = true
 
-[node name="Bobby" type="Sprite2D" parent="RigidBody2D" index="0"]
+[node name="Sprite" type="Sprite2D" parent="Frog" index="0"]
 texture = ExtResource("2_b5nan")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" index="1"]
+[node name="GroundCheck" type="Area2D" parent="Frog" index="1"]
+
+[node name="GroundCheckSize" type="CollisionShape2D" parent="Frog/GroundCheck" index="0"]
+position = Vector2(0, 69.5)
+shape = SubResource("RectangleShape2D_m55bd")
+
+[node name="ColliderBox" type="CollisionShape2D" parent="Frog" index="2"]
 shape = SubResource("RectangleShape2D_867cx")
 
-[node name="Camera2D" type="Camera2D" parent="." index="3"]
-position = Vector2(642, 143)
+[node name="Camera2D" type="Camera2D" parent="." index="1"]
+position = Vector2(194, -73)
+
+[node name="Platforms" type="Node2D" parent="." index="2"]
+position = Vector2(-450, -118)
+
+[node name="Platform1" type="StaticBody2D" parent="Platforms" index="0"]
+position = Vector2(631, 299)
+scale = Vector2(8.4374, -0.656258)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1" index="0"]
+shape = SubResource("RectangleShape2D_4ikro")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform1" index="1"]
+texture = ExtResource("2_b5nan")
