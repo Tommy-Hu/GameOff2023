@@ -27,9 +27,9 @@ metadata/_edit_group_ = true
 [node name="Sprite" type="Sprite2D" parent="Frog" index="0"]
 texture = ExtResource("2_b5nan")
 
-[node name="GroundCheck" type="Area2D" parent="Frog" index="1"]
+[node name="FrogGroundCheck" type="Area2D" parent="Frog" index="1"]
 
-[node name="GroundCheckSize" type="CollisionShape2D" parent="Frog/GroundCheck" index="0"]
+[node name="GroundCheckSize" type="CollisionShape2D" parent="Frog/FrogGroundCheck" index="0"]
 position = Vector2(0, 69.5)
 shape = SubResource("RectangleShape2D_m55bd")
 

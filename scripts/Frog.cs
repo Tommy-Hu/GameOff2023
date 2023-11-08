@@ -56,7 +56,7 @@ public partial class Frog : RigidBody2D
 		else if (Input.IsActionJustReleased("FrogJump"))
         {
 			jumpHeld = false;
-			ApplyImpulse(new Vector2(curJumpForce * direction.Position.Normalized().X, curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
+			ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f* curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
 			curJumpForce = jumpForceMin;
 		}
 	}
