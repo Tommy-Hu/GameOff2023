@@ -8,10 +8,7 @@ size = Vector2(136, 134)
 
 [node name="Node2D" instance=ExtResource("1_welx0")]
 
-[node name="Bob" parent="." index="0"]
-position = Vector2(449, 132)
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." index="2"]
+[node name="RigidBody2D" type="RigidBody2D" parent="." index="0"]
 position = Vector2(641, 138)
 gravity_scale = 1.15
 
@@ -21,5 +18,5 @@ texture = ExtResource("2_b5nan")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" index="1"]
 shape = SubResource("RectangleShape2D_867cx")
 
-[node name="Camera2D" type="Camera2D" parent="." index="3"]
+[node name="Camera2D" type="Camera2D" parent="." index="1"]
 position = Vector2(642, 143)

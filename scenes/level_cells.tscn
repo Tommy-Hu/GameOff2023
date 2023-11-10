@@ -1,5 +1,68 @@
-[gd_scene load_steps=2 format=3 uid="uid://cha1q2o261qal"]
+[gd_scene load_steps=8 format=3 uid="uid://cha1q2o261qal"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_4nleg"]
+[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="2_b7x1t"]
+[ext_resource type="Shader" path="res://shaders/cell_shader.gdshader" id="2_kp68h"]
+[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="4_rbnwh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b5ppk"]
+shader = ExtResource("2_kp68h")
+shader_parameter/offset = Vector2(3, 0)
+shader_parameter/tint = Vector4(0.01, 0.3, 0.75, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_auk5c"]
+shader = ExtResource("2_kp68h")
+shader_parameter/offset = Vector2(5, 0)
+shader_parameter/tint = Vector4(0.7, 0.01, 0.01, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vo0f1"]
+shader = ExtResource("2_kp68h")
+shader_parameter/offset = Vector2(9, 8)
+shader_parameter/tint = Vector4(1, 1, 1, 1)
 
 [node name="Node2D" instance=ExtResource("1_4nleg")]
+
+[node name="Camera2D" type="Camera2D" parent="." index="0"]
+
+[node name="Player Cell" type="Sprite2D" parent="." index="1"]
+z_index = 10
+material = SubResource("ShaderMaterial_b5ppk")
+position = Vector2(129, -94)
+scale = Vector2(-0.136454, -0.136454)
+texture = ExtResource("2_b7x1t")
+
+[node name="Bad Cell" type="Sprite2D" parent="." index="2"]
+material = SubResource("ShaderMaterial_auk5c")
+position = Vector2(113, -25)
+scale = Vector2(0.0683594, 0.0683594)
+texture = ExtResource("2_b7x1t")
+
+[node name="Bad Cell2" type="Sprite2D" parent="." index="3"]
+material = SubResource("ShaderMaterial_auk5c")
+position = Vector2(52, -68)
+scale = Vector2(0.0683594, 0.0683594)
+texture = ExtResource("2_b7x1t")
+
+[node name="Normal Cell" type="Sprite2D" parent="." index="4"]
+material = SubResource("ShaderMaterial_vo0f1")
+position = Vector2(121, -40)
+scale = Vector2(0.0683594, 0.0683594)
+texture = ExtResource("2_b7x1t")
+
+[node name="Normal Cell2" type="Sprite2D" parent="." index="5"]
+material = SubResource("ShaderMaterial_vo0f1")
+position = Vector2(66, -49)
+scale = Vector2(0.0683594, 0.0683594)
+texture = ExtResource("2_b7x1t")
+
+[node name="Normal Cell3" type="Sprite2D" parent="." index="6"]
+material = SubResource("ShaderMaterial_vo0f1")
+position = Vector2(76, -71)
+scale = Vector2(0.0683594, 0.0683594)
+texture = ExtResource("2_b7x1t")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." index="7"]
+z_index = -1
+position = Vector2(19, -21)
+scale = Vector2(0.34375, 0.34375)
+texture = ExtResource("4_rbnwh")
