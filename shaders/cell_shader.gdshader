@@ -1,6 +1,7 @@
 shader_type canvas_item;
 uniform vec2 offset;
 uniform vec4 tint;
+uniform float squish;
 
 // copied from https://godotshaders.com/snippet/2d-noise/
 vec2 random(vec2 uv){
@@ -23,10 +24,11 @@ float noise(vec2 uv) {
 
 
 void vertex() {
-  VERTEX += vec2(cos(TIME)*10.0, sin(TIME)*10.0);
+	VERTEX += vec2(cos(TIME)*10.0, sin(TIME)*10.0);
+	VERTEX *= vec2(1.0 - squish, 1.0);
 }
 float map(float value, float min1, float max1, float min2, float max2) {
-  return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+ 	return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
 }
 void fragment() {
 	float n = mix(0.45, 0.55, clamp(noise(UV * 1.1f + vec2((sin(TIME) + offset.r), (cos(TIME)))), 0, 1));
@@ -42,12 +44,14 @@ void fragment() {
 	a = pow(clamppedA, 2);
 	float c = round(a);
 	if (c == 0.0) {
-		
 		// this pixel is outside the core
 		if (ceil(a) == 1.0) {
 			// this pixel is inside the bounds of the membrane
 			a = (1.0f - clamppedA) * 0.2f;
 		}
+		// colorInv *= 0.75;
 	}
-	COLOR = (tint + vec4(0.5, 0.5, 0.5, 1)) * vec4(colorInv, a);
+	// float n2 = mix(0.0, 0.2, clamp(noise(UV * 50.0f + vec2((sin(TIME) + offset.r), (cos(TIME)))), 0, 1));
+
+	COLOR = (tint + vec4(0.5, 0.5, 0.5, 1) /*+ n2*/) * vec4(colorInv, a);
 }

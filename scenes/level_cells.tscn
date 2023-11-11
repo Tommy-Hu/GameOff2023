@@ -1,68 +1,90 @@
-[gd_scene load_steps=8 format=3 uid="uid://cha1q2o261qal"]
+[gd_scene load_steps=4 format=3 uid="uid://cha1q2o261qal"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_4nleg"]
-[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="2_b7x1t"]
-[ext_resource type="Shader" path="res://shaders/cell_shader.gdshader" id="2_kp68h"]
-[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="4_rbnwh"]
+[ext_resource type="PackedScene" uid="uid://bpeffins62t35" path="res://scenes/prefabs/cell.tscn" id="3_w22lo"]
+[ext_resource type="PackedScene" uid="uid://jyejhx3s4pid" path="res://scenes/prefabs/player_cell.tscn" id="4_f840k"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b5ppk"]
-shader = ExtResource("2_kp68h")
-shader_parameter/offset = Vector2(3, 0)
-shader_parameter/tint = Vector4(0.01, 0.3, 0.75, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_auk5c"]
-shader = ExtResource("2_kp68h")
-shader_parameter/offset = Vector2(5, 0)
-shader_parameter/tint = Vector4(0.7, 0.01, 0.01, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vo0f1"]
-shader = ExtResource("2_kp68h")
-shader_parameter/offset = Vector2(9, 8)
-shader_parameter/tint = Vector4(1, 1, 1, 1)
-
-[node name="Node2D" instance=ExtResource("1_4nleg")]
+[node name="level_cells" instance=ExtResource("1_4nleg")]
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
 
-[node name="Player Cell" type="Sprite2D" parent="." index="1"]
-z_index = 10
-material = SubResource("ShaderMaterial_b5ppk")
-position = Vector2(129, -94)
-scale = Vector2(-0.136454, -0.136454)
-texture = ExtResource("2_b7x1t")
+[node name="Cells" type="Node2D" parent="." index="1"]
 
-[node name="Bad Cell" type="Sprite2D" parent="." index="2"]
-material = SubResource("ShaderMaterial_auk5c")
-position = Vector2(113, -25)
-scale = Vector2(0.0683594, 0.0683594)
-texture = ExtResource("2_b7x1t")
+[node name="Goods" type="Node2D" parent="Cells" index="0"]
 
-[node name="Bad Cell2" type="Sprite2D" parent="." index="3"]
-material = SubResource("ShaderMaterial_auk5c")
-position = Vector2(52, -68)
-scale = Vector2(0.0683594, 0.0683594)
-texture = ExtResource("2_b7x1t")
+[node name="Good Cell" parent="Cells/Goods" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(94, -69)
+good = true
 
-[node name="Normal Cell" type="Sprite2D" parent="." index="4"]
-material = SubResource("ShaderMaterial_vo0f1")
-position = Vector2(121, -40)
-scale = Vector2(0.0683594, 0.0683594)
-texture = ExtResource("2_b7x1t")
+[node name="Good Cell2" parent="Cells/Goods" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(118, -75)
+good = true
 
-[node name="Normal Cell2" type="Sprite2D" parent="." index="5"]
-material = SubResource("ShaderMaterial_vo0f1")
-position = Vector2(66, -49)
-scale = Vector2(0.0683594, 0.0683594)
-texture = ExtResource("2_b7x1t")
+[node name="Good Cell3" parent="Cells/Goods" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(86, -53)
+good = true
 
-[node name="Normal Cell3" type="Sprite2D" parent="." index="6"]
-material = SubResource("ShaderMaterial_vo0f1")
-position = Vector2(76, -71)
-scale = Vector2(0.0683594, 0.0683594)
-texture = ExtResource("2_b7x1t")
+[node name="Good Cell4" parent="Cells/Goods" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(103, -83)
+good = true
 
-[node name="Sprite2D2" type="Sprite2D" parent="." index="7"]
-z_index = -1
-position = Vector2(19, -21)
-scale = Vector2(0.34375, 0.34375)
-texture = ExtResource("4_rbnwh")
+[node name="Good Cell5" parent="Cells/Goods" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(129, -59)
+good = true
+
+[node name="Good Cell6" parent="Cells/Goods" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(110, -66)
+good = true
+
+[node name="Good Cell7" parent="Cells/Goods" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(84, -85)
+good = true
+
+[node name="Good Cell8" parent="Cells/Goods" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(97, -37)
+good = true
+
+[node name="Good Cell9" parent="Cells/Goods" index="8" instance=ExtResource("3_w22lo")]
+position = Vector2(-60, -45)
+good = true
+
+[node name="Good Cell10" parent="Cells/Goods" index="9" instance=ExtResource("3_w22lo")]
+position = Vector2(-45, -78)
+good = true
+
+[node name="Good Cell11" parent="Cells/Goods" index="10" instance=ExtResource("3_w22lo")]
+position = Vector2(-59, -96)
+good = true
+
+[node name="Good Cell12" parent="Cells/Goods" index="11" instance=ExtResource("3_w22lo")]
+position = Vector2(-71, -83)
+good = true
+
+[node name="Good Cell13" parent="Cells/Goods" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(-45, -59)
+good = true
+
+[node name="Good Cell14" parent="Cells/Goods" index="13" instance=ExtResource("3_w22lo")]
+position = Vector2(-88, -52)
+good = true
+
+[node name="Good Cell15" parent="Cells/Goods" index="14" instance=ExtResource("3_w22lo")]
+position = Vector2(-93, -75)
+good = true
+
+[node name="Good Cell16" parent="Cells/Goods" index="15" instance=ExtResource("3_w22lo")]
+position = Vector2(-75, -66)
+good = true
+
+[node name="Bads" type="Node2D" parent="Cells" index="1"]
+
+[node name="Bad Cell" parent="Cells/Bads" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(110, -53)
+
+[node name="Bad Cell2" parent="Cells/Bads" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(-110, -61)
+
+[node name="Player" parent="." index="2" instance=ExtResource("4_f840k")]
+gravity_scale = 0.0
+linear_damp = 0.8
+speed = 50.0
