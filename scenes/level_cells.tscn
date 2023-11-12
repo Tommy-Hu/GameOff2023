@@ -1,12 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://cha1q2o261qal"]
+[gd_scene load_steps=9 format=3 uid="uid://cha1q2o261qal"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_4nleg"]
+[ext_resource type="Shader" path="res://shaders/post_processing.gdshader" id="2_seqbp"]
 [ext_resource type="PackedScene" uid="uid://bpeffins62t35" path="res://scenes/prefabs/cell.tscn" id="3_w22lo"]
 [ext_resource type="PackedScene" uid="uid://jyejhx3s4pid" path="res://scenes/prefabs/player_cell.tscn" id="4_f840k"]
+[ext_resource type="Script" path="res://scripts/SpriteMaskMaster.cs" id="5_3jyt6"]
+[ext_resource type="Shader" path="res://shaders/mask_shader.gdshader" id="5_rmwer"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rjwuj"]
+shader = ExtResource("2_seqbp")
+shader_parameter/tint = Vector4(1.1, 0.9, 0.9, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55yfy"]
+shader = ExtResource("5_rmwer")
+shader_parameter/tint = Vector4(0.7, 0.1, 0.1, 0.25)
 
 [node name="level_cells" instance=ExtResource("1_4nleg")]
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
+position_smoothing_enabled = true
 
 [node name="Cells" type="Node2D" parent="." index="1"]
 
@@ -88,3 +100,19 @@ position = Vector2(-110, -61)
 gravity_scale = 0.0
 linear_damp = 0.8
 speed = 50.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" index="0"]
+material = SubResource("ShaderMaterial_rjwuj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpriteMaskMaster" type="Sprite2D" parent="." index="4"]
+z_index = 1000
+material = SubResource("ShaderMaterial_55yfy")
+script = ExtResource("5_3jyt6")

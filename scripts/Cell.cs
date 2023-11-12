@@ -34,6 +34,7 @@ public partial class Cell : StaticBody2D
         material.SetShaderParameter("offset", new Vector2(rng.Randf(), rng.Randf()));
         material.SetShaderParameter("tint", good ? GOOD_COLOR : BAD_COLOR);
         material.SetShaderParameter("squish", 0.0f);
+        material.SetShaderParameter("mask_texture", SpriteMaskMaster.Singleton.Texture);
         var particle = GetChild<SelfDestroyingParticle>(2);
         ParticleProcessMaterial ppm = (particle.ProcessMaterial.Duplicate() as ParticleProcessMaterial);
         particle.ProcessMaterial = ppm;
