@@ -3,6 +3,8 @@ uniform vec2 offset;
 uniform vec4 tint;
 uniform float squish;
 
+uniform sampler2D mask_texture : repeat_disable, filter_nearest;
+
 // copied from https://godotshaders.com/snippet/2d-noise/
 vec2 random(vec2 uv){
     uv = vec2( dot(uv, vec2(127.1,311.7) ),
@@ -53,5 +55,5 @@ void fragment() {
 	}
 	// float n2 = mix(0.0, 0.2, clamp(noise(UV * 50.0f + vec2((sin(TIME) + offset.r), (cos(TIME)))), 0, 1));
 
-	COLOR = (tint + vec4(0.5, 0.5, 0.5, 1) /*+ n2*/) * vec4(colorInv, a);
+	COLOR = (tint * texture(mask_texture, SCREEN_UV) + vec4(0.5, 0.5, 0.5, 1) /*+ n2*/) * vec4(colorInv, a);
 }
