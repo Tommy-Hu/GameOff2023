@@ -12,8 +12,6 @@ public partial class Cell : StaticBody2D
     [Export]
     public bool good;
 
-    private static RandomNumberGenerator rng = null;
-
     private bool squishing = false;
     private PlayerCell squishTo = null;
     private Sprite2D sprite;
@@ -22,16 +20,11 @@ public partial class Cell : StaticBody2D
 
     public override void _Ready()
     {
-        if (rng == null)
-        {
-            rng = new RandomNumberGenerator();
-            rng.Seed = ~0x7531357UL ^ Time.GetTicksMsec();
-        }
         base._Ready();
         sprite = GetChild<Sprite2D>(1);
         material = (sprite.Material.Duplicate() as ShaderMaterial);
         sprite.Material = material;
-        material.SetShaderParameter("offset", new Vector2(rng.Randf(), rng.Randf()));
+        material.SetShaderParameter("offset", new Vector2(RNG.Gen.Randf(), RNG.Gen.Randf()));
         material.SetShaderParameter("tint", good ? GOOD_COLOR : BAD_COLOR);
         material.SetShaderParameter("squish", 0.0f);
         material.SetShaderParameter("mask_texture", SpriteMaskMaster.Singleton.Texture);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cha1q2o261qal"]
+[gd_scene load_steps=10 format=3 uid="uid://cha1q2o261qal"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_4nleg"]
 [ext_resource type="Shader" path="res://shaders/post_processing.gdshader" id="2_seqbp"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://jyejhx3s4pid" path="res://scenes/prefabs/player_cell.tscn" id="4_f840k"]
 [ext_resource type="Script" path="res://scripts/SpriteMaskMaster.cs" id="5_3jyt6"]
 [ext_resource type="Shader" path="res://shaders/mask_shader.gdshader" id="5_rmwer"]
+[ext_resource type="Script" path="res://scripts/RNG.cs" id="8_rrh8e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjwuj"]
 shader = ExtResource("2_seqbp")
@@ -13,7 +14,7 @@ shader_parameter/tint = Vector4(1.1, 0.9, 0.9, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_55yfy"]
 shader = ExtResource("5_rmwer")
-shader_parameter/tint = Vector4(0.7, 0.1, 0.1, 0.25)
+shader_parameter/tint = Color(0.788235, 0.25098, 0.290196, 0.462745)
 
 [node name="level_cells" instance=ExtResource("1_4nleg")]
 
@@ -24,68 +25,400 @@ position_smoothing_enabled = true
 
 [node name="Goods" type="Node2D" parent="Cells" index="0"]
 
-[node name="Good Cell" parent="Cells/Goods" index="0" instance=ExtResource("3_w22lo")]
+[node name="Batch 1" type="Node2D" parent="Cells/Goods" index="0"]
+
+[node name="Good Cell" parent="Cells/Goods/Batch 1" index="0" instance=ExtResource("3_w22lo")]
 position = Vector2(94, -69)
 good = true
 
-[node name="Good Cell2" parent="Cells/Goods" index="1" instance=ExtResource("3_w22lo")]
+[node name="Good Cell2" parent="Cells/Goods/Batch 1" index="1" instance=ExtResource("3_w22lo")]
 position = Vector2(118, -75)
 good = true
 
-[node name="Good Cell3" parent="Cells/Goods" index="2" instance=ExtResource("3_w22lo")]
+[node name="Good Cell3" parent="Cells/Goods/Batch 1" index="2" instance=ExtResource("3_w22lo")]
 position = Vector2(86, -53)
 good = true
 
-[node name="Good Cell4" parent="Cells/Goods" index="3" instance=ExtResource("3_w22lo")]
+[node name="Good Cell4" parent="Cells/Goods/Batch 1" index="3" instance=ExtResource("3_w22lo")]
 position = Vector2(103, -83)
 good = true
 
-[node name="Good Cell5" parent="Cells/Goods" index="4" instance=ExtResource("3_w22lo")]
+[node name="Good Cell5" parent="Cells/Goods/Batch 1" index="4" instance=ExtResource("3_w22lo")]
 position = Vector2(129, -59)
 good = true
 
-[node name="Good Cell6" parent="Cells/Goods" index="5" instance=ExtResource("3_w22lo")]
+[node name="Good Cell6" parent="Cells/Goods/Batch 1" index="5" instance=ExtResource("3_w22lo")]
 position = Vector2(110, -66)
 good = true
 
-[node name="Good Cell7" parent="Cells/Goods" index="6" instance=ExtResource("3_w22lo")]
+[node name="Good Cell7" parent="Cells/Goods/Batch 1" index="6" instance=ExtResource("3_w22lo")]
 position = Vector2(84, -85)
 good = true
 
-[node name="Good Cell8" parent="Cells/Goods" index="7" instance=ExtResource("3_w22lo")]
+[node name="Good Cell8" parent="Cells/Goods/Batch 1" index="7" instance=ExtResource("3_w22lo")]
 position = Vector2(97, -37)
 good = true
 
-[node name="Good Cell9" parent="Cells/Goods" index="8" instance=ExtResource("3_w22lo")]
+[node name="Good Cell9" parent="Cells/Goods/Batch 1" index="8" instance=ExtResource("3_w22lo")]
 position = Vector2(-60, -45)
 good = true
 
-[node name="Good Cell10" parent="Cells/Goods" index="9" instance=ExtResource("3_w22lo")]
+[node name="Good Cell10" parent="Cells/Goods/Batch 1" index="9" instance=ExtResource("3_w22lo")]
 position = Vector2(-45, -78)
 good = true
 
-[node name="Good Cell11" parent="Cells/Goods" index="10" instance=ExtResource("3_w22lo")]
+[node name="Good Cell11" parent="Cells/Goods/Batch 1" index="10" instance=ExtResource("3_w22lo")]
 position = Vector2(-59, -96)
 good = true
 
-[node name="Good Cell12" parent="Cells/Goods" index="11" instance=ExtResource("3_w22lo")]
+[node name="Good Cell12" parent="Cells/Goods/Batch 1" index="11" instance=ExtResource("3_w22lo")]
 position = Vector2(-71, -83)
 good = true
 
-[node name="Good Cell13" parent="Cells/Goods" index="12" instance=ExtResource("3_w22lo")]
-position = Vector2(-45, -59)
+[node name="Good Cell13" parent="Cells/Goods/Batch 1" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(-56, -62)
 good = true
 
-[node name="Good Cell14" parent="Cells/Goods" index="13" instance=ExtResource("3_w22lo")]
+[node name="Good Cell14" parent="Cells/Goods/Batch 1" index="13" instance=ExtResource("3_w22lo")]
 position = Vector2(-88, -52)
 good = true
 
-[node name="Good Cell15" parent="Cells/Goods" index="14" instance=ExtResource("3_w22lo")]
+[node name="Good Cell15" parent="Cells/Goods/Batch 1" index="14" instance=ExtResource("3_w22lo")]
 position = Vector2(-93, -75)
 good = true
 
-[node name="Good Cell16" parent="Cells/Goods" index="15" instance=ExtResource("3_w22lo")]
+[node name="Good Cell16" parent="Cells/Goods/Batch 1" index="15" instance=ExtResource("3_w22lo")]
 position = Vector2(-75, -66)
+good = true
+
+[node name="Batch 2" type="Node2D" parent="Cells/Goods" index="1"]
+
+[node name="Good Cell" parent="Cells/Goods/Batch 2" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(64, -114)
+good = true
+
+[node name="Good Cell2" parent="Cells/Goods/Batch 2" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(88, -120)
+good = true
+
+[node name="Good Cell3" parent="Cells/Goods/Batch 2" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(56, -98)
+good = true
+
+[node name="Good Cell4" parent="Cells/Goods/Batch 2" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(73, -128)
+good = true
+
+[node name="Good Cell5" parent="Cells/Goods/Batch 2" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(99, -104)
+good = true
+
+[node name="Good Cell6" parent="Cells/Goods/Batch 2" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(80, -111)
+good = true
+
+[node name="Good Cell7" parent="Cells/Goods/Batch 2" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(54, -130)
+good = true
+
+[node name="Good Cell8" parent="Cells/Goods/Batch 2" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(67, -82)
+good = true
+
+[node name="Good Cell9" parent="Cells/Goods/Batch 2" index="8" instance=ExtResource("3_w22lo")]
+position = Vector2(-90, -90)
+good = true
+
+[node name="Good Cell10" parent="Cells/Goods/Batch 2" index="9" instance=ExtResource("3_w22lo")]
+position = Vector2(-75, -123)
+good = true
+
+[node name="Good Cell11" parent="Cells/Goods/Batch 2" index="10" instance=ExtResource("3_w22lo")]
+position = Vector2(-89, -141)
+good = true
+
+[node name="Good Cell12" parent="Cells/Goods/Batch 2" index="11" instance=ExtResource("3_w22lo")]
+position = Vector2(-101, -128)
+good = true
+
+[node name="Good Cell13" parent="Cells/Goods/Batch 2" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(-75, -104)
+good = true
+
+[node name="Good Cell14" parent="Cells/Goods/Batch 2" index="13" instance=ExtResource("3_w22lo")]
+position = Vector2(-118, -97)
+good = true
+
+[node name="Good Cell15" parent="Cells/Goods/Batch 2" index="14" instance=ExtResource("3_w22lo")]
+position = Vector2(-123, -120)
+good = true
+
+[node name="Good Cell16" parent="Cells/Goods/Batch 2" index="15" instance=ExtResource("3_w22lo")]
+position = Vector2(-105, -111)
+good = true
+
+[node name="Batch 3" type="Node2D" parent="Cells/Goods" index="2"]
+
+[node name="Good Cell" parent="Cells/Goods/Batch 3" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(27, -74)
+good = true
+
+[node name="Good Cell2" parent="Cells/Goods/Batch 3" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(51, -80)
+good = true
+
+[node name="Good Cell3" parent="Cells/Goods/Batch 3" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(36, -60)
+good = true
+
+[node name="Good Cell4" parent="Cells/Goods/Batch 3" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(36, -88)
+good = true
+
+[node name="Good Cell5" parent="Cells/Goods/Batch 3" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(72, -43)
+good = true
+
+[node name="Good Cell6" parent="Cells/Goods/Batch 3" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(55, -65)
+good = true
+
+[node name="Good Cell7" parent="Cells/Goods/Batch 3" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(75, -65)
+good = true
+
+[node name="Good Cell8" parent="Cells/Goods/Batch 3" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(74, -96)
+good = true
+
+[node name="Good Cell9" parent="Cells/Goods/Batch 3" index="8" instance=ExtResource("3_w22lo")]
+position = Vector2(-127, -50)
+good = true
+
+[node name="Good Cell10" parent="Cells/Goods/Batch 3" index="9" instance=ExtResource("3_w22lo")]
+position = Vector2(-112, -83)
+good = true
+
+[node name="Good Cell11" parent="Cells/Goods/Batch 3" index="10" instance=ExtResource("3_w22lo")]
+position = Vector2(-123, -66)
+good = true
+
+[node name="Good Cell12" parent="Cells/Goods/Batch 3" index="11" instance=ExtResource("3_w22lo")]
+position = Vector2(-138, -88)
+good = true
+
+[node name="Good Cell13" parent="Cells/Goods/Batch 3" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(53, -41)
+good = true
+
+[node name="Good Cell14" parent="Cells/Goods/Batch 3" index="13" instance=ExtResource("3_w22lo")]
+position = Vector2(-155, -57)
+good = true
+
+[node name="Good Cell15" parent="Cells/Goods/Batch 3" index="14" instance=ExtResource("3_w22lo")]
+position = Vector2(-160, -80)
+good = true
+
+[node name="Good Cell16" parent="Cells/Goods/Batch 3" index="15" instance=ExtResource("3_w22lo")]
+position = Vector2(-142, -71)
+good = true
+
+[node name="Batch 4" type="Node2D" parent="Cells/Goods" index="3"]
+
+[node name="Good Cell" parent="Cells/Goods/Batch 4" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(70, 46)
+good = true
+
+[node name="Good Cell2" parent="Cells/Goods/Batch 4" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(94, 40)
+good = true
+
+[node name="Good Cell3" parent="Cells/Goods/Batch 4" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(62, 62)
+good = true
+
+[node name="Good Cell4" parent="Cells/Goods/Batch 4" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(79, 32)
+good = true
+
+[node name="Good Cell5" parent="Cells/Goods/Batch 4" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(107, 65)
+good = true
+
+[node name="Good Cell6" parent="Cells/Goods/Batch 4" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(91, 57)
+good = true
+
+[node name="Good Cell7" parent="Cells/Goods/Batch 4" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(51, 45)
+good = true
+
+[node name="Good Cell8" parent="Cells/Goods/Batch 4" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(73, 78)
+good = true
+
+[node name="Good Cell9" parent="Cells/Goods/Batch 4" index="8" instance=ExtResource("3_w22lo")]
+position = Vector2(-84, 70)
+good = true
+
+[node name="Good Cell10" parent="Cells/Goods/Batch 4" index="9" instance=ExtResource("3_w22lo")]
+position = Vector2(-69, 37)
+good = true
+
+[node name="Good Cell11" parent="Cells/Goods/Batch 4" index="10" instance=ExtResource("3_w22lo")]
+position = Vector2(-80, 54)
+good = true
+
+[node name="Good Cell12" parent="Cells/Goods/Batch 4" index="11" instance=ExtResource("3_w22lo")]
+position = Vector2(-95, 32)
+good = true
+
+[node name="Good Cell13" parent="Cells/Goods/Batch 4" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(96, 79)
+good = true
+
+[node name="Good Cell14" parent="Cells/Goods/Batch 4" index="13" instance=ExtResource("3_w22lo")]
+position = Vector2(-112, 63)
+good = true
+
+[node name="Good Cell15" parent="Cells/Goods/Batch 4" index="14" instance=ExtResource("3_w22lo")]
+position = Vector2(-117, 40)
+good = true
+
+[node name="Good Cell16" parent="Cells/Goods/Batch 4" index="15" instance=ExtResource("3_w22lo")]
+position = Vector2(-99, 49)
+good = true
+
+[node name="Batch 5" type="Node2D" parent="Cells/Goods" index="4"]
+
+[node name="Good Cell" parent="Cells/Goods/Batch 5" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(15, 67)
+good = true
+
+[node name="Good Cell2" parent="Cells/Goods/Batch 5" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(39, 61)
+good = true
+
+[node name="Good Cell3" parent="Cells/Goods/Batch 5" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(7, 83)
+good = true
+
+[node name="Good Cell4" parent="Cells/Goods/Batch 5" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(24, 53)
+good = true
+
+[node name="Good Cell5" parent="Cells/Goods/Batch 5" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(50, 77)
+good = true
+
+[node name="Good Cell6" parent="Cells/Goods/Batch 5" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(31, 70)
+good = true
+
+[node name="Good Cell7" parent="Cells/Goods/Batch 5" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(5, 51)
+good = true
+
+[node name="Good Cell8" parent="Cells/Goods/Batch 5" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(36, 91)
+good = true
+
+[node name="Good Cell9" parent="Cells/Goods/Batch 5" index="8" instance=ExtResource("3_w22lo")]
+position = Vector2(-102, 86)
+good = true
+
+[node name="Good Cell10" parent="Cells/Goods/Batch 5" index="9" instance=ExtResource("3_w22lo")]
+position = Vector2(-124, 58)
+good = true
+
+[node name="Good Cell11" parent="Cells/Goods/Batch 5" index="10" instance=ExtResource("3_w22lo")]
+position = Vector2(-138, 40)
+good = true
+
+[node name="Good Cell12" parent="Cells/Goods/Batch 5" index="11" instance=ExtResource("3_w22lo")]
+position = Vector2(-150, 53)
+good = true
+
+[node name="Good Cell13" parent="Cells/Goods/Batch 5" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(-124, 77)
+good = true
+
+[node name="Good Cell14" parent="Cells/Goods/Batch 5" index="13" instance=ExtResource("3_w22lo")]
+position = Vector2(-142, 89)
+good = true
+
+[node name="Good Cell15" parent="Cells/Goods/Batch 5" index="14" instance=ExtResource("3_w22lo")]
+position = Vector2(-172, 61)
+good = true
+
+[node name="Good Cell16" parent="Cells/Goods/Batch 5" index="15" instance=ExtResource("3_w22lo")]
+position = Vector2(-154, 70)
+good = true
+
+[node name="Batch 6" type="Node2D" parent="Cells/Goods" index="5"]
+
+[node name="Good Cell" parent="Cells/Goods/Batch 6" index="0" instance=ExtResource("3_w22lo")]
+position = Vector2(272, 105)
+good = true
+
+[node name="Good Cell2" parent="Cells/Goods/Batch 6" index="1" instance=ExtResource("3_w22lo")]
+position = Vector2(296, 99)
+good = true
+
+[node name="Good Cell3" parent="Cells/Goods/Batch 6" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(264, 121)
+good = true
+
+[node name="Good Cell4" parent="Cells/Goods/Batch 6" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(281, 91)
+good = true
+
+[node name="Good Cell5" parent="Cells/Goods/Batch 6" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(307, 115)
+good = true
+
+[node name="Good Cell6" parent="Cells/Goods/Batch 6" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(288, 108)
+good = true
+
+[node name="Good Cell7" parent="Cells/Goods/Batch 6" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(262, 89)
+good = true
+
+[node name="Good Cell8" parent="Cells/Goods/Batch 6" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(293, 129)
+good = true
+
+[node name="Good Cell9" parent="Cells/Goods/Batch 6" index="8" instance=ExtResource("3_w22lo")]
+position = Vector2(155, 124)
+good = true
+
+[node name="Good Cell10" parent="Cells/Goods/Batch 6" index="9" instance=ExtResource("3_w22lo")]
+position = Vector2(133, 96)
+good = true
+
+[node name="Good Cell11" parent="Cells/Goods/Batch 6" index="10" instance=ExtResource("3_w22lo")]
+position = Vector2(216, 75)
+good = true
+
+[node name="Good Cell12" parent="Cells/Goods/Batch 6" index="11" instance=ExtResource("3_w22lo")]
+position = Vector2(204, 88)
+good = true
+
+[node name="Good Cell13" parent="Cells/Goods/Batch 6" index="12" instance=ExtResource("3_w22lo")]
+position = Vector2(230, 112)
+good = true
+
+[node name="Good Cell14" parent="Cells/Goods/Batch 6" index="13" instance=ExtResource("3_w22lo")]
+position = Vector2(212, 124)
+good = true
+
+[node name="Good Cell15" parent="Cells/Goods/Batch 6" index="14" instance=ExtResource("3_w22lo")]
+position = Vector2(182, 96)
+good = true
+
+[node name="Good Cell16" parent="Cells/Goods/Batch 6" index="15" instance=ExtResource("3_w22lo")]
+position = Vector2(200, 105)
 good = true
 
 [node name="Bads" type="Node2D" parent="Cells" index="1"]
@@ -95,6 +428,24 @@ position = Vector2(110, -53)
 
 [node name="Bad Cell2" parent="Cells/Bads" index="1" instance=ExtResource("3_w22lo")]
 position = Vector2(-110, -61)
+
+[node name="Bad Cell3" parent="Cells/Bads" index="2" instance=ExtResource("3_w22lo")]
+position = Vector2(-139, 68)
+
+[node name="Bad Cell4" parent="Cells/Bads" index="3" instance=ExtResource("3_w22lo")]
+position = Vector2(-177, -67)
+
+[node name="Bad Cell5" parent="Cells/Bads" index="4" instance=ExtResource("3_w22lo")]
+position = Vector2(-177, -85)
+
+[node name="Bad Cell6" parent="Cells/Bads" index="5" instance=ExtResource("3_w22lo")]
+position = Vector2(114, 45)
+
+[node name="Bad Cell7" parent="Cells/Bads" index="6" instance=ExtResource("3_w22lo")]
+position = Vector2(65, 94)
+
+[node name="Bad Cell8" parent="Cells/Bads" index="7" instance=ExtResource("3_w22lo")]
+position = Vector2(-12, -43)
 
 [node name="Player" parent="." index="2" instance=ExtResource("4_f840k")]
 gravity_scale = 0.0
@@ -116,3 +467,6 @@ grow_vertical = 2
 z_index = 1000
 material = SubResource("ShaderMaterial_55yfy")
 script = ExtResource("5_3jyt6")
+
+[node name="RNG" type="Node2D" parent="." index="5"]
+script = ExtResource("8_rrh8e")

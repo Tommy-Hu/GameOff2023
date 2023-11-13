@@ -12,6 +12,18 @@ public partial class PlayerCell : RigidBody2D
     {
         base._Ready();
         BodyEntered += PlayerCell_BodyEntered;
+
+        var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
+        var mask = maskScn.Instantiate<SpriteMask>();
+        const float SCALE = 0.15f;
+        mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_0.png");
+        mask.GlobalPosition = GlobalPosition;
+        mask.GlobalScale = Vector2.One * SCALE;
+        mask.update = () =>
+        {
+            mask.GlobalPosition = GlobalPosition + GetViewportRect().Size * 0.5f;
+        };
+        SpriteMaskMaster.AddMask(mask);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -33,9 +45,27 @@ public partial class PlayerCell : RigidBody2D
         {
             if (!mouseWasPressed)
             {
-                var mask = new SpriteMask() { Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_0.png") };
-                mask.GlobalPosition = GetGlobalMousePosition();
-                mask.ApplyScale(Vector2.One * 0.15f);
+                var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
+                var mask = maskScn.Instantiate<SpriteMask>();
+                const bool SHOTGUN = true;
+                const float SCALE = 0.15f;
+                if (SHOTGUN)
+                {
+                    mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_shot_gun.png");
+                    mask.rotateSpeed = 0f;
+                    Transform2D t = Transform2D.Identity;
+                    t = t.Rotated((GetGlobalMousePosition() - GlobalPosition).Angle() + Mathf.Pi * 0.25f);
+                    t[2] += GlobalTransform[2];
+                    //t[2] += GetGlobalMousePosition();
+                    t = t.TranslatedLocal(new Vector2(1f, -1f) * (Vector2)mask.Texture.GetImage().GetSize() * 0.5f * SCALE);
+                    mask.GlobalTransform = t;
+                }
+                else
+                {
+                    mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_0.png");
+                    mask.GlobalPosition = GetGlobalMousePosition();
+                }
+                mask.GlobalScale = Vector2.One * SCALE;
                 SpriteMaskMaster.AddMask(mask);
                 mouseWasPressed = true;
             }

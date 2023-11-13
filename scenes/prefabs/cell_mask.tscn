@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvoaq6x6dtwi0"]
+
+[ext_resource type="Script" path="res://scripts/SpriteMask.cs" id="1_rkkh3"]
+
+[node name="CellMask" type="Sprite2D"]
+script = ExtResource("1_rkkh3")
+rotateSpeed = 0.1
