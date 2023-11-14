@@ -3,13 +3,21 @@ using System;
 
 public partial class Frog : RigidBody2D
 {
-	public float jumpForceMin = 200;
-	public float jumpForceMax = 1000;
-	public float jumpinterval = 15;
-	public float curJumpForce = 200;
 	public bool jumpIncreaseing;
 	public bool jumpHeld;
 	public Sprite2D direction;
+	public bool onGround = true;
+	[ExportCategory("Frog")]
+	[ExportGroup("Jump Params")]
+	[Export] 
+	private float jumpForceMin = 200;
+	[Export]
+	public float jumpForceMax = 1000;
+	[Export]
+	public float jumpinterval = 15;
+	[Export]
+	public float curJumpForce = 200;
+	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,7 +30,7 @@ public partial class Frog : RigidBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
+	
         
 	}
 
@@ -43,22 +51,36 @@ public partial class Frog : RigidBody2D
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
 			
 			
-			GD.Print(curJumpForce);
-			GD.Print(jumpIncreaseing);
-
-		}
-
-		if (Input.IsActionPressed("FrogJump"))
-		{
+			//GD.Print(curJumpForce);
 			
-			jumpHeld = true;
+
 		}
-		else if (Input.IsActionJustReleased("FrogJump"))
-        {
-			jumpHeld = false;
-			ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f* curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
-			curJumpForce = jumpForceMin;
+		if (onGround)
+		{
+			if (Input.IsActionPressed("FrogJump"))
+			{
+
+				jumpHeld = true;
+			}
+			else if (Input.IsActionJustReleased("FrogJump"))
+			{
+				jumpHeld = false;
+				ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f * curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
+				curJumpForce = jumpForceMin;
+			}
 		}
+	}
+
+	private void OnFrogGroundCheckBodyEntered(Node2D body)
+    {
+		onGround = true;
+		
+    }
+
+	private void OnFrogGroundCheckBodyExited(Node2D body)
+    {
+		onGround = false;
+		
 	}
 
 

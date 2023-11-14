@@ -20,7 +20,7 @@ public partial class FrogJumpDirector : Sprite2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (!frog.jumpHeld)
+		if (!frog.jumpHeld && frog.onGround)
 		{
 
 			if (angle >= Math.PI)
@@ -41,10 +41,15 @@ public partial class FrogJumpDirector : Sprite2D
 				angle = angle + 0.1;
 			}
 
-			this.Rotation = -(float)angle + (float)Math.PI/2;
-
-
+			
+			this.Rotation = -(float)angle + (float)Math.PI / 2;
 			Position = new Vector2((float)Math.Cos(angle) * 100, (float)Math.Sin(angle) * -100);
+			
+			
+			
+
+
+			
 		}
 
 	}

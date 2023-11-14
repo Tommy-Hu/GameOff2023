@@ -1,13 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://m405luxpd4qr"]
+[gd_scene load_steps=12 format=3 uid="uid://m405luxpd4qr"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_welx0"]
 [ext_resource type="Script" path="res://scripts/Frog.cs" id="2_86pts"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_b5nan"]
 [ext_resource type="Texture2D" uid="uid://5qwnos8mvd8h" path="res://sprites/up-arrow.png" id="4_eiv5w"]
 [ext_resource type="Script" path="res://scripts/FrogJumpDirector.cs" id="5_vxjgx"]
+[ext_resource type="Shader" path="res://scenes/FrogLightningShader.gdshader" id="6_f74o4"]
+[ext_resource type="Script" path="res://scripts/Lightning.cs" id="7_igvof"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m55bd"]
-size = Vector2(127, 3)
+size = Vector2(127, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_867cx"]
 size = Vector2(136, 134)
@@ -15,12 +17,18 @@ size = Vector2(136, 134)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ikro"]
 size = Vector2(126, 125.063)
 
-[node name="Node2D" instance=ExtResource("1_welx0")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a2f2w"]
+shader = ExtResource("6_f74o4")
+shader_parameter/thunder = false
+shader_parameter/duration = null
+
+[node name="FrogManager" instance=ExtResource("1_welx0")]
 position = Vector2(289, 145)
 
 [node name="Frog" type="RigidBody2D" parent="." index="0"]
 position = Vector2(143, -214)
 gravity_scale = 1.15
+lock_rotation = true
 script = ExtResource("2_86pts")
 metadata/_edit_group_ = true
 
@@ -30,7 +38,7 @@ texture = ExtResource("2_b5nan")
 [node name="FrogGroundCheck" type="Area2D" parent="Frog" index="1"]
 
 [node name="GroundCheckSize" type="CollisionShape2D" parent="Frog/FrogGroundCheck" index="0"]
-position = Vector2(0, 69.5)
+position = Vector2(0, 68.5)
 shape = SubResource("RectangleShape2D_m55bd")
 
 [node name="ColliderBox" type="CollisionShape2D" parent="Frog" index="2"]
@@ -57,3 +65,18 @@ texture = ExtResource("2_b5nan")
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
 position = Vector2(194, -73)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" index="0"]
+
+[node name="Lightning" type="ColorRect" parent="Camera2D/CanvasLayer" index="0"]
+material = SubResource("ShaderMaterial_a2f2w")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("7_igvof")
+
+[connection signal="body_entered" from="Frog/FrogGroundCheck" to="Frog" method="OnFrogGroundCheckBodyEntered"]
+[connection signal="body_exited" from="Frog/FrogGroundCheck" to="Frog" method="OnFrogGroundCheckBodyExited"]
