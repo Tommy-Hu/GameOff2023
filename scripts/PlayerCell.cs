@@ -47,7 +47,7 @@ public partial class PlayerCell : RigidBody2D
             {
                 var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
                 var mask = maskScn.Instantiate<SpriteMask>();
-                const bool SHOTGUN = true;
+                const bool SHOTGUN = false;
                 const float SCALE = 0.15f;
                 if (SHOTGUN)
                 {

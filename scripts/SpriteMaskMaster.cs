@@ -51,4 +51,13 @@ public partial class SpriteMaskMaster : Sprite2D
         base._Process(delta);
         this.QueueRedraw();
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        if (this == Singleton)
+        {
+            Singleton = null;
+        }
+    }
 }
