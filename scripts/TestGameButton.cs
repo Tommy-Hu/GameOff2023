@@ -15,6 +15,6 @@ public partial class TestGameButton : Button
 
     private void TestGameButton_Pressed()
     {
-        GetParent().GetChild<GameManager>(0).PlayLevel(levelName, musicName);
+        GameManager.PlayLevel(levelName, musicName);
     }
 }

@@ -15,7 +15,7 @@ public partial class PlayerCell : RigidBody2D
 
         var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
         var mask = maskScn.Instantiate<SpriteMask>();
-        const float SCALE = 0.15f;
+        const float SCALE = 0.20f;
         mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_0.png");
         mask.GlobalPosition = GlobalPosition;
         mask.GlobalScale = Vector2.One * SCALE;
@@ -48,7 +48,7 @@ public partial class PlayerCell : RigidBody2D
                 var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
                 var mask = maskScn.Instantiate<SpriteMask>();
                 const bool SHOTGUN = false;
-                const float SCALE = 0.15f;
+                const float SCALE = 0.20f;
                 if (SHOTGUN)
                 {
                     mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_shot_gun.png");
