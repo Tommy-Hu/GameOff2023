@@ -52,3 +52,8 @@ text = "Play Earth"
 script = ExtResource("3_18r21")
 levelName = "asteroid"
 musicName = "Earth"
+
+[node name="Title" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "THIS WILL BE THE MENU..."

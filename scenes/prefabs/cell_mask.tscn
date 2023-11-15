@@ -1,7 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvoaq6x6dtwi0"]
+[gd_scene load_steps=5 format=3 uid="uid://cvoaq6x6dtwi0"]
 
+[ext_resource type="Shader" path="res://shaders/distort_field.gdshader" id="1_5v068"]
 [ext_resource type="Script" path="res://scripts/SpriteMask.cs" id="1_rkkh3"]
+[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_mumak"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_chse6"]
+shader = ExtResource("1_5v068")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.3
+shader_parameter/innerRadius = 0.2
+shader_parameter/distortAmount = 0.5
 
 [node name="CellMask" type="Sprite2D"]
+material = SubResource("ShaderMaterial_chse6")
+texture = ExtResource("2_mumak")
 script = ExtResource("1_rkkh3")
 rotateSpeed = 0.1
