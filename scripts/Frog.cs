@@ -22,7 +22,7 @@ public partial class Frog : RigidBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Area2D area2D = this.GetNode<Area2D>("GroundCheck");
+		Area2D area2D = this.GetNode<Area2D>("FrogGroundCheck");
 		direction = this.GetNode<FrogJumpDirector>("FrogJumpDirector");
 		curJumpForce = jumpForceMin;
 	}
