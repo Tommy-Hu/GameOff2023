@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhqk577suomm"]
+[gd_scene load_steps=5 format=3 uid="uid://dhqk577suomm"]
 
 [ext_resource type="Texture2D" uid="uid://ba4iv42g34pe0" path="res://scenes/prefabs/textures_earth/backgroundColor.png" id="1_8ctk5"]
 [ext_resource type="PackedScene" uid="uid://yxmhljisd54g" path="res://scenes/earth/player_earth.tscn" id="1_aorym"]
 [ext_resource type="Texture2D" uid="uid://8886m266eks1" path="res://scenes/prefabs/textures_earth/starBig.png" id="2_702mv"]
+[ext_resource type="PackedScene" uid="uid://cswtgbbxdtdu7" path="res://scenes/earth/meteor_earth.tscn" id="3_w1rm1"]
 
 [node name="level_earth" type="Node2D"]
 
@@ -27,7 +28,8 @@ angle_min = 0.5
 angle_max = 65.0
 scale_amount_min = 0.3
 
+[node name="meteor_earth" parent="." instance=ExtResource("3_w1rm1")]
+position = Vector2(585, 140)
+
 [node name="Player" parent="." instance=ExtResource("1_aorym")]
 position = Vector2(599, 465)
-speed = null
-fireDelay = null

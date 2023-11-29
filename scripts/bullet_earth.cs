@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks.Dataflow;
 
 public partial class bullet_earth : Area2D
 {
@@ -15,4 +16,16 @@ public partial class bullet_earth : Area2D
 	{
 		QueueFree();
 	}
+
+	private void _on_area_entered(Area2D area)
+	{
+		if (area.IsInGroup("damageable")) 
+		{
+			area.Call("damage","2");
+			QueueFree();
+		}
+		
+	}	
 }
+
+

@@ -48,17 +48,18 @@ public partial class player_earth : Area2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 movement = new Vector2(0, 0);
+		vel.X = 0;
+		vel.Y = 0;
 		if (Input.IsActionPressed("move_left"))
-			movement.X -= speed;
+			vel.X -= speed;
 		if (Input.IsActionPressed("move_right"))
-			movement.X += speed;
+			vel.X += speed;
 		if (Input.IsActionPressed("move_up"))
-			movement.Y -= speed;
+			vel.Y -= speed;
 		if (Input.IsActionPressed("move_down"))
-			movement.Y += speed;
+			vel.Y += speed;
 
-		vel = movement.Normalized() * speed;
+		vel = vel.Normalized() * speed;
 		Position += vel * (float)delta;
 
 		// Make sure we stay within the screen
