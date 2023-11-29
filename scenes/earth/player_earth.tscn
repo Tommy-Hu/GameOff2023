@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://yxmhljisd54g"]
+
+[ext_resource type="Script" path="res://scripts/player_earth.cs" id="1_e1nql"]
+[ext_resource type="Texture2D" uid="uid://i1n1hm8gjc0n" path="res://scenes/prefabs/textures_earth/player_sheet.png" id="1_g1wv4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgag1"]
+atlas = ExtResource("1_g1wv4")
+region = Rect2(99, 0, 99, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ygf3"]
+atlas = ExtResource("1_g1wv4")
+region = Rect2(0, 0, 99, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lymsj"]
+atlas = ExtResource("1_g1wv4")
+region = Rect2(198, 0, 99, 77)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bif1a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgag1")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ygf3")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lymsj")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_26v4a"]
+radius = 33.0
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_e1nql")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -3)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_bif1a")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_26v4a")
+
+[node name="FiringPositions" type="Node2D" parent="."]
+
+[node name="FrontGun" type="Node2D" parent="FiringPositions"]
+position = Vector2(-1, -50)
+scale = Vector2(4.73359, -0.57585)
+
+[node name="FireDelayTimer" type="Timer" parent="."]
+one_shot = true

@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhqk577suomm"]
+
+[ext_resource type="Texture2D" uid="uid://ba4iv42g34pe0" path="res://scenes/prefabs/textures_earth/backgroundColor.png" id="1_8ctk5"]
+[ext_resource type="PackedScene" uid="uid://yxmhljisd54g" path="res://scenes/earth/player_earth.tscn" id="1_aorym"]
+[ext_resource type="Texture2D" uid="uid://8886m266eks1" path="res://scenes/prefabs/textures_earth/starBig.png" id="2_702mv"]
+
+[node name="level_earth" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(7.67333, 4.31333)
+texture = ExtResource("1_8ctk5")
+centered = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Background"]
+position = Vector2(78.5838, -10.8964)
+amount = 110
+lifetime = 20.0
+texture = ExtResource("2_702mv")
+emission_shape = 3
+emission_rect_extents = Vector2(75, 25)
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
+angle_min = 0.5
+angle_max = 65.0
+scale_amount_min = 0.3
+
+[node name="Player" parent="." instance=ExtResource("1_aorym")]
+position = Vector2(599, 465)
+speed = null
+fireDelay = null
