@@ -42,7 +42,6 @@ public partial class PlayerElectron : SubAtomicCharge
 			forceVector += 10_000 * forceMagnitude * (keyValuePairs.Key - Position).Normalized();
 		}
         ApplyForce(forceVector);
-        GD.Print(forceVector);
         return forceVector;
 	}
 
@@ -55,5 +54,15 @@ public partial class PlayerElectron : SubAtomicCharge
     public bool RemoveElectromagneticCharge(SubAtomicCharge type)
     {
         return electromagneticCharges.Remove(type.Position);
+    }
+
+    public override void InPlayerRange(bool status)
+    {
+        // pass, do nothing
+    }
+
+    public void Hit()
+    {
+        GD.Print("You lose");
     }
 }

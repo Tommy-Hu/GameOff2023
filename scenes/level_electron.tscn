@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://41q0ex13b4i3"]
+[gd_scene load_steps=14 format=3 uid="uid://cn3t10bsceldo"]
 
+[ext_resource type="Script" path="res://scripts/MainElectron.cs" id="1_ayqqf"]
 [ext_resource type="Script" path="res://scripts/PlayerElectron.cs" id="1_nc870"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_01ik8"]
-[ext_resource type="Script" path="res://scenes/Nitrogen1.cs" id="3_wm20h"]
-[ext_resource type="Script" path="res://scenes/Nitrogen1Area2D.cs" id="4_roirv"]
+[ext_resource type="Script" path="res://scripts/Nitrogen1.cs" id="5_hsqo7"]
+[ext_resource type="PackedScene" uid="uid://trw5bircsxia" path="res://scenes/photon.tscn" id="6_5g3f7"]
+[ext_resource type="Script" path="res://scripts/Nitrogen1Area2D.cs" id="6_jcn68"]
+[ext_resource type="Script" path="res://Photon.cs" id="7_ef4tf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_livv0"]
 radius = 16.0312
@@ -14,7 +17,17 @@ radius = 69.0072
 [sub_resource type="CircleShape2D" id="CircleShape2D_gyn87"]
 radius = 486.124
 
-[node name="level_electron" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_bsnxf"]
+radius = 17.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovrfg"]
+
+[sub_resource type="Curve2D" id="Curve2D_0a7qb"]
+
+[node name="level_electron" type="Node2D" node_paths=PackedStringArray("mobTimer")]
+script = ExtResource("1_ayqqf")
+MobScene = ExtResource("6_5g3f7")
+mobTimer = NodePath("MobTimer")
 
 [node name="PlayerElectron" type="RigidBody2D" parent="."]
 position = Vector2(229, -265)
@@ -33,92 +46,160 @@ scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerElectron"]
+zoom = Vector2(0.5, 0.5)
+limit_left = -8192
+limit_top = -4096
+limit_right = 8192
+limit_bottom = 4096
 
-[node name="Nucleis" type="Node" parent="."]
+[node name="Atoms" type="Node" parent="."]
 
-[node name="Nitrogen1" type="RigidBody2D" parent="Nucleis" node_paths=PackedStringArray("player")]
+[node name="Nitrogen1" type="RigidBody2D" parent="Atoms"]
 gravity_scale = 0.0
 sleeping = true
-script = ExtResource("3_wm20h")
-player = NodePath("../../PlayerElectron")
+script = ExtResource("5_hsqo7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Nucleis/Nitrogen1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Atoms/Nitrogen1"]
 shape = SubResource("CircleShape2D_8o8s7")
 
-[node name="Nitrogen1Area2D" type="Area2D" parent="Nucleis/Nitrogen1"]
-script = ExtResource("4_roirv")
+[node name="Nitrogen1Area2D" type="Area2D" parent="Atoms/Nitrogen1"]
+script = ExtResource("6_jcn68")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Nucleis/Nitrogen1/Nitrogen1Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Atoms/Nitrogen1/Nitrogen1Area2D"]
 shape = SubResource("CircleShape2D_gyn87")
 
-[node name="Protons and Neutrons" type="Node" parent="Nucleis/Nitrogen1"]
+[node name="Protons and Neutrons" type="Node" parent="Atoms/Nitrogen1"]
 
-[node name="PlayerSprite2" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite2" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(-19, -22)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite3" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite3" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(10, -34)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite4" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite4" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(30, -14)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite5" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite5" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(4, -2)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite11" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite11" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(30, 34)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite12" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite12" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(-40, 19)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite13" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite13" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(-18, -46)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite14" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite14" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(32, -35)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite15" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite15" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(43, 10)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite6" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite6" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(-35, -6)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite7" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite7" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(-18, 12)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite8" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite8" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(26, 10)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite9" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite9" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(7, 26)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
-[node name="PlayerSprite10" type="Sprite2D" parent="Nucleis/Nitrogen1/Protons and Neutrons"]
+[node name="PlayerSprite10" type="Sprite2D" parent="Atoms/Nitrogen1/Protons and Neutrons"]
 position = Vector2(-19, 33)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
+
+[node name="Electrons" type="Node" parent="Atoms/Nitrogen1"]
+
+[node name="Photons" type="Node2D" parent="."]
+position = Vector2(683, -328)
+
+[node name="Photon1" parent="Photons" instance=ExtResource("6_5g3f7")]
+
+[node name="Photon2" type="CharacterBody2D" parent="Photons"]
+script = ExtResource("7_ef4tf")
+speed = 2000.0
+
+[node name="PhotonHitbox1" type="CollisionShape2D" parent="Photons/Photon2"]
+shape = SubResource("CircleShape2D_bsnxf")
+
+[node name="PhotonSprite1" type="Sprite2D" parent="Photons/Photon2"]
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("2_01ik8")
+
+[node name="Photon3" type="CharacterBody2D" parent="Photons"]
+script = ExtResource("7_ef4tf")
+speed = 2000.0
+
+[node name="PhotonHitbox1" type="CollisionShape2D" parent="Photons/Photon3"]
+shape = SubResource("CircleShape2D_bsnxf")
+
+[node name="PhotonSprite1" type="Sprite2D" parent="Photons/Photon3"]
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("2_01ik8")
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="StaticBody2D" type="CharacterBody2D" parent="Walls"]
+position = Vector2(-8192, -4096)
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(8192, 8192)
+scale = Vector2(1024, 1)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(8192, 0)
+scale = Vector2(1024, 1)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(0, 4096)
+rotation = -3.14159
+scale = Vector2(1, 512)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(16384, 4096)
+rotation = -3.14159
+scale = Vector2(1, 512)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0a7qb")
+
+[node name="MobTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]

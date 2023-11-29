@@ -11,9 +11,10 @@ public abstract partial class SubAtomicCharge : RigidBody2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
-		base._Process(delta);
+		base._PhysicsProcess(delta);
 	}
 
+	public abstract void InPlayerRange(bool status);
 }
