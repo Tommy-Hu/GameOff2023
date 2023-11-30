@@ -4,11 +4,11 @@ using System;
 public partial class Photon : CharacterBody2D
 {
 	// Called when the node enters the scene tree for the first time.
-	[Export]
 	float speed;
 	public override void _Ready()
     {
         base._Ready();
+        speed = 1000f;
         SetRandomSpawn();
         SetRandomVelocity();    
     }

@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://cn3t10bsceldo"]
+[gd_scene load_steps=15 format=3 uid="uid://cn3t10bsceldo"]
 
 [ext_resource type="Script" path="res://scripts/MainElectron.cs" id="1_ayqqf"]
 [ext_resource type="Script" path="res://scripts/PlayerElectron.cs" id="1_nc870"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_01ik8"]
 [ext_resource type="Script" path="res://scripts/Nitrogen1.cs" id="5_hsqo7"]
-[ext_resource type="PackedScene" uid="uid://trw5bircsxia" path="res://scenes/photon.tscn" id="6_5g3f7"]
+[ext_resource type="PackedScene" uid="uid://trw5bircsxia" path="res://scenes/prefabs/photon.tscn" id="6_5g3f7"]
 [ext_resource type="Script" path="res://scripts/Nitrogen1Area2D.cs" id="6_jcn68"]
+[ext_resource type="PackedScene" uid="uid://b0aw7lo06wcgf" path="res://scenes/prefabs/electron.tscn" id="6_n2a7a"]
 [ext_resource type="Script" path="res://Photon.cs" id="7_ef4tf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_livv0"]
@@ -15,7 +16,7 @@ radius = 16.0312
 radius = 69.0072
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gyn87"]
-radius = 486.124
+radius = 935.019
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsnxf"]
 radius = 17.0
@@ -24,10 +25,8 @@ radius = 17.0
 
 [sub_resource type="Curve2D" id="Curve2D_0a7qb"]
 
-[node name="level_electron" type="Node2D" node_paths=PackedStringArray("mobTimer")]
+[node name="level_electron" type="Node2D"]
 script = ExtResource("1_ayqqf")
-MobScene = ExtResource("6_5g3f7")
-mobTimer = NodePath("MobTimer")
 
 [node name="PlayerElectron" type="RigidBody2D" parent="."]
 position = Vector2(229, -265)
@@ -36,7 +35,6 @@ inertia = 1.0
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_nc870")
-speed = 2.0
 
 [node name="PlayerHitbox" type="CollisionShape2D" parent="PlayerElectron"]
 shape = SubResource("CircleShape2D_livv0")
@@ -46,7 +44,7 @@ scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_01ik8")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerElectron"]
-zoom = Vector2(0.5, 0.5)
+zoom = Vector2(0.25, 0.25)
 limit_left = -8192
 limit_top = -4096
 limit_right = 8192
@@ -142,6 +140,9 @@ texture = ExtResource("2_01ik8")
 
 [node name="Electrons" type="Node" parent="Atoms/Nitrogen1"]
 
+[node name="ElectronA1" parent="Atoms/Nitrogen1/Electrons" node_paths=PackedStringArray("center") instance=ExtResource("6_n2a7a")]
+center = NodePath("../..")
+
 [node name="Photons" type="Node2D" parent="."]
 position = Vector2(683, -328)
 
@@ -149,7 +150,6 @@ position = Vector2(683, -328)
 
 [node name="Photon2" type="CharacterBody2D" parent="Photons"]
 script = ExtResource("7_ef4tf")
-speed = 2000.0
 
 [node name="PhotonHitbox1" type="CollisionShape2D" parent="Photons/Photon2"]
 shape = SubResource("CircleShape2D_bsnxf")
@@ -160,7 +160,6 @@ texture = ExtResource("2_01ik8")
 
 [node name="Photon3" type="CharacterBody2D" parent="Photons"]
 script = ExtResource("7_ef4tf")
-speed = 2000.0
 
 [node name="PhotonHitbox1" type="CollisionShape2D" parent="Photons/Photon3"]
 shape = SubResource("CircleShape2D_bsnxf")

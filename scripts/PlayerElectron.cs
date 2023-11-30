@@ -3,9 +3,7 @@ using System;
 
 public partial class PlayerElectron : SubAtomicCharge
 {
-	[Export]
 	float speed = 5f;
-
 
 	Godot.Collections.Dictionary<Vector2, int> electromagneticCharges = new() { };
 
@@ -18,6 +16,7 @@ public partial class PlayerElectron : SubAtomicCharge
     {
         base._PhysicsProcess(delta);
         ApplyInputForce();
+        ApplyElectromagneticForce();
     }
 
     private void ApplyInputForce()
@@ -29,7 +28,6 @@ public partial class PlayerElectron : SubAtomicCharge
         if (Input.IsKeyPressed(Key.D)) movement += Vector2.Right;
         if (movement != Vector2.Zero) movement = movement.Normalized();
         ApplyForce(movement * speed);
-        ApplyElectromagneticForce();
     }
 
     public Vector2 ApplyElectromagneticForce() 
