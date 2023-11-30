@@ -88,3 +88,6 @@ theme_override_constants/shadow_outline_size = 5
 theme_override_fonts/font = ExtResource("1_06431")
 theme_override_font_sizes/font_size = 40
 text = "0s"
+
+[node name="Gun" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
