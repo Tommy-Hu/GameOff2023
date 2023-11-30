@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://jyejhx3s4pid"]
+
+[ext_resource type="Script" path="res://scripts/PlayerCell.cs" id="1_5oqgs"]
+[ext_resource type="Shader" path="res://shaders/cell_shader.gdshader" id="1_b0t7d"]
+[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="2_uiv8q"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k0tje"]
+radius = 27.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4okdo"]
+shader = ExtResource("1_b0t7d")
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/tint = Vector4(0.1, 0.3, 1, 1)
+shader_parameter/squish = null
+
+[sub_resource type="Gradient" id="Gradient_lttiq"]
+offsets = PackedFloat32Array(0, 0.505208, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i5o27"]
+gradient = SubResource("Gradient_lttiq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hu740"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 13.0
+emission_ring_inner_radius = 10.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 5.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 0.1
+damping_max = 1.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_i5o27")
+
+[node name="Player" type="RigidBody2D"]
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_5oqgs")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_k0tje")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4okdo")
+scale = Vector2(0.132812, 0.132812)
+texture = ExtResource("2_uiv8q")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_hu740")

@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://bpeffins62t35"]
+
+[ext_resource type="Script" path="res://scripts/Cell.cs" id="1_5r3y4"]
+[ext_resource type="Shader" path="res://shaders/cell_shader.gdshader" id="1_ivm68"]
+[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="2_wgxes"]
+[ext_resource type="Texture2D" uid="uid://bdunwct4k1yuo" path="res://scenes/prefabs/good_cell_color_ramp.tres" id="4_8ag8f"]
+[ext_resource type="Script" path="res://scripts/SelfDestroyingParticle.cs" id="4_dqmdi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k0tje"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vo0f1"]
+shader = ExtResource("1_ivm68")
+shader_parameter/offset = Vector2(5, 8)
+shader_parameter/tint = Vector4(0.969, 0.196, 0.196, 1)
+shader_parameter/squish = null
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0yo8p"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 10.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 1.5
+scale_max = 2.5
+color_ramp = ExtResource("4_8ag8f")
+
+[node name="Cell" type="StaticBody2D"]
+script = ExtResource("1_5r3y4")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_k0tje")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_vo0f1")
+scale = Vector2(0.0507812, 0.0507812)
+texture = ExtResource("2_wgxes")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -1
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_0yo8p")
+lifetime = 2.0
+script = ExtResource("4_dqmdi")
