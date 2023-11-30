@@ -34,6 +34,9 @@ public partial class GameManager : Node2D
     /// Inverse of BEAT_TIME.
     /// </summary>
     public const float INV_BEAT_TIME = BPM / 60.0f;
+
+    public const float ZOOM_TIME = 2f;
+
     /// <summary>
     /// Un-delay this many seconds to the beats.
     /// </summary>
@@ -52,6 +55,8 @@ public partial class GameManager : Node2D
     private float lastFramePos = 0f;
 
     private static HashSet<AudioStreamPlayer2D> aliveSFX = new HashSet<AudioStreamPlayer2D>();
+
+    private bool isLoadingNext = false;
 
     public override void _EnterTree()
     {
@@ -100,9 +105,20 @@ public partial class GameManager : Node2D
     /// <param name="musicName"></param>
     public static void PlayLevel(string levelName, string musicName)
     {
-        singleton.DestroyCurrentLevel();
-        singleton.LoadNextLevel($"res://scenes/level_{levelName}.tscn");
-        singleton.PlayMusic(musicName);
+        if (!singleton.isLoadingNext)
+        {
+            singleton.isLoadingNext = true;
+            Tween tween = singleton.CreateTween();
+            Camera2D cam = singleton.GetViewport().GetCamera2D();
+            tween.TweenProperty(cam, "zoom", Vector2.One * 0.05f, ZOOM_TIME);
+            tween.TweenCallback(Callable.From(() =>
+            {
+                singleton.DestroyCurrentLevel();
+                singleton.LoadNextLevel($"res://scenes/level_{levelName}.tscn");
+                singleton.PlayMusic(musicName);
+                singleton.isLoadingNext = false;
+            }));
+        }
     }
 
     /// <summary>
