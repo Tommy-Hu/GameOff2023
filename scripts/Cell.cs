@@ -7,7 +7,7 @@ using System;
 public partial class Cell : StaticBody2D
 {
     public static readonly Color GOOD_COLOR = new Color(1, 1, 1, 1f);
-    public static readonly Color BAD_COLOR = new Color(1, .1f, .15f, 1f);
+    public static readonly Color BAD_COLOR = new Color(1f, 1f, .04f, 1f);
 
     [Export]
     public bool good;

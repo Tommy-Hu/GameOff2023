@@ -108,17 +108,30 @@ public partial class GameManager : Node2D
         if (!singleton.isLoadingNext)
         {
             singleton.isLoadingNext = true;
-            Tween tween = singleton.CreateTween();
+
             Camera2D cam = singleton.GetViewport().GetCamera2D();
-            tween.TweenProperty(cam, "zoom", Vector2.One * 0.05f, ZOOM_TIME);
-            tween.TweenCallback(Callable.From(() =>
+            if (cam is not null)
             {
-                singleton.DestroyCurrentLevel();
-                singleton.LoadNextLevel($"res://scenes/level_{levelName}.tscn");
-                singleton.PlayMusic(musicName);
-                singleton.isLoadingNext = false;
-            }));
+                Tween tween = singleton.CreateTween();
+                tween.TweenProperty(cam, "zoom", Vector2.One * 0.05f, ZOOM_TIME);
+                tween.TweenCallback(Callable.From(() =>
+                {
+                    PlayLevelActual(levelName, musicName);
+                }));
+            }
+            else
+            {
+                PlayLevelActual(levelName, musicName);
+            }
         }
+    }
+
+    private static void PlayLevelActual(string levelName, string musicName)
+    {
+        singleton.DestroyCurrentLevel();
+        singleton.LoadNextLevel($"res://scenes/level_{levelName}.tscn");
+        singleton.PlayMusic(musicName);
+        singleton.isLoadingNext = false;
     }
 
     /// <summary>
