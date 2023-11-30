@@ -6,13 +6,13 @@ uniform float duration;
 
 void fragment() {
 	vec4 bg = texture(SCREEN_TEXTURE, SCREEN_UV);
-	COLOR = vec4(0,0,0,1);
+	COLOR = vec4(0.06,0.05,0.15,1);
 	if (thunder){
 		if (duration >= 0.0){
-			COLOR = vec4(255,255,255, duration);
+			COLOR = vec4(0.8,0.8,0.8, duration);
 		}
 		if (duration <= 0.0){
-			COLOR = vec4(0,0,0, abs(duration));
+			COLOR = vec4(0.06,0.05,0.15, abs(duration));
 		}
 		
 	}

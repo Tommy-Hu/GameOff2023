@@ -7,6 +7,15 @@ public partial class Frog : RigidBody2D
 	public bool jumpHeld;
 	public Sprite2D direction;
 	public bool onGround = true;
+	public Sprite2D sprite;
+	public Area2D area;
+
+
+	public CollisionShape2D collider;
+
+	public Texture2D idle = ResourceLoader.Load("res://sprites/FrogAssets/frog_idle.png") as Texture2D;
+	public Texture2D midJump = ResourceLoader.Load("res://sprites/FrogAssets/frog_jump.png") as Texture2D;
+
 	[ExportCategory("Frog")]
 	[ExportGroup("Jump Params")]
 	[Export] 
@@ -17,25 +26,37 @@ public partial class Frog : RigidBody2D
 	public float jumpinterval = 15;
 	[Export]
 	public float curJumpForce = 200;
+
 	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Area2D area2D = this.GetNode<Area2D>("FrogGroundCheck");
+		area = this.GetNode<Area2D>("FrogGroundCheck");
 		direction = this.GetNode<FrogJumpDirector>("FrogJumpDirector");
+		sprite = this.GetNode<Sprite2D>("FrogSprite");
+
+		collider = this.GetNode<CollisionShape2D>("FrogCollider");
 		curJumpForce = jumpForceMin;
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-	
-        
+		if (!onGround)
+        {
+			sprite.Texture = midJump;
+		} else
+        {
+			sprite.Texture = idle;
+        }
 	}
 
     public override void _PhysicsProcess(double delta)
     {
+		GD.Print(collider.Disabled);
+
         base._PhysicsProcess(delta);
 
 		if (jumpHeld)
@@ -67,13 +88,19 @@ public partial class Frog : RigidBody2D
 				jumpHeld = false;
 				ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f * curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
 				curJumpForce = jumpForceMin;
+				//collider.Disabled = true;
+				
 			}
 		}
 	}
 
 	private void OnFrogGroundCheckBodyEntered(Node2D body)
     {
-		onGround = true;
+		if (this.LinearVelocity.Y >= 0)
+		{
+			onGround = true;
+			//collider.Disabled = false;
+		}
 		
     }
 

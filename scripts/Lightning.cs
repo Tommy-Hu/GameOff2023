@@ -18,7 +18,7 @@ public partial class Lightning : ColorRect
 
     private void GameManager_OnBeat(BeatType beat)
     {
-		if (beat.HasFlag(BeatType.PhraseBeat))
+		if (beat.HasFlag(BeatType.MainBeat ))
 		{
 			flash = true;
 			angle = 0;

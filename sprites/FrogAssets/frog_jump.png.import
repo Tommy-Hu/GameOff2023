@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5qwnos8mvd8h"
-path="res://.godot/imported/up-arrow.png-8af2c2bdd657deb4de101cad63985186.ctex"
+uid="uid://cayffct4gedy7"
+path="res://.godot/imported/frog_jump.png-d04e1e53123186b59c3d85f3fc58f9f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/up-arrow.png"
-dest_files=["res://.godot/imported/up-arrow.png-8af2c2bdd657deb4de101cad63985186.ctex"]
+source_file="res://sprites/FrogAssets/frog_jump.png"
+dest_files=["res://.godot/imported/frog_jump.png-d04e1e53123186b59c3d85f3fc58f9f6.ctex"]
 
 [params]
 
