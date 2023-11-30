@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 public partial class meteor_earth : Area2D 
 {
-
+	PackedScene plMeteorEffect = (PackedScene)GD.Load("res://scenes/earth/meteor_effect_earth.tscn");
 	[Export]
 	public float minSpeed = 50;
 	[Export]
@@ -46,6 +46,9 @@ public partial class meteor_earth : Area2D
 		life -= AMOUNT;
 		if (life <= 0) 
 		{
+			var effect = plMeteorEffect.Instantiate<CpuParticles2D>();
+			effect.Position = Position;
+			GetParent().AddChild(effect);
 			QueueFree();
 		}
 	}
@@ -54,8 +57,20 @@ public partial class meteor_earth : Area2D
 	{
 		QueueFree();
 	}
+	
+		
+	private void _on_area_entered(Area2D area)
+	{
+		if (area.IsInGroup("Earth")) 
+		{
+			area.Call("damage","1");
+			QueueFree();
+		}
+	}
+
 
 }
+
 
 
 

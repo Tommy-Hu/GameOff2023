@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5ysybwdnvu02"]
 
-[ext_resource type="Script" path="res://scripts/bullet_earth.cs" id="1_2q384"]
+[ext_resource type="Script" path="res://scripts/earth/bullet_earth.cs" id="1_2q384"]
 [ext_resource type="Texture2D" uid="uid://b2frl7ydg66wf" path="res://scenes/prefabs/textures_earth/laserRed.png" id="2_n8550"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kikmm"]
