@@ -17,6 +17,15 @@ public partial class Cell : StaticBody2D
     private Sprite2D sprite;
     private ShaderMaterial material;
     private float slurpProcess;
+    private ParticleProcessMaterial ppm;
+
+    public void SetGood(bool good)
+    {
+        this.good = good;
+        material.SetShaderParameter("tint", good ? GOOD_COLOR : BAD_COLOR);
+        var colorRamp = ResourceLoader.Load<GradientTexture1D>($"res://scenes/prefabs/{(good ? "good" : "bad")}_cell_color_ramp.tres");
+        ppm.ColorRamp = colorRamp;
+    }
 
     public override void _Ready()
     {
@@ -29,7 +38,7 @@ public partial class Cell : StaticBody2D
         material.SetShaderParameter("squish", 0.0f);
         material.SetShaderParameter("mask_texture", SpriteMaskMaster.Singleton.Texture);
         var particle = GetChild<SelfDestroyingParticle>(2);
-        ParticleProcessMaterial ppm = (particle.ProcessMaterial.Duplicate() as ParticleProcessMaterial);
+        ppm = (particle.ProcessMaterial.Duplicate() as ParticleProcessMaterial);
         particle.ProcessMaterial = ppm;
         var colorRamp = ResourceLoader.Load<GradientTexture1D>($"res://scenes/prefabs/{(good ? "good" : "bad")}_cell_color_ramp.tres");
         ppm.ColorRamp = colorRamp;
@@ -37,11 +46,20 @@ public partial class Cell : StaticBody2D
 
     public void Slurp(PlayerCell into)
     {
-        squishing = true;
-        squishTo = into;
-        var particle = GetChild<SelfDestroyingParticle>(2);
-        particle.StartSelfDestroy(2f);
-        particle.Emitting = true;
+        if (!squishing)
+        {
+            GameManager.PlayRandomSFX("wobble1.wav", "wobble2.wav");
+            CellsManager.instance.CellDie(this);
+            if (!good)
+            {
+                GameManager.PlayRandomSFX("kill_bad_cell1.wav", "kill_bad_cell2.wav");
+            }
+            squishing = true;
+            squishTo = into;
+            var particle = GetChild<SelfDestroyingParticle>(2);
+            particle.StartSelfDestroy(2f);
+            particle.Emitting = true;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
