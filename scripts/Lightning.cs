@@ -18,7 +18,7 @@ public partial class Lightning : ColorRect
 
     private void GameManager_OnBeat(BeatType beat)
     {
-		if (beat.HasFlag(BeatType.MainBeat ))
+		if (beat.HasFlag(BeatType.MainBeat))
 		{
 			flash = true;
 			angle = 0;
@@ -41,7 +41,7 @@ public partial class Lightning : ColorRect
 			}
         }
 		//GD.Print(angle);
-		GD.Print(Math.Sin(angle));
+		
 	}
 
 	public void lighting()

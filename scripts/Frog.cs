@@ -9,7 +9,9 @@ public partial class Frog : RigidBody2D
 	public bool onGround = true;
 	public Sprite2D sprite;
 	public Area2D area;
+	public Vector2 screenBounds;
 
+	public static Frog instance;
 
 	public CollisionShape2D collider;
 
@@ -32,12 +34,14 @@ public partial class Frog : RigidBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
 		area = this.GetNode<Area2D>("FrogGroundCheck");
 		direction = this.GetNode<FrogJumpDirector>("FrogJumpDirector");
 		sprite = this.GetNode<Sprite2D>("FrogSprite");
 
 		collider = this.GetNode<CollisionShape2D>("FrogCollider");
 		curJumpForce = jumpForceMin;
+		
 		
 	}
 
@@ -51,11 +55,13 @@ public partial class Frog : RigidBody2D
         {
 			sprite.Texture = idle;
         }
+		ScreenWrap();
+		screenBounds = FrogCamara2D.instance.bounds;
 	}
 
     public override void _PhysicsProcess(double delta)
     {
-		GD.Print(collider.Disabled);
+		
 
         base._PhysicsProcess(delta);
 
@@ -88,8 +94,8 @@ public partial class Frog : RigidBody2D
 				jumpHeld = false;
 				ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f * curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
 				curJumpForce = jumpForceMin;
-				//collider.Disabled = true;
-				
+				GameManager.PlaySFX("FrogJump.wav");
+
 			}
 		}
 	}
@@ -108,6 +114,32 @@ public partial class Frog : RigidBody2D
     {
 		onGround = false;
 		
+	}
+
+	private void ScreenWrap()
+    {
+		if (GlobalPosition.X < screenBounds.X)
+        {
+			GlobalPosition = new Vector2 (screenBounds.Y, GlobalPosition.Y);
+        }
+		if (GlobalPosition.X > screenBounds.Y)
+        {
+			GlobalPosition = new Vector2(screenBounds.X, GlobalPosition.Y);
+
+		}
+	
+    }
+
+
+	public override void _EnterTree()
+	{
+		instance = this;
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		instance = null;
 	}
 
 

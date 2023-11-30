@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/SpriteMaskMaster.cs" id="5_3jyt6"]
 [ext_resource type="Shader" path="res://shaders/mask_shader.gdshader" id="5_rmwer"]
 [ext_resource type="Script" path="res://scripts/RNG.cs" id="8_rrh8e"]
-[ext_resource type="PackedScene" uid="uid://bpewmoeofaw4a" path="res://scenes/prefabs/cell_level_ui.tscn" id="9_8jkm5"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/cell_level_ui.tscn" id="9_8jkm5"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="9_vd4es"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjwuj"]
