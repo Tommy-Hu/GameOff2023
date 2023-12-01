@@ -50,7 +50,7 @@ public partial class meteor_earth : Area2D
 		{
 			vel.X += (GD.Randf() - 0.5f) * 2f * speed * 0.75f;
 			var cam = GetViewport().GetCamera2D() as Cam;
-			cam.shake(0.25f, 6);
+			cam.shake(0.3f, 6);
 		}
 
 	}
