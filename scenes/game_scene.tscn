@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://3vmf1ob7ja3v"]
+[gd_scene load_steps=5 format=3 uid="uid://3vmf1ob7ja3v"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_dn8nw"]
 [ext_resource type="AudioStream" uid="uid://b6pkncq2waaye" path="res://music/Conjugate Menu.wav" id="1_nx43q"]
 [ext_resource type="Script" path="res://scripts/TestGameButton.cs" id="3_18r21"]
+[ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="4_l7g3a"]
 
 [node name="game_scene" type="Node2D"]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_dn8nw")
+faderPath = NodePath("../CanvasLayer/GameMargin/TextureProgressBar")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_nx43q")
@@ -24,6 +26,7 @@ text = "Play Electron"
 script = ExtResource("3_18r21")
 levelName = "electron"
 musicName = "Electron"
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonCell" type="Button" parent="."]
 offset_left = 60.0
@@ -34,6 +37,7 @@ text = "Play Cell"
 script = ExtResource("3_18r21")
 levelName = "cells"
 musicName = "Cell"
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonFrog" type="Button" parent="."]
 offset_left = 60.0
@@ -44,6 +48,7 @@ text = "Play Frog"
 script = ExtResource("3_18r21")
 levelName = "frog"
 musicName = "Frog"
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonEarth" type="Button" parent="."]
 offset_left = 61.0
@@ -54,8 +59,29 @@ text = "Play Earth"
 script = ExtResource("3_18r21")
 levelName = "earth"
 musicName = "Earth"
+metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
 text = "THIS WILL BE THE MENU..."
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="GameMargin" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/GameMargin"]
+layout_mode = 2
+mouse_filter = 2
+fill_mode = 2
+nine_patch_stretch = true
+texture_progress = ExtResource("4_l7g3a")
+tint_progress = Color(0.0196078, 0.00784314, 0.0313726, 1)
