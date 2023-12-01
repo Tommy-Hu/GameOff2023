@@ -27,7 +27,7 @@ public partial class SpriteMask : Sprite2D
         {
             Scale = normalScale;
             scaleTimer = 0;
-        }
+        }   
     }
 
     private const float SCALE_TOTAL_TIME = 2f;
