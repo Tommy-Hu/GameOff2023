@@ -60,5 +60,5 @@ script = ExtResource("8_3q6pp")
 z_index = -1
 position = Vector2(570, -313)
 script = ExtResource("9_slkfg")
-meteorsTilBoss = 120
-spawnInterval = 0.2
+meteorsTilBoss = 30
+spawnInterval = 0.75
