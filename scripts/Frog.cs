@@ -16,6 +16,7 @@ public partial class Frog : RigidBody2D
 	public static Frog instance;
 
 	public CollisionShape2D collider;
+	public bool win =false;
 
 	public Texture2D idle = ResourceLoader.Load("res://sprites/FrogAssets/frog_idle.png") as Texture2D;
 	public Texture2D midJump = ResourceLoader.Load("res://sprites/FrogAssets/frog_jump.png") as Texture2D;
@@ -43,6 +44,7 @@ public partial class Frog : RigidBody2D
 
 		collider = this.GetNode<CollisionShape2D>("FrogCollider");
 		curJumpForce = jumpForceMin;
+		win = false;
 		
 		
 	}
@@ -118,6 +120,8 @@ public partial class Frog : RigidBody2D
 	
 		if (body.Name == "SuperiorLilyPad")
         {
+			win = true;
+			Lightning.instance.angle = 0;
 			GameManager.PlayLevel("earth", "Earth");
 
         }

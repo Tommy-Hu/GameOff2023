@@ -31,6 +31,7 @@ public partial class planet_earth : Area2D
 		{
 			GD.Print("Player died!");
 			QueueFree();
+			GameManager.PlayLevelFade("earth","Earth");
 		}
 	}
 

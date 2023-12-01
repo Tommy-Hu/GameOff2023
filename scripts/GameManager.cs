@@ -5,19 +5,19 @@ using System.Collections.Generic;
 [Flags]
 public enum BeatType
 {
-    None = 0,
-    /// <summary>
-    /// The super loud beat every phrase. (every two measures)
-    /// </summary>
-    PhraseBeat = 1,
-    /// <summary>
-    /// The loud beat every measure.
-    /// </summary>
-    MainBeat = 1 << 1,
-    /// <summary>
-    /// The lighter beat 4 times per measure.
-    /// </summary>
-    QuarterBeat = 1 << 2,
+	None = 0,
+	/// <summary>
+	/// The super loud beat every phrase. (every two measures)
+	/// </summary>
+	PhraseBeat = 1,
+	/// <summary>
+	/// The loud beat every measure.
+	/// </summary>
+	MainBeat = 1 << 1,
+	/// <summary>
+	/// The lighter beat 4 times per measure.
+	/// </summary>
+	QuarterBeat = 1 << 2,
 }
 
 public partial class GameManager : Node2D
@@ -68,9 +68,15 @@ public partial class GameManager : Node2D
     public NodePath faderPath;
     [Export]
     public NodePath menuPath;
+    [Export]
+    public NodePath volumeSliderPath;
+    [Export]
+    public NodePath quoteContainerPath;
 
     private TextureProgressBar fader;
     private MarginContainer menu;
+    private VSlider volumeSlider;
+    private MarginContainer quoteContainer;
 
     private bool fading = false;
 
@@ -91,6 +97,9 @@ public partial class GameManager : Node2D
         base._Ready();
         fader = GetNode<TextureProgressBar>(faderPath);
         menu = GetNode<MarginContainer>(menuPath);
+        volumeSlider = GetNode<VSlider>(volumeSliderPath);
+        volumeSlider.Value = 50;
+        quoteContainer = GetNode<MarginContainer>(quoteContainerPath);
     }
 
     /// <summary>
@@ -252,6 +261,7 @@ public partial class GameManager : Node2D
 
     public override void _Process(double delta)
     {
+        musicPlayer.VolumeDb = (float)Mathf.Lerp(-10f, 10f, volumeSlider.Value / 100f);
         UNDELAY = (float)delta * 2.0f;
         base._Process(delta);
         float pos = musicPlayer.GetPlaybackPosition() - UNDELAY;
@@ -325,18 +335,49 @@ public partial class GameManager : Node2D
         }
     }
 
-    public static void LoadMenu()
+    public static void LoadMenu(bool showQuote = false)
     {
-        Tween tween = singleton.CreateTween();
+        if (singleton.fading) return;
         singleton.fading = true;
-        tween.SetTrans(Tween.TransitionType.Circ);
-        tween.TweenProperty(singleton.fader, "value", 100, FADE_TIME);
-        tween.TweenCallback(Callable.From(() =>
+        if (showQuote)
         {
-            singleton.menu.Visible = true;
-            singleton.fading = false;
-        }));
-        tween.TweenProperty(singleton.fader, "value", 0, FADE_TIME);
+            Tween tween = singleton.CreateTween();
+            tween.SetTrans(Tween.TransitionType.Linear);
+            singleton.quoteContainer.Visible = true;
+            singleton.quoteContainer.Modulate = new Color(1f, 1f, 1f, 0f);
+            tween.TweenProperty(singleton.quoteContainer, "modulate", new Color(1f, 1f, 1f, 1f), 4f);
+            tween.TweenCallback(Callable.From(() =>
+            {
+                LoadMenuActual();
+            }));
+            // stay there for 6 secs
+            tween.TweenProperty(singleton.quoteContainer, "modulate", new Color(1f, 1f, 1f, 1f), 6f);
+            tween.TweenProperty(singleton.quoteContainer, "modulate", new Color(1f, 1f, 1f, 0f), 3f);
+            tween.TweenCallback(Callable.From(() =>
+            {
+                singleton.fading = false;
+                singleton.quoteContainer.Visible = false;
+            }));
+        }
+        else
+        {
+            Tween tween = singleton.CreateTween();
+            tween.SetTrans(Tween.TransitionType.Circ);
+            tween.TweenProperty(singleton.fader, "value", 100, FADE_TIME);
+            tween.TweenCallback(Callable.From(() =>
+            {
+                LoadMenuActual();
+                singleton.fading = false;
+            }));
+            tween.TweenProperty(singleton.fader, "value", 0, FADE_TIME);
+        }
+    }
+
+    private static void LoadMenuActual()
+    {
+        singleton.menu.Visible = true;
+        singleton.DestroyCurrentLevel();
+        singleton.PlayMusic("Menu");
     }
 
     public static void UnloadMenu()

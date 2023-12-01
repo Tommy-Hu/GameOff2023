@@ -25,6 +25,10 @@ public partial class meteor_earth : Area2D
 
 	[Export]
 	public double life = 20;
+
+	public Action onDeath;
+
+	public bool isBoss = false;
 	
 
 	public override void _Ready()
@@ -37,11 +41,16 @@ public partial class meteor_earth : Area2D
 
 	public void onBeat(BeatType beattype)
 	{
+		if (isBoss)
+		{
+			return;
+		}
+
 		if (beattype.HasFlag(BeatType.MainBeat))
 		{
-			vel.X += (GD.Randf() - 0.5f) * 2f * speed;
+			vel.X += (GD.Randf() - 0.5f) * 2f * speed * 0.75f;
 			var cam = GetViewport().GetCamera2D() as Cam;
-			cam.shake(0.2f, 3);
+			cam.shake(0.3f, 6);
 		}
 
 	}
@@ -65,6 +74,7 @@ public partial class meteor_earth : Area2D
 		life -= AMOUNT;
 		if (life <= 0) 
 		{
+			onDeath?.Invoke();
 			var effect = plMeteorEffect.Instantiate<CpuParticles2D>();
 			effect.Position = Position;
 			GetParent().AddChild(effect);
@@ -91,8 +101,6 @@ public partial class meteor_earth : Area2D
     {
        GameManager.OnBeat -= onBeat;
     }
-
-
 
 }
 
