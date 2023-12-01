@@ -57,6 +57,8 @@ public partial class CellLevelUIManager : MarginContainer
     public void _on_restart_pressed()
     {
         GameManager.PlayLevelFade("cells", "Cell");
+        GameManager.RemoveStat(CellsManager.STAT_CANCER_CELLS_ATE);
+        GameManager.RemoveStat(CellsManager.STAT_HEALTHY_CELLS_ATE);
     }
 
     public override void _ExitTree()

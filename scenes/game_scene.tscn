@@ -1,71 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://3vmf1ob7ja3v"]
+[gd_scene load_steps=9 format=3 uid="uid://3vmf1ob7ja3v"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_dn8nw"]
 [ext_resource type="AudioStream" uid="uid://b6pkncq2waaye" path="res://music/Conjugate Menu.wav" id="1_nx43q"]
 [ext_resource type="Script" path="res://scripts/TestGameButton.cs" id="3_18r21"]
+[ext_resource type="FontFile" uid="uid://bbsiso6vqdsa3" path="res://fonts/Dolce Vita Light.ttf" id="3_pa3hc"]
 [ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="4_l7g3a"]
+[ext_resource type="FontFile" uid="uid://ct8ktr3vwivj5" path="res://fonts/Dolce Vita.ttf" id="5_esfke"]
+
+[sub_resource type="FontVariation" id="FontVariation_cjo1o"]
+base_font = ExtResource("3_pa3hc")
+
+[sub_resource type="FontVariation" id="FontVariation_mei7f"]
+base_font = ExtResource("5_esfke")
 
 [node name="game_scene" type="Node2D"]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_dn8nw")
-faderPath = NodePath("../CanvasLayer/GameMargin/TextureProgressBar")
+faderPath = NodePath("../CanvasLayer/GameMargin/Fader")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_nx43q")
 autoplay = true
 max_distance = 2e+08
 attenuation = 1e-05
-
-[node name="ButtonElectron" type="Button" parent="."]
-offset_left = 60.0
-offset_top = 30.0
-offset_right = 169.0
-offset_bottom = 61.0
-text = "Play Electron"
-script = ExtResource("3_18r21")
-levelName = "electron"
-musicName = "Electron"
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonCell" type="Button" parent="."]
-offset_left = 60.0
-offset_top = 74.0
-offset_right = 169.0
-offset_bottom = 105.0
-text = "Play Cell"
-script = ExtResource("3_18r21")
-levelName = "cells"
-musicName = "Cell"
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonFrog" type="Button" parent="."]
-offset_left = 60.0
-offset_top = 121.0
-offset_right = 169.0
-offset_bottom = 152.0
-text = "Play Frog"
-script = ExtResource("3_18r21")
-levelName = "frog"
-musicName = "Frog"
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonEarth" type="Button" parent="."]
-offset_left = 61.0
-offset_top = 166.0
-offset_right = 170.0
-offset_bottom = 197.0
-text = "Play Earth"
-script = ExtResource("3_18r21")
-levelName = "earth"
-musicName = "Earth"
-metadata/_edit_use_anchors_ = true
-
-[node name="Title" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "THIS WILL BE THE MENU..."
-metadata/_edit_use_anchors_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 128
@@ -78,10 +36,105 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/GameMargin"]
+[node name="Menu" type="MarginContainer" parent="CanvasLayer/GameMargin"]
+layout_mode = 2
+
+[node name="BG" type="TextureRect" parent="CanvasLayer/GameMargin/Menu"]
+modulate = Color(0.129412, 0.129412, 0.129412, 1)
+layout_mode = 2
+texture = ExtResource("4_l7g3a")
+
+[node name="Texts" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TopVbox" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Texts"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/GameMargin/Menu/Texts/TopVbox"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_cjo1o")
+theme_override_font_sizes/font_size = 100
+text = "The Big Picture"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BotVbox" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Texts"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu/Texts/BotVbox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 200
+
+[node name="Instruction" type="Label" parent="CanvasLayer/GameMargin/Menu/Texts/BotVbox/MarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_mei7f")
+theme_override_font_sizes/font_size = 30
+text = "- Click anywhere to begin journey -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fader" type="TextureProgressBar" parent="CanvasLayer/GameMargin"]
+z_index = 5
 layout_mode = 2
 mouse_filter = 2
 fill_mode = 2
 nine_patch_stretch = true
 texture_progress = ExtResource("4_l7g3a")
 tint_progress = Color(0.0196078, 0.00784314, 0.0313726, 1)
+
+[node name="DEBUG" type="MarginContainer" parent="CanvasLayer/GameMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 1000
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameMargin/DEBUG"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="ButtonElectron" type="Button" parent="CanvasLayer/GameMargin/DEBUG/VBoxContainer"]
+layout_mode = 2
+text = "Play Electron"
+script = ExtResource("3_18r21")
+levelName = "electron"
+musicName = "Electron"
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonCell" type="Button" parent="CanvasLayer/GameMargin/DEBUG/VBoxContainer"]
+layout_mode = 2
+text = "Play Cell"
+script = ExtResource("3_18r21")
+levelName = "cells"
+musicName = "Cell"
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonFrog" type="Button" parent="CanvasLayer/GameMargin/DEBUG/VBoxContainer"]
+layout_mode = 2
+text = "Play Frog"
+script = ExtResource("3_18r21")
+levelName = "frog"
+musicName = "Frog"
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonEarth" type="Button" parent="CanvasLayer/GameMargin/DEBUG/VBoxContainer"]
+layout_mode = 2
+text = "Play Earth"
+script = ExtResource("3_18r21")
+levelName = "earth"
+musicName = "Earth"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="gui_input" from="CanvasLayer/GameMargin/Menu/Texts" to="GameManager" method="_on_menu_gui_input"]
