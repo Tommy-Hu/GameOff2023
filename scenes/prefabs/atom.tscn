@@ -25,7 +25,7 @@ script = ExtResource("2_vq2vf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nitrogen1Area2D"]
 shape = SubResource("CircleShape2D_gyn87")
 
-[node name="Protons and Neutrons" type="Node" parent="."]
+[node name="Protons and Neutrons" type="Node2D" parent="."]
 
 [node name="PlayerSprite2" type="Sprite2D" parent="Protons and Neutrons"]
 position = Vector2(-19, -22)
@@ -97,7 +97,7 @@ position = Vector2(-19, 33)
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("3_npwm2")
 
-[node name="Electrons" type="Node" parent="."]
+[node name="Electrons" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="OnHit"]
 [connection signal="body_entered" from="Nitrogen1Area2D" to="." method="OnBodyInRange"]

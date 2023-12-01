@@ -37,19 +37,19 @@ limit_top = -4096
 limit_right = 8192
 limit_bottom = 4096
 
-[node name="Atoms" type="Node" parent="."]
+[node name="Atoms" type="Node2D" parent="."]
 
 [node name="Nitrogen1" parent="Atoms" instance=ExtResource("4_sdbnb")]
-Charge = 10
+Charge = 8
 
 [node name="Nitrogen2" parent="Atoms" instance=ExtResource("4_sdbnb")]
 position = Vector2(-4010, -274)
-Charge = 7
+Charge = 1
 
 [node name="Photons" type="Node2D" parent="."]
 position = Vector2(683, -328)
 
-[node name="Walls" type="Node" parent="."]
+[node name="Walls" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="CharacterBody2D" parent="Walls"]
 position = Vector2(-8192, -4096)

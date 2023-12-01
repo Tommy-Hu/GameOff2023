@@ -30,8 +30,8 @@ public partial class ElectronNPC : SubAtomicCharge
     {
         revolutionAngle += (float)delta * SPIN;
         Vector2 newPosition = Vector2.Zero;
-        newPosition.X = center.Position.X + (float)Math.Cos(revolutionAngle)*orbitalRadius;
-        newPosition.Y = center.Position.Y + (float)Math.Sin(revolutionAngle)*orbitalRadius;
+        newPosition.X = (float)Math.Cos(revolutionAngle)*orbitalRadius;
+        newPosition.Y = (float)Math.Sin(revolutionAngle)*orbitalRadius;
         Position = newPosition;
     }
 
