@@ -130,7 +130,6 @@ offset_top = 54.0
 offset_right = 82.0
 offset_bottom = 579.0
 theme = SubResource("Theme_t5q3u")
-value = 50.0
 fill_mode = 3
 show_percentage = false
 
