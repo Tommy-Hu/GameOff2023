@@ -3,51 +3,51 @@ using System;
 
 public partial class Spawner : Node2D
 {
-	[Export]
-	public int meteorsTilBoss = 5;
-	[Export]
-	public float spawnInterval = 2;
-	float nextSpawnTime = 2;
-	PackedScene plMeteor;
+    [Export]
+    public int meteorsTilBoss = 5;
+    [Export]
+    public float spawnInterval = 2;
+    float nextSpawnTime = 2;
+    PackedScene plMeteor;
 
 
 
-	public override void _Ready()
-	{
-		plMeteor = (PackedScene)GD.Load("res://scenes/earth/meteor_earth.tscn");
-	}
+    public override void _Ready()
+    {
+        plMeteor = (PackedScene)GD.Load("res://scenes/earth/meteor_earth.tscn");
+    }
 
-	public override void _Process(double delta)
-	{
-		nextSpawnTime -= (float) delta;
-		if (nextSpawnTime <= 0)
-		{
-			nextSpawnTime = spawnInterval;
-			
-			meteorsTilBoss -= 1;
-			meteor_earth spawnedMeteor = plMeteor.Instantiate<meteor_earth>();
+    public override void _Process(double delta)
+    {
+        nextSpawnTime -= (float)delta;
+        if (nextSpawnTime <= 0)
+        {
+            nextSpawnTime = spawnInterval;
 
-			AddChild(spawnedMeteor);
-			float spawnX = GD.Randi() % (uint) GetViewportRect().Size.X;
+            meteorsTilBoss -= 1;
+            meteor_earth spawnedMeteor = plMeteor.Instantiate<meteor_earth>();
 
-			if (meteorsTilBoss == 0)
-			{
-				spawnedMeteor.isBoss = true;
-				spawnedMeteor.GlobalScale *= 5;
-				spawnedMeteor.speed = 20;
-				spawnedMeteor.life = 400;
-				spawnX = GetViewportRect().Size.X / 2;
-				spawnedMeteor.damageAmount = 100;
-				spawnedMeteor.ZIndex = -2;
-				spawnedMeteor.onDeath = () =>
-				{
-					GameManager.LoadMenu();
-				};
-			}
+            AddChild(spawnedMeteor);
+            float spawnX = GD.Randi() % (uint)GetViewportRect().Size.X;
 
-			spawnedMeteor.GlobalPosition = new Vector2(spawnX, this.GlobalPosition.Y);
-		}
-	}
+            if (meteorsTilBoss == 0)
+            {
+                spawnedMeteor.isBoss = true;
+                spawnedMeteor.GlobalScale *= 5;
+                spawnedMeteor.speed = 20;
+                spawnedMeteor.life = 200;
+                spawnX = GetViewportRect().Size.X / 2;
+                spawnedMeteor.damageAmount = 100;
+                spawnedMeteor.ZIndex = -2;
+                spawnedMeteor.onDeath = () =>
+                {
+                    GameManager.LoadMenu(true);
+                };
+            }
+
+            spawnedMeteor.GlobalPosition = new Vector2(spawnX, this.GlobalPosition.Y);
+        }
+    }
 
 }
 
