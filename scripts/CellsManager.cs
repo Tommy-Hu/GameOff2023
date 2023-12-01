@@ -6,6 +6,8 @@ using System.Linq;
 public partial class CellsManager : Node2D
 {
     public static CellsManager instance;
+    public static bool lost = false;
+    public static bool won = false;
 
     [Export]
     public float badInterval = 10;
@@ -22,6 +24,7 @@ public partial class CellsManager : Node2D
     {
         base._Ready();
         instance = this;
+        lost = won = false;
         void Recurse(Node2D nd)
         {
             for (int i = 0; i < nd.GetChildCount(); i++)
@@ -40,6 +43,7 @@ public partial class CellsManager : Node2D
     public override void _Process(double delta)
     {
         base._Process(delta);
+        if (lost || won) return;
         badTimer -= (float)delta;
         CellLevelUIManager.instance.SetCancerCountdown((int)(100 - badTimer * 100f / badInterval));
         if (badTimer <= 0)
@@ -53,17 +57,26 @@ public partial class CellsManager : Node2D
             CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
             cell.SetGood(false);
             badTimer = badInterval;
+            if (totalCancerCells >= loseBadCount)
+            {
+                CellLevelUIManager.instance.SetDeathUIVisible(true);
+                lost = true;
+                won = false;
+            }
         }
     }
 
     public void CellDie(Cell cell)
     {
+        if (lost || won) return;
+
         if (!cell.good)
         {
             totalCancerCells--;
             CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
             if (totalCancerCells <= 0)
             {
+                CellsManager.won = true;
                 GameManager.PlayLevel("frog", "Frog");
             }
         }

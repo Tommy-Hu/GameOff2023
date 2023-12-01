@@ -11,6 +11,8 @@ public partial class CellLevelUIManager : MarginContainer
     public NodePath cancerCountdownProgress;
     [Export]
     public NodePath gunCountdownProgress;
+    [Export]
+    public NodePath deathUIPath;
 
     public static CellLevelUIManager instance;
 
@@ -18,6 +20,7 @@ public partial class CellLevelUIManager : MarginContainer
     private Label cancerCountText;
     private TextureProgressBar cancerCountdown;
     private TextureProgressBar gunCountdown;
+    private Panel deathUI;
 
     public override void _EnterTree()
     {
@@ -25,6 +28,7 @@ public partial class CellLevelUIManager : MarginContainer
         cancerCountText = GetNode<Label>(cancerCountLabel);
         cancerCountdown = GetNode<TextureProgressBar>(cancerCountdownProgress);
         gunCountdown = GetNode<TextureProgressBar>(gunCountdownProgress);
+        deathUI = GetNode<Panel>(deathUIPath);
         instance = this;
     }
 
@@ -43,6 +47,16 @@ public partial class CellLevelUIManager : MarginContainer
     public void SetGunCountdown(int progress)
     {
         gunCountdown.Value = progress;
+    }
+
+    public void SetDeathUIVisible(bool visible)
+    {
+        deathUI.Visible = visible;
+    }
+
+    public void _on_restart_pressed()
+    {
+        GameManager.PlayLevelFade("cells", "Cell");
     }
 
     public override void _ExitTree()
