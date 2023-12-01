@@ -7,8 +7,6 @@ public partial class player_earth : Area2D
 
 	PackedScene plBullet = (PackedScene)GD.Load("res://scenes/earth/bullet_earth.tscn");
 
-	
-
 	private AnimatedSprite2D animatedSprite;
 	private Node2D firingPositions;
 	private Timer fireDelayTimer;
@@ -39,7 +37,7 @@ public partial class player_earth : Area2D
 			animatedSprite.Play("Idle");
 
 		// Check if shooting
-		if (Input.IsActionPressed("shoot") && fireDelayTimer.IsStopped())
+		if (Input.IsMouseButtonPressed(MouseButton.Left) && fireDelayTimer.IsStopped())
 		{
 			fireDelayTimer.Start(fireDelay);
 			foreach (Node2D child in firingPositions.GetChildren())
@@ -55,13 +53,13 @@ public partial class player_earth : Area2D
 	{
 		vel.X = 0;
 		vel.Y = 0;
-		if (Input.IsActionPressed("move_left"))
+		if (Input.IsKeyPressed(Key.A))
 			vel.X -= speed;
-		if (Input.IsActionPressed("move_right"))
+		if (Input.IsKeyPressed(Key.D))
 			vel.X += speed;
-		if (Input.IsActionPressed("move_up"))
+		if (Input.IsKeyPressed(Key.W))
 			vel.Y -= speed;
-		if (Input.IsActionPressed("move_down"))
+		if (Input.IsKeyPressed(Key.S))
 			vel.Y += speed;
 
 		vel = vel.Normalized() * speed;
