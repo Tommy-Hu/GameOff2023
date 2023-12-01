@@ -29,7 +29,6 @@ public partial class PlayerElectron : SubAtomicCharge
         {
             //ApplyCentralImpulse(CalculateElectromagneticPull(1) / 16);
         }
-        GD.Print(electromagneticCharges.Count);
     }
 
     public override void _PhysicsProcess(double delta)

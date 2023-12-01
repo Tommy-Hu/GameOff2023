@@ -1,14 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dysvpeittck7j"]
+[gd_scene load_steps=7 format=3 uid="uid://dysvpeittck7j"]
 
 [ext_resource type="Script" path="res://scripts/Nitrogen1.cs" id="1_hgsex"]
 [ext_resource type="Script" path="res://scripts/Nitrogen1Area2D.cs" id="2_vq2vf"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="3_npwm2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8o8s7"]
-radius = 69.0072
+radius = 48.0937
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gyn87"]
 radius = 459.736
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtkmh"]
+radius = 65.9242
 
 [node name="Nitrogen1" type="RigidBody2D"]
 gravity_scale = 0.0
@@ -99,6 +102,11 @@ texture = ExtResource("3_npwm2")
 
 [node name="Electrons" type="Node2D" parent="."]
 
-[connection signal="body_entered" from="." to="." method="OnHit"]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_rtkmh")
+
 [connection signal="body_entered" from="Nitrogen1Area2D" to="." method="OnBodyInRange"]
 [connection signal="body_exited" from="Nitrogen1Area2D" to="." method="OnBodyOutRange"]
+[connection signal="body_entered" from="Area2D" to="." method="OnHit"]

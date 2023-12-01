@@ -17,7 +17,6 @@ public partial class Nitrogen1 : SubAtomicCharge
         CollisionShape2D shape = GetChild<Nitrogen1Area2D>(1).GetChild<CollisionShape2D>(0);
         shape.Shape = (Shape2D)shape.Shape.Duplicate();
         ((CircleShape2D)shape.Shape).Radius = SpawnElectrons();
-        GD.Print("CIRCLE RADIUS", ((CircleShape2D)GetChild<Nitrogen1Area2D>(1).GetChild<CollisionShape2D>(0).Shape).Radius);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -40,7 +39,6 @@ public partial class Nitrogen1 : SubAtomicCharge
             GetChild(3).AddChild(electron);
             electron.Position = new Vector2(orbitRadius * Mathf.Cos(i*2*Mathf.Pi/Charge), orbitRadius * Mathf.Sin(i*2 * Mathf.Pi / Charge));
             biggestRadius = Mathf.Max(biggestRadius, orbitRadius);
-            GD.Print("Electron i: ", orbitRadius, "Position: ", electron.GlobalPosition);
         }
         return biggestRadius;
     }
