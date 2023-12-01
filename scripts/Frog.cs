@@ -5,7 +5,7 @@ public partial class Frog : RigidBody2D
 {
 	public bool jumpIncreaseing;
 	public bool jumpHeld;
-	public Sprite2D direction;
+	public Node2D direction;
 	public bool onGround = true;
 	public Sprite2D sprite;
 	public Area2D area;
@@ -78,7 +78,7 @@ public partial class Frog : RigidBody2D
 				jumpIncreaseing = false;
 			}
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
-			
+			direction.Scale = new Vector2(direction.Scale.X, 1 * (curJumpForce - 200) / 800+1);
 			
 			//GD.Print(curJumpForce);
 			
@@ -97,6 +97,8 @@ public partial class Frog : RigidBody2D
 				ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f * curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
 				curJumpForce = jumpForceMin;
 				start = true;
+				direction.Scale = new Vector2(1, 1);
+				direction.Visible = false;
 
 				GameManager.PlaySFX("FrogJump.wav");
 				
@@ -111,6 +113,7 @@ public partial class Frog : RigidBody2D
 		{
 			onGround = true;
 			//collider.Disabled = false;
+			direction.Visible = true;
 		}
 	
 		if (body.Name == "SuperiorLilyPad")

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class FrogJumpDirector : Sprite2D
+public partial class FrogJumpDirector : Node2D
 {
 	private float distance;
 	private float cycleTime = 2;
@@ -43,7 +43,7 @@ public partial class FrogJumpDirector : Sprite2D
 
 			
 			this.Rotation = -(float)angle + (float)Math.PI / 2;
-			Position = new Vector2((float)Math.Cos(angle) * 100, (float)Math.Sin(angle) * -100);
+			Position = new Vector2((float)Math.Cos(angle) * 50, (float)Math.Sin(angle) * -50);
 			
 			
 			
