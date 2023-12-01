@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsojtkskxe4y2"]
 
-[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="1_6qiuo"]
+[ext_resource type="Texture2D" uid="uid://cqbrsbmbkbkts" path="res://sprites/flare.png" id="1_a1kc2"]
 [ext_resource type="Script" path="res://scripts/CellProjectile.cs" id="2_lh7rn"]
 
 [node name="Projectile" type="Sprite2D"]
-scale = Vector2(0.164063, 0.164063)
-texture = ExtResource("1_6qiuo")
+z_index = -5
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_a1kc2")
 script = ExtResource("2_lh7rn")
