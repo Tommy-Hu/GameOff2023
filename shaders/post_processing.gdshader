@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec4 tint;
+uniform vec4 tint : source_color;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
 void fragment() {

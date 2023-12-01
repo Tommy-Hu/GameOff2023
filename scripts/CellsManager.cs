@@ -59,6 +59,10 @@ public partial class CellsManager : Node2D
         {
             totalCancerCells--;
             CellLevelUIManager.instance.SetCancerCount(totalCancerCells);
+            if (totalCancerCells <= 0)
+            {
+                GameManager.PlayLevel("frog", "Frog");
+            }
         }
     }
 

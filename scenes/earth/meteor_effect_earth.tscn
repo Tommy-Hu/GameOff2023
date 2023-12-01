@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dssc5unmk0pu2"]
+
+[ext_resource type="Texture2D" uid="uid://c6chf8x181yaf" path="res://scenes/prefabs/textures_earth/meteorSmall.png" id="1_bfds7"]
+[ext_resource type="Script" path="res://scripts/earth/meteor_effect_earth.cs" id="2_3pjmp"]
+
+[sub_resource type="Gradient" id="Gradient_dx4n0"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="meteor_effect_earth" type="CPUParticles2D"]
+emitting = false
+lifetime = 10.0
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("1_bfds7")
+emission_shape = 1
+emission_sphere_radius = 13.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+angular_velocity_min = 70.0
+angular_velocity_max = 100.0
+scale_amount_min = 0.25
+scale_amount_max = 0.4
+color_ramp = SubResource("Gradient_dx4n0")
+script = ExtResource("2_3pjmp")

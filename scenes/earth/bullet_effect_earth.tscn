@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://btsv7n43k86jn"]
+
+[ext_resource type="Texture2D" uid="uid://bg6t02ugjtpus" path="res://scenes/prefabs/textures_earth/laserRedShot.png" id="1_uuykg"]
+[ext_resource type="Script" path="res://scripts/earth/bullet_effect_earth.cs" id="2_6bt8q"]
+
+[node name="bullet_effect_earth" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_uuykg")
+script = ExtResource("2_6bt8q")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.08
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
