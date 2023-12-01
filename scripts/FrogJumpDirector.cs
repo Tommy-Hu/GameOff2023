@@ -34,11 +34,11 @@ public partial class FrogJumpDirector : Sprite2D
 
 			if (!clockwise)
 			{
-				angle = angle - 0.1;
+				angle = angle - 0.07;
 			}
 			else if (clockwise)
 			{
-				angle = angle + 0.1;
+				angle = angle + 0.07;
 			}
 
 			

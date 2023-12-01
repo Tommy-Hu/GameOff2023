@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class PlayerCell : RigidBody2D
 {
@@ -31,6 +32,8 @@ public partial class PlayerCell : RigidBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (CellsManager.lost || CellsManager.won) return;
+
         base._PhysicsProcess(delta);
         Vector2 movement = Vector2.Zero;
         if (Input.IsKeyPressed(Key.W)) movement += Vector2.Up;
@@ -43,9 +46,12 @@ public partial class PlayerCell : RigidBody2D
 
     public override void _Process(double delta)
     {
+        if (CellsManager.lost || CellsManager.won) return;
+
         base._Process(delta);
         bool wasGreater = shootTimer > 0;
         shootTimer -= (float)delta;
+        CellLevelUIManager.instance.SetGunCountdown((int)(100 - shootTimer * 100f / shootInterval));
         if (shootTimer <= 0)
         {
             if (wasGreater)
@@ -77,6 +83,8 @@ public partial class PlayerCell : RigidBody2D
 
     private void PlayerCell_BodyEntered(Node body)
     {
+        if (CellsManager.lost || CellsManager.won) return;
+
         if (body is Cell cell)
         {
             cell.Slurp(this);

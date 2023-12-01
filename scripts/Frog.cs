@@ -11,6 +11,8 @@ public partial class Frog : RigidBody2D
 	public Area2D area;
 	public Vector2 screenBounds;
 
+	public bool start;
+
 	public static Frog instance;
 
 	public CollisionShape2D collider;
@@ -78,7 +80,7 @@ public partial class Frog : RigidBody2D
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
 			
 			
-			//GD.Print(curJumpForce);
+			GD.Print(curJumpForce);
 			
 
 		}
@@ -94,7 +96,10 @@ public partial class Frog : RigidBody2D
 				jumpHeld = false;
 				ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f * curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
 				curJumpForce = jumpForceMin;
+				start = true;
+
 				GameManager.PlaySFX("FrogJump.wav");
+				
 
 			}
 		}
@@ -116,6 +121,11 @@ public partial class Frog : RigidBody2D
 		
 	}
 
+	private void OnDeathBodyEntered(Node2D body)
+    {
+		GD.Print("DEATH DESTROYER OF WORLDS");
+    }
+
 	private void ScreenWrap()
 	{
 		if (GlobalPosition.X < screenBounds.X)
@@ -130,6 +140,12 @@ public partial class Frog : RigidBody2D
 	
 	}
 
+	public Vector2 ToUV()
+    {
+		Vector2 UV;
+		UV = FrogCamara2D.instance.GetCanvasTransform() * this.GlobalPosition;
+		return new Vector2((UV.X/FrogCamara2D.instance.bounds.Y)/2, 0.5f);
+	}
 
 	public override void _EnterTree()
 	{

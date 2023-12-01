@@ -1,21 +1,90 @@
-[gd_scene load_steps=8 format=3 uid="uid://bpewmoeofaw4a"]
+[gd_scene load_steps=14 format=3 uid="uid://bpewmoeofaw4a"]
 
 [ext_resource type="Script" path="res://scripts/CellLevelUIManager.cs" id="1_umn4w"]
-[ext_resource type="FontFile" uid="uid://cshn1wgr1g7o" path="res://fonts/Ignotum.ttf" id="2_k6at4"]
-[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="3_jj8kr"]
+[ext_resource type="FontFile" uid="uid://ct8ktr3vwivj5" path="res://fonts/Dolce Vita.ttf" id="2_f6mj3"]
+[ext_resource type="Texture2D" uid="uid://57gvirih32in" path="res://sprites/circle.png" id="3_x0q7d"]
+[ext_resource type="Texture2D" uid="uid://dn266vbh20fef" path="res://sprites/bullet.png" id="4_8pwos"]
+[ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="5_7rgob"]
+[ext_resource type="Texture2D" uid="uid://d0p1w7nfrhef3" path="res://sprites/skull.png" id="5_u6167"]
+[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="6_x8k8s"]
+[ext_resource type="FontFile" uid="uid://d284c83dkulgm" path="res://fonts/Dolce Vita Heavy Bold.ttf" id="8_bnjm2"]
 
-[sub_resource type="Gradient" id="Gradient_nj1ud"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+[sub_resource type="Shader" id="Shader_ti16y"]
+code = "shader_type canvas_item;
+uniform vec2 offset;
+uniform vec4 tint;
+uniform float squish;
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wp03h"]
-gradient = SubResource("Gradient_nj1ud")
-fill_to = Vector2(0.653846, 0.435897)
+uniform sampler2D mask_texture : repeat_disable, filter_nearest;
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8y6ap"]
-texture = SubResource("GradientTexture2D_wp03h")
+// copied from https://godotshaders.com/snippet/2d-noise/
+vec2 random(vec2 uv){
+    uv = vec2( dot(uv, vec2(127.1,311.7) ),
+               dot(uv, vec2(269.5,183.3) ) );
+    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+    vec2 uv_index = floor(uv);
+    vec2 uv_fract = fract(uv);
+
+    vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix( mix( dot( random(uv_index + vec2(0.0,0.0) ), uv_fract - vec2(0.0,0.0) ),
+                     dot( random(uv_index + vec2(1.0,0.0) ), uv_fract - vec2(1.0,0.0) ), blur.x),
+                mix( dot( random(uv_index + vec2(0.0,1.0) ), uv_fract - vec2(0.0,1.0) ),
+                     dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) + 0.5;
+}
+
+
+void vertex() {
+	VERTEX += vec2(cos(TIME)*10.0, sin(TIME)*10.0);
+	VERTEX *= vec2(1.0 - squish, 1.0);
+}
+float map(float value, float min1, float max1, float min2, float max2) {
+ 	return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+}
+void fragment() {
+	float n = mix(0.45, 0.55, clamp(noise(UV * 1.1f + vec2((sin(TIME) + offset.r), (cos(TIME)))), 0, 1));
+	// here n is between 0.45 and 0.55
+	// UV is between 0 and 1
+	vec2 modifiedUV = (UV - 0.5) * 2.0;
+	modifiedUV *= map(n, 0.45, 0.55, 1, 1.25);
+	modifiedUV = modifiedUV * 0.5 + 0.5;
+	vec3 color = texture(TEXTURE, modifiedUV).rgb;
+	vec3 colorInv = ceil(vec3(1, 1, 1) - color);
+	float a = 1.0 - color.r;
+	float clamppedA = clamp(a * 3.0 * (n), 0, 1);
+	a = pow(clamppedA, 2);
+	float c = round(a);
+	if (c == 0.0) {
+		// this pixel is outside the core
+		if (ceil(a) == 1.0) {
+			// this pixel is inside the bounds of the membrane
+			a = (1.0f - clamppedA) * 0.2f;
+		}
+		// colorInv *= 0.75;
+	}
+	// float n2 = mix(0.0, 0.2, clamp(noise(UV * 50.0f + vec2((sin(TIME) + offset.r), (cos(TIME)))), 0, 1));
+
+	COLOR = (tint * texture(mask_texture, SCREEN_UV) + vec4(0.5, 0.5, 0.5, 1) /*+ n2*/) * vec4(colorInv, a);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yi1an"]
+shader = SubResource("Shader_ti16y")
+shader_parameter/offset = null
+shader_parameter/tint = Vector4(1, 1, 0.04, 1)
+shader_parameter/squish = 0.0
 
 [sub_resource type="FontVariation" id="FontVariation_i3g0f"]
-base_font = ExtResource("2_k6at4")
+base_font = ExtResource("2_f6mj3")
+
+[sub_resource type="FontVariation" id="FontVariation_e432w"]
+base_font = ExtResource("8_bnjm2")
+
+[sub_resource type="FontVariation" id="FontVariation_seby1"]
+base_font = ExtResource("8_bnjm2")
 
 [node name="CellLevelUI" type="MarginContainer"]
 anchors_preset = 15
@@ -28,18 +97,17 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_umn4w")
-cancerCountLabel = NodePath("TopVBox/Header/MarginContainer/LeftTexts/CountText/CancerCellCount")
-cancerCountdownLabel = NodePath("TopVBox/Header/MarginContainer/LeftTexts/CountdownText/Countdown")
+cancerCountProgress = NodePath("RightBar/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/HealthBar")
+cancerCountLabel = NodePath("RightBar/MarginContainer/HBoxContainer/VBoxContainer/Bottom/CancerCellCount")
+cancerCountdownProgress = NodePath("TopVBox/Header/MarginContainer/LeftTexts/CountdownText/Countdown")
+gunCountdownProgress = NodePath("BottomVBox/Gun/HBoxContainer/AmmoProgress")
+deathUIPath = NodePath("LoseUI")
 
 [node name="TopVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="Header" type="MarginContainer" parent="TopVBox"]
 layout_mode = 2
-
-[node name="Panel" type="Panel" parent="TopVBox/Header"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_8y6ap")
 
 [node name="MarginContainer" type="MarginContainer" parent="TopVBox/Header"]
 layout_mode = 2
@@ -51,43 +119,25 @@ theme_override_constants/margin_bottom = 5
 [node name="LeftTexts" type="VBoxContainer" parent="TopVBox/Header/MarginContainer"]
 layout_mode = 2
 
-[node name="CountText" type="HBoxContainer" parent="TopVBox/Header/MarginContainer/LeftTexts"]
-layout_mode = 2
-
-[node name="CancerCellCountLabel" type="Label" parent="TopVBox/Header/MarginContainer/LeftTexts/CountText"]
-layout_mode = 2
-theme_override_constants/outline_size = 1
-theme_override_fonts/font = ExtResource("2_k6at4")
-theme_override_font_sizes/font_size = 35
-text = "Cancer cells "
-
-[node name="CancerCellCount" type="Label" parent="TopVBox/Header/MarginContainer/LeftTexts/CountText"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
-theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("FontVariation_i3g0f")
-theme_override_font_sizes/font_size = 40
-text = "0"
-
 [node name="CountdownText" type="HBoxContainer" parent="TopVBox/Header/MarginContainer/LeftTexts"]
 layout_mode = 2
 
 [node name="CountdownLabel" type="Label" parent="TopVBox/Header/MarginContainer/LeftTexts/CountdownText"]
 layout_mode = 2
 theme_override_constants/outline_size = 1
-theme_override_fonts/font = ExtResource("2_k6at4")
+theme_override_fonts/font = ExtResource("2_f6mj3")
 theme_override_font_sizes/font_size = 30
 text = "Cancer spreads in "
 
-[node name="Countdown" type="Label" parent="TopVBox/Header/MarginContainer/LeftTexts/CountdownText"]
+[node name="Countdown" type="TextureProgressBar" parent="TopVBox/Header/MarginContainer/LeftTexts/CountdownText"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
-theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("FontVariation_i3g0f")
-theme_override_font_sizes/font_size = 40
-text = "0s"
+value = 15.0
+fill_mode = 5
+nine_patch_stretch = true
+texture_under = ExtResource("3_x0q7d")
+texture_progress = ExtResource("3_x0q7d")
+tint_under = Color(0.682353, 0.556863, 0.870588, 0)
 
 [node name="BottomVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -95,11 +145,137 @@ alignment = 2
 
 [node name="Gun" type="MarginContainer" parent="BottomVBox"]
 layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BottomVBox/Gun"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="BottomVBox/Gun/HBoxContainer"]
+[node name="AmmoProgress" type="TextureProgressBar" parent="BottomVBox/Gun/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("3_jj8kr")
-stretch_mode = 4
+value = 75.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("3_x0q7d")
+texture_progress = ExtResource("3_x0q7d")
+tint_under = Color(0.682353, 0.556863, 0.870588, 1)
+
+[node name="AmmoIcon" type="TextureRect" parent="BottomVBox/Gun/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+texture = ExtResource("4_8pwos")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="RightBar" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="RightBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RightBar/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Top Icon" type="TextureRect" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_u6167")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
+
+[node name="HealthBar" type="TextureProgressBar" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_vertical = 3
+value = 26.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("5_7rgob")
+texture_progress = ExtResource("5_7rgob")
+tint_progress = Color(0.831373, 0.172549, 0.207843, 1)
+
+[node name="Bottom" type="MarginContainer" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Bottom Icon" type="TextureRect" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer/Bottom"]
+material = SubResource("ShaderMaterial_yi1an")
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("6_x8k8s")
+expand_mode = 1
+
+[node name="CancerCellCount" type="Label" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer/Bottom"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
+theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_i3g0f")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoseUI" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LoseUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBox" type="VBoxContainer" parent="LoseUI/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="LoseUI/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_e432w")
+theme_override_font_sizes/font_size = 50
+text = "The cancer killed
+the poor soul  :("
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonMargin" type="MarginContainer" parent="LoseUI/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 450
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 450
+theme_override_constants/margin_bottom = 25
+
+[node name="Restart" type="Button" parent="LoseUI/MarginContainer/VBox/ButtonMargin"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_seby1")
+theme_override_font_sizes/font_size = 30
+text = "Retry"
+
+[connection signal="pressed" from="LoseUI/MarginContainer/VBox/ButtonMargin/Restart" to="." method="_on_restart_pressed"]

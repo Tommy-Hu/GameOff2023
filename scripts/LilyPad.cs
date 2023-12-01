@@ -43,5 +43,6 @@ public partial class LilyPad : StaticBody2D
 	public void setSpriteZIndex(int z)
     {
 		lilyPadSprite.ZIndex = z;
+		
     }
 }

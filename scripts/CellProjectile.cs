@@ -5,6 +5,8 @@ public partial class CellProjectile : Sprite2D
 {
     [Export]
     public float speed = 1000f;
+    [Export]
+    public float rotSpeed = 2f;
 
     public Vector2 destination;
 
@@ -19,6 +21,7 @@ public partial class CellProjectile : Sprite2D
         }
 
         GlobalPosition = GlobalPosition.MoveToward(destination, (float)delta * speed);
+        float rotAmount = 0;
         if (GlobalPosition.DistanceSquaredTo(destination) < (1 * 1))
         {
             var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
@@ -43,8 +46,14 @@ public partial class CellProjectile : Sprite2D
             }
             mask.GlobalScale = Vector2.One * SCALE;
             SpriteMaskMaster.AddMask(mask);
-            GameManager.PlayRandomSFX("cell_bullet_splat.wav","cell_bullet_splat1.wav");
+            GameManager.PlayRandomSFX("cell_bullet_splat.wav", "cell_bullet_splat1.wav");
             activated = true;
+            rotAmount = 0f;
         }
+        else
+        {
+            rotAmount = rotSpeed * 2f * Mathf.Pi * (float)delta;
+        }
+        GlobalRotation += rotAmount;
     }
 }

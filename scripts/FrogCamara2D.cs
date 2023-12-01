@@ -25,7 +25,7 @@ public partial class FrogCamara2D : Camera2D
 	{
 		topCorner = GetCanvasTransform().AffineInverse() * Vector2.Zero;
 		bounds = new Vector2(topCorner.X, topCorner.X+2.0f*(GlobalPosition.X-topCorner.X));
-		GD.Print(bounds.X);
+		
 
 		GlobalPosition = new Vector2(GlobalPosition.X, Frog.instance.GlobalPosition.Y);
 
