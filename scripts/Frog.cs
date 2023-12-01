@@ -78,7 +78,7 @@ public partial class Frog : RigidBody2D
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
 			
 			
-			//GD.Print(curJumpForce);
+			GD.Print(curJumpForce);
 			
 
 		}
@@ -130,6 +130,12 @@ public partial class Frog : RigidBody2D
 	
     }
 
+	public Vector2 ToUV()
+    {
+		Vector2 UV;
+		UV = FrogCamara2D.instance.GetCanvasTransform() * this.GlobalPosition;
+		return new Vector2((UV.X/FrogCamara2D.instance.bounds.Y)/2, 0.5f);
+	}
 
 	public override void _EnterTree()
 	{

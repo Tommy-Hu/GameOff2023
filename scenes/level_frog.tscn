@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://m405luxpd4qr"]
+[gd_scene load_steps=18 format=3 uid="uid://m405luxpd4qr"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_welx0"]
 [ext_resource type="Script" path="res://scripts/Frog.cs" id="2_86pts"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/FrogCamara2D.cs" id="8_f36vk"]
 [ext_resource type="Script" path="res://scripts/LilyPadSpawner.cs" id="11_lxju7"]
 [ext_resource type="Script" path="res://scripts/PlayerProgress.cs" id="11_snvxc"]
+[ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="12_sn8dd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m55bd"]
 size = Vector2(127, 1)
@@ -25,8 +26,8 @@ size = Vector2(143.409, 125.063)
 shader = ExtResource("6_vu8uy")
 shader_parameter/thunder = false
 shader_parameter/duration = null
-shader_parameter/center = null
-shader_parameter/radius = null
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.2
 
 [sub_resource type="Theme" id="Theme_t5q3u"]
 
@@ -92,10 +93,6 @@ material = SubResource("ShaderMaterial_a2f2w")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1158.0
-offset_top = 326.0
-offset_right = -1158.0
-offset_bottom = 326.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
@@ -125,11 +122,14 @@ fill_mode = 3
 show_percentage = false
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="FrogCamara2D/Ui layer/PlayerProgress" index="2"]
-offset_left = 159.0
-offset_top = 187.0
-offset_right = 199.0
-offset_bottom = 623.0
+offset_left = -241.0
+offset_top = 373.0
+offset_right = -201.0
+offset_bottom = 809.0
 value = 50.0
+texture_under = ExtResource("12_sn8dd")
+texture_over = ExtResource("12_sn8dd")
+texture_progress = ExtResource("12_sn8dd")
 tint_under = Color(0, 0, 0, 1)
 tint_over = Color(0, 0, 0, 1)
 tint_progress = Color(0.219608, 0.160784, 0.0862745, 1)

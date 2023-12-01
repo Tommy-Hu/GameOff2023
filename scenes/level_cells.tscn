@@ -4,12 +4,12 @@
 [ext_resource type="Script" path="res://scripts/CellsManager.cs" id="2_itjdd"]
 [ext_resource type="Texture2D" uid="uid://5lo4uhylrq05" path="res://sprites/level_cell_bg.png" id="2_ixtno"]
 [ext_resource type="Shader" path="res://shaders/post_processing.gdshader" id="2_seqbp"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/cell.tscn" id="3_w22lo"]
+[ext_resource type="PackedScene" uid="uid://bpeffins62t35" path="res://scenes/prefabs/cell.tscn" id="3_w22lo"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/player_cell.tscn" id="4_f840k"]
 [ext_resource type="Script" path="res://scripts/SpriteMaskMaster.cs" id="5_3jyt6"]
 [ext_resource type="Shader" path="res://shaders/mask_shader.gdshader" id="5_rmwer"]
 [ext_resource type="Script" path="res://scripts/RNG.cs" id="8_rrh8e"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/cell_level_ui.tscn" id="9_8jkm5"]
+[ext_resource type="PackedScene" uid="uid://bpewmoeofaw4a" path="res://scenes/prefabs/cell_level_ui.tscn" id="9_8jkm5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjwuj"]
 shader = ExtResource("2_seqbp")

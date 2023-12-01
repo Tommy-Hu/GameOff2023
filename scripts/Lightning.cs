@@ -30,8 +30,8 @@ public partial class Lightning : ColorRect
     public override void _Process(double delta)
 	{
 
-		shader.SetShaderParameter("center", Vector2 );
-
+		shader.SetShaderParameter("center", Frog.instance.ToUV() );
+		
 		if (flash) {
 			if (angle <= Math.PI)
 			{
