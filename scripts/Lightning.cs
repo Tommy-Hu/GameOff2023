@@ -12,6 +12,7 @@ public partial class Lightning : ColorRect
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 		shader = this.Material as ShaderMaterial;
         GameManager.OnBeat += GameManager_OnBeat;
 	}
@@ -23,6 +24,7 @@ public partial class Lightning : ColorRect
 			flash = true;
 			angle = 0;
 			shader.SetShaderParameter("thunder", true);
+			shader.SetShaderParameter("halfthunder", true);
 		}
 	}
 
@@ -39,6 +41,7 @@ public partial class Lightning : ColorRect
 			}
 			if (angle >= Math.PI)
             {
+				shader.SetShaderParameter("halfthunder", false);
 				angle += 0.025f;
             }
 			shader.SetShaderParameter("duration", Math.Sin(angle));

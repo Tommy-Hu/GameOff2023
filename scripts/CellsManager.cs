@@ -19,9 +19,9 @@ public partial class CellsManager : Node2D
 
     private float badTimer = 10;
 
-    private HashSet<Cell> cells = new HashSet<Cell>();
-    private int totalAliveCells = 0;
-    private int totalCancerCells = 0;
+	private HashSet<Cell> cells = new HashSet<Cell>();
+	private int totalAliveCells = 0;
+	private int totalCancerCells = 0;
 
     public override void _Ready()
     {
@@ -91,9 +91,9 @@ public partial class CellsManager : Node2D
         }
     }
 
-    public override void _ExitTree()
-    {
-        base._ExitTree();
-        instance = null;
-    }
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		instance = null;
+	}
 }

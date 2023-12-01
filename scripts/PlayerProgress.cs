@@ -24,7 +24,7 @@ public partial class PlayerProgress : Node2D
 		icon.GlobalPosition = new Vector2(icon.GlobalPosition.X, currIconPosition + 480f * playerProgress);
 
 		progressBar.Value = ( Death.instance.GlobalPosition.Y)/ LilyPadSpawner.instance.height * -100;
-		GD.Print(progressBar.Value);
+	
 	}
 
 
