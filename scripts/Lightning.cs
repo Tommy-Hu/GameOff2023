@@ -29,12 +29,20 @@ public partial class Lightning : ColorRect
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		
-        if (flash) {
-			angle = angle + 0.1f;
+
+		shader.SetShaderParameter("center", Vector2 );
+
+		if (flash) {
+			if (angle <= Math.PI)
+			{
+				angle = angle + 0.1f;
+			}
+			if (angle >= Math.PI)
+            {
+				angle += 0.025f;
+            }
 			shader.SetShaderParameter("duration", Math.Sin(angle));
-			shader.GetShaderParameter("");
-			if (angle >=  (3f*Math.PI)/2f) 
+			if (angle >=  (3f * Math.PI) / 2f) 
             {
 				flash = false;
 				shader.SetShaderParameter("thunder", false);
