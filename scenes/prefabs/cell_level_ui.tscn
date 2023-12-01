@@ -9,9 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="6_x8k8s"]
 [ext_resource type="FontFile" uid="uid://d284c83dkulgm" path="res://fonts/Dolce Vita Heavy Bold.ttf" id="8_bnjm2"]
 
-[sub_resource type="FontVariation" id="FontVariation_i3g0f"]
-base_font = ExtResource("2_f6mj3")
-
 [sub_resource type="Shader" id="Shader_ti16y"]
 code = "shader_type canvas_item;
 uniform vec2 offset;
@@ -80,6 +77,9 @@ shader_parameter/offset = null
 shader_parameter/tint = Vector4(1, 1, 0.04, 1)
 shader_parameter/squish = 0.0
 
+[sub_resource type="FontVariation" id="FontVariation_i3g0f"]
+base_font = ExtResource("2_f6mj3")
+
 [sub_resource type="FontVariation" id="FontVariation_e432w"]
 base_font = ExtResource("8_bnjm2")
 
@@ -98,9 +98,10 @@ theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_umn4w")
 cancerCountProgress = NodePath("RightBar/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/HealthBar")
-cancerCountLabel = NodePath("RightBar/MarginContainer/HBoxContainer/CancerCellCount")
+cancerCountLabel = NodePath("RightBar/MarginContainer/HBoxContainer/VBoxContainer/Bottom/CancerCellCount")
 cancerCountdownProgress = NodePath("TopVBox/Header/MarginContainer/LeftTexts/CountdownText/Countdown")
 gunCountdownProgress = NodePath("BottomVBox/Gun/HBoxContainer/AmmoProgress")
+deathUIPath = NodePath("LoseUI")
 
 [node name="TopVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -136,8 +137,7 @@ fill_mode = 5
 nine_patch_stretch = true
 texture_under = ExtResource("3_x0q7d")
 texture_progress = ExtResource("3_x0q7d")
-tint_under = Color(0.682353, 0.556863, 0.870588, 1)
-tint_progress = Color(1, 1, 0.137255, 1)
+tint_under = Color(0.682353, 0.556863, 0.870588, 0)
 
 [node name="BottomVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -177,23 +177,12 @@ alignment = 2
 [node name="MarginContainer" type="MarginContainer" parent="RightBar"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 150
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 150
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 100
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RightBar/MarginContainer"]
 layout_mode = 2
-
-[node name="CancerCellCount" type="Label" parent="RightBar/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
-theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("FontVariation_i3g0f")
-theme_override_font_sizes/font_size = 40
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RightBar/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -201,15 +190,17 @@ layout_mode = 2
 [node name="Top Icon" type="TextureRect" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("5_u6167")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 20
+theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 0
 
 [node name="HealthBar" type="TextureProgressBar" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
@@ -223,14 +214,29 @@ texture_under = ExtResource("5_7rgob")
 texture_progress = ExtResource("5_7rgob")
 tint_progress = Color(0.831373, 0.172549, 0.207843, 1)
 
-[node name="Bottom Icon" type="TextureRect" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Bottom" type="MarginContainer" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Bottom Icon" type="TextureRect" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer/Bottom"]
 material = SubResource("ShaderMaterial_yi1an")
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture = ExtResource("6_x8k8s")
 expand_mode = 1
 
+[node name="CancerCellCount" type="Label" parent="RightBar/MarginContainer/HBoxContainer/VBoxContainer/Bottom"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
+theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_i3g0f")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="LoseUI" type="Panel" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="LoseUI"]
@@ -247,25 +253,29 @@ theme_override_constants/margin_bottom = 50
 
 [node name="VBox" type="VBoxContainer" parent="LoseUI/MarginContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="Title" type="Label" parent="LoseUI/MarginContainer/VBox"]
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontVariation_e432w")
 theme_override_font_sizes/font_size = 50
-text = "LOL! YOU LOST he he hee!"
+text = "The cancer killed
+the poor soul  :("
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ButtonMargin" type="MarginContainer" parent="LoseUI/MarginContainer/VBox"]
 layout_mode = 2
-theme_override_constants/margin_left = 400
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 400
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_left = 450
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 450
+theme_override_constants/margin_bottom = 25
 
 [node name="Restart" type="Button" parent="LoseUI/MarginContainer/VBox/ButtonMargin"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_seby1")
 theme_override_font_sizes/font_size = 30
-text = "I Will Get Better..."
+text = "Retry"
+
+[connection signal="pressed" from="LoseUI/MarginContainer/VBox/ButtonMargin/Restart" to="." method="_on_restart_pressed"]
