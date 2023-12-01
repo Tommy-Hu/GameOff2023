@@ -1,17 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://trw5bircsxia"]
+[gd_scene load_steps=8 format=3 uid="uid://trw5bircsxia"]
 
-[ext_resource type="Script" path="res://Photon.cs" id="1_effk3"]
-[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_042vn"]
+[ext_resource type="Script" path="res://scripts/electron_scripts/Photon.cs" id="1_14jaj"]
+[ext_resource type="Texture2D" uid="uid://dcnxnr317ykj4" path="res://sprites/ElectronAssets/photon_animation/photon_v01_0000.png" id="2_4bkvy"]
+[ext_resource type="Texture2D" uid="uid://dw1x242ewk87g" path="res://sprites/ElectronAssets/photon_animation/photon_v01_0001.png" id="3_vcpdy"]
+[ext_resource type="Texture2D" uid="uid://b2b81ldnvxhw8" path="res://sprites/ElectronAssets/photon_animation/photon_v01_0002.png" id="4_hyh3q"]
+[ext_resource type="Texture2D" uid="uid://cxhtspwrg72ig" path="res://sprites/ElectronAssets/photon_animation/photon_v01_0003.png" id="5_12sbk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsnxf"]
 radius = 17.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_bdgk7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4bkvy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vcpdy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hyh3q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_12sbk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
 [node name="Photon1" type="CharacterBody2D"]
-script = ExtResource("1_effk3")
+script = ExtResource("1_14jaj")
 
 [node name="PhotonHitbox1" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bsnxf")
 
-[node name="PhotonSprite1" type="Sprite2D" parent="."]
-scale = Vector2(0.265625, 0.265625)
-texture = ExtResource("2_042vn")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, -92)
+sprite_frames = SubResource("SpriteFrames_bdgk7")
+frame_progress = 0.421012

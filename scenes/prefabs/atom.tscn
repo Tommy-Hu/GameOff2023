@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dysvpeittck7j"]
 
-[ext_resource type="Script" path="res://scripts/Nitrogen1.cs" id="1_hgsex"]
-[ext_resource type="Script" path="res://scripts/Nitrogen1Area2D.cs" id="2_vq2vf"]
+[ext_resource type="Script" path="res://scripts/electron_scripts/Nitrogen1.cs" id="1_vgto8"]
+[ext_resource type="Script" path="res://scripts/electron_scripts/Nitrogen1Area2D.cs" id="2_hbhlt"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="3_npwm2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8o8s7"]
@@ -17,13 +17,13 @@ radius = 65.9242
 gravity_scale = 0.0
 sleeping = true
 freeze = true
-script = ExtResource("1_hgsex")
+script = ExtResource("1_vgto8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8o8s7")
 
 [node name="Nitrogen1Area2D" type="Area2D" parent="."]
-script = ExtResource("2_vq2vf")
+script = ExtResource("2_hbhlt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nitrogen1Area2D"]
 shape = SubResource("CircleShape2D_gyn87")

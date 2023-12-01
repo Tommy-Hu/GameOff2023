@@ -11,7 +11,7 @@ public partial class Nitrogen1Area2D : Area2D
 	{
 		base._Ready();
 		parentNode = (SubAtomicCharge) GetParent();
-		player = (PlayerElectron) GetParent().GetParent().GetParent().GetChild(0);
+		player = (PlayerElectron) GetParent().GetParent().GetParent().GetParent().GetChild(0);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

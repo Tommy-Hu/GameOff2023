@@ -8,15 +8,18 @@ public partial class Nitrogen1 : SubAtomicCharge
 	PlayerElectron player;
 
     private const float RADIUS_MULTIPLIER = 500f;
+
+    [Export]
+    bool spawnElectron = true;
 	
 	public override void _Ready()
 	{
 		base._Ready();
 		electronScene = ResourceLoader.Load<PackedScene>("res://scenes/prefabs/electron.tscn");
-		player = (PlayerElectron) GetParent().GetParent().GetChild(0);
+		player = (PlayerElectron) GetParent().GetParent().GetParent().GetChild(0);
         CollisionShape2D shape = GetChild<Nitrogen1Area2D>(1).GetChild<CollisionShape2D>(0);
         shape.Shape = (Shape2D)shape.Shape.Duplicate();
-        ((CircleShape2D)shape.Shape).Radius = SpawnElectrons();
+        ((CircleShape2D)shape.Shape).Radius = GetRadius();
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,22 +28,26 @@ public partial class Nitrogen1 : SubAtomicCharge
 		base._PhysicsProcess(delta);
     }
 
-	private float SpawnElectrons()
+	private float GetRadius()
 	{
         float biggestRadius = 0f;
 		for (int i = 0; i < Charge; i++)
         {
-            ElectronNPC electron = electronScene.Instantiate<ElectronNPC>();
-
             float orbitRadius = DetermineRadius(i);
             float alfa = DetermineRotation(i);
-
-            electron.Initialize(this, player, orbitRadius, alfa);
-            GetChild(3).AddChild(electron);
-            electron.Position = new Vector2(orbitRadius * Mathf.Cos(i*2*Mathf.Pi/Charge), orbitRadius * Mathf.Sin(i*2 * Mathf.Pi / Charge));
             biggestRadius = Mathf.Max(biggestRadius, orbitRadius);
+            if (spawnElectron == true)
+                InstantiateElectrons(i, orbitRadius, alfa);
         }
         return biggestRadius;
+    }
+
+    private void InstantiateElectrons(int i, float orbitRadius, float alfa)
+    {
+        ElectronNPC electron = electronScene.Instantiate<ElectronNPC>();
+        electron.Initialize(this, player, orbitRadius, alfa);
+        GetChild(3).AddChild(electron);
+        electron.Position = new Vector2(orbitRadius * Mathf.Cos(i * 2 * Mathf.Pi / Charge), orbitRadius * Mathf.Sin(i * 2 * Mathf.Pi / Charge));
     }
 
     private static float DetermineRadius(int i)

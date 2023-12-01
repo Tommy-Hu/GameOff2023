@@ -5,12 +5,14 @@ public partial class Photon : CharacterBody2D
 {
 	// Called when the node enters the scene tree for the first time.
 	float speed;
-	public override void _Ready()
+    private AnimatedSprite2D daSprite;
+    public override void _Ready()
     {
         base._Ready();
         speed = 1000f;
         SetRandomSpawn();
         SetRandomVelocity();
+        daSprite = GetChild<AnimatedSprite2D>(1);
     }
 
     private void SetRandomVelocity()
@@ -24,8 +26,8 @@ public partial class Photon : CharacterBody2D
 
     private void SetRandomSpawn()
     {
-        int positionX = ((int)GD.Randi()) % 16384 - 8192;
-        int positionY = ((int)GD.Randi()) % 8192 - 4096;
+        int positionX = ((int)GD.Randi()) % 8192 - 4096;
+        int positionY = ((int)GD.Randi()) % 4096 - 2048;
         Position = new Vector2(positionX, positionY);
     }
 
@@ -34,6 +36,9 @@ public partial class Photon : CharacterBody2D
 	{
 		base._Process(delta);
         Richochet(delta);
+        daSprite.Play();
+        GD.Print(GlobalRotation);
+        GlobalRotation = (Velocity / Velocity.Normalized()).X - Mathf.Pi / 2;
     }
 
     private void Richochet(double delta)

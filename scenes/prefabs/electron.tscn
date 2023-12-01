@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://b0aw7lo06wcgf"]
 
-[ext_resource type="Script" path="res://scripts/ElectronNPC.cs" id="1_178d5"]
+[ext_resource type="Script" path="res://scripts/electron_scripts/ElectronNPC.cs" id="1_63n1h"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_b0gvt"]
-[ext_resource type="Script" path="res://scripts/ElectronA1Area2D.cs" id="3_sugbo"]
+[ext_resource type="Script" path="res://scripts/electron_scripts/ElectronA1Area2D.cs" id="3_rkep6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jn6wl"]
 
@@ -13,7 +13,7 @@ radius = 112.872
 position = Vector2(464, -452)
 gravity_scale = 0.0
 lock_rotation = true
-script = ExtResource("1_178d5")
+script = ExtResource("1_63n1h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jn6wl")
@@ -23,7 +23,7 @@ scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_b0gvt")
 
 [node name="ElectronA1Area2D" type="Area2D" parent="."]
-script = ExtResource("3_sugbo")
+script = ExtResource("3_rkep6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElectronA1Area2D"]
 shape = SubResource("CircleShape2D_170lp")
