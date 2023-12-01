@@ -3,10 +3,10 @@ using System;
 
 public partial class Lightning : ColorRect
 {
-	private float angle = 0;
+	public float angle = 0;
 	private bool flash;
 
-
+	public static Lightning instance;
 
 	ShaderMaterial shader;
 	// Called when the node enters the scene tree for the first time.
@@ -15,6 +15,7 @@ public partial class Lightning : ColorRect
 		
 		shader = this.Material as ShaderMaterial;
         GameManager.OnBeat += GameManager_OnBeat;
+		shader.SetShaderParameter("duration", 1);
 	}
 
     private void GameManager_OnBeat(BeatType beat)
@@ -34,7 +35,7 @@ public partial class Lightning : ColorRect
 
 		shader.SetShaderParameter("center", Frog.instance.ToUV() );
 		
-		if (flash) {
+		if (flash && !Frog.instance.win) {
 			if (angle <= Math.PI)
 			{
 				angle = angle + 0.1f;
@@ -51,12 +52,34 @@ public partial class Lightning : ColorRect
 				shader.SetShaderParameter("thunder", false);
 			}
         }
+
+		if (Frog.instance.win)
+        {
+			
+			if (angle <= Math.PI)
+			{
+				angle = angle + 0.1f;
+			}
+			if (angle >= Math.PI)
+			{
+				Frog.instance.win = false;
+			}
+			shader.SetShaderParameter("duration", Math.Sin(angle));
+
+		}
 		//GD.Print(angle);
 		
 	}
 
-	public void lighting()
-    {
 
-    }
+	public override void _EnterTree()
+	{
+		instance = this;
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		instance = null;
+	}
 }

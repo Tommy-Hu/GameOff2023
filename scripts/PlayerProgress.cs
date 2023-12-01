@@ -5,7 +5,7 @@ public partial class PlayerProgress : Node2D
 {
 
 	public Sprite2D icon;
-	public ProgressBar progressBar;
+	public Godot.ProgressBar progressBar;
 
 	public float currIconPosition;
 	public float playerProgress;
@@ -13,7 +13,7 @@ public partial class PlayerProgress : Node2D
 	public override void _Ready()
 	{
 		icon = this.GetNode<Sprite2D>("PlayerIcon");
-		progressBar = this.GetNode<ProgressBar>("FrogProgressBar");
+		progressBar = this.GetNode<Godot.ProgressBar>("FrogProgressBar");
 		currIconPosition = icon.GlobalPosition.Y;
 	}
 
