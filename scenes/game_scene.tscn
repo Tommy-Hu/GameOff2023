@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3vmf1ob7ja3v"]
+[gd_scene load_steps=12 format=3 uid="uid://3vmf1ob7ja3v"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_dn8nw"]
 [ext_resource type="AudioStream" uid="uid://b6pkncq2waaye" path="res://music/Conjugate Menu.wav" id="1_nx43q"]
@@ -6,11 +6,18 @@
 [ext_resource type="FontFile" uid="uid://bbsiso6vqdsa3" path="res://fonts/Dolce Vita Light.ttf" id="3_pa3hc"]
 [ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="4_l7g3a"]
 [ext_resource type="FontFile" uid="uid://ct8ktr3vwivj5" path="res://fonts/Dolce Vita.ttf" id="5_esfke"]
+[ext_resource type="FontFile" uid="uid://d284c83dkulgm" path="res://fonts/Dolce Vita Heavy Bold.ttf" id="6_bry4w"]
 
 [sub_resource type="FontVariation" id="FontVariation_cjo1o"]
 base_font = ExtResource("3_pa3hc")
 
 [sub_resource type="FontVariation" id="FontVariation_mei7f"]
+base_font = ExtResource("5_esfke")
+
+[sub_resource type="FontVariation" id="FontVariation_ke2ut"]
+base_font = ExtResource("6_bry4w")
+
+[sub_resource type="FontVariation" id="FontVariation_j3ca0"]
 base_font = ExtResource("5_esfke")
 
 [node name="game_scene" type="Node2D"]
@@ -19,9 +26,12 @@ base_font = ExtResource("5_esfke")
 script = ExtResource("1_dn8nw")
 faderPath = NodePath("../CanvasLayer/GameMargin/Fader")
 menuPath = NodePath("../CanvasLayer/GameMargin/Menu")
+volumeSliderPath = NodePath("../CanvasLayer/GameMargin/Menu/Content/RightHbox/MarginContainer/VBoxContainer/HBoxContainer/VolumeSlider")
+quoteContainerPath = NodePath("../CanvasLayer/GameMargin/QuoteContainer")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_nx43q")
+volume_db = -50.0
 autoplay = true
 max_distance = 2e+08
 attenuation = 1e-05
@@ -45,18 +55,18 @@ modulate = Color(0.129412, 0.129412, 0.129412, 1)
 layout_mode = 2
 texture = ExtResource("4_l7g3a")
 
-[node name="Texts" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu"]
+[node name="Content" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="TopVbox" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Texts"]
+[node name="TopVbox" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Content"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/GameMargin/Menu/Texts/TopVbox"]
+[node name="Title" type="Label" parent="CanvasLayer/GameMargin/Menu/Content/TopVbox"]
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontVariation_cjo1o")
 theme_override_font_sizes/font_size = 100
@@ -65,22 +75,83 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BotVbox" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Texts"]
+[node name="BotVbox" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Content"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu/Texts/BotVbox"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu/Content/BotVbox"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_right = 200
 
-[node name="Instruction" type="Label" parent="CanvasLayer/GameMargin/Menu/Texts/BotVbox/MarginContainer"]
+[node name="Instruction" type="Label" parent="CanvasLayer/GameMargin/Menu/Content/BotVbox/MarginContainer"]
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontVariation_mei7f")
 theme_override_font_sizes/font_size = 30
 text = "- Click anywhere to begin journey -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightHbox" type="HBoxContainer" parent="CanvasLayer/GameMargin/Menu/Content"]
+layout_mode = 2
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameMargin/Menu/Content/RightHbox"]
+layout_mode = 2
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameMargin/Menu/Content/RightHbox/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GameMargin/Menu/Content/RightHbox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VolumeSlider" type="VSlider" parent="CanvasLayer/GameMargin/Menu/Content/RightHbox/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+scrollable = false
+tick_count = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/GameMargin/Menu/Content/RightHbox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_ke2ut")
+text = "Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuoteContainer" type="MarginContainer" parent="CanvasLayer/GameMargin"]
+visible = false
+layout_mode = 2
+
+[node name="BG" type="TextureRect" parent="CanvasLayer/GameMargin/QuoteContainer"]
+modulate = Color(0.74902, 0.74902, 0.74902, 1)
+layout_mode = 2
+texture = ExtResource("4_l7g3a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameMargin/QuoteContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Quote" type="Label" parent="CanvasLayer/GameMargin/QuoteContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.160784, 0.160784, 0.160784, 1)
+theme_override_fonts/font = SubResource("FontVariation_j3ca0")
+theme_override_font_sizes/font_size = 35
+text = "\"Whatever you do will be insignificant,
+but it is very important that you do it.\"
+
+- Mahatma Gandhi"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -138,4 +209,4 @@ levelName = "earth"
 musicName = "Earth"
 metadata/_edit_use_anchors_ = true
 
-[connection signal="gui_input" from="CanvasLayer/GameMargin/Menu/Texts" to="GameManager" method="_on_menu_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/GameMargin/Menu/Content" to="GameManager" method="_on_menu_gui_input"]
