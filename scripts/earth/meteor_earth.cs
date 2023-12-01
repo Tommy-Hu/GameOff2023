@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 
 public partial class meteor_earth : Area2D 
 {
+	[Export]
+	public int damageAmount = 1;
 	PackedScene plMeteorEffect = (PackedScene)GD.Load("res://scenes/earth/meteor_effect_earth.tscn");
 	[Export]
 	public float minSpeed = 50;
@@ -63,7 +65,7 @@ public partial class meteor_earth : Area2D
 	{
 		if (area.IsInGroup("Earth")) 
 		{
-			area.Call("damage","1");
+			planet_earth.singleton.damage(damageAmount);
 			QueueFree();
 		}
 	}

@@ -3,14 +3,15 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 
 public partial class player_earth : Area2D
-{	PackedScene plBullet = (PackedScene)GD.Load("res://scenes/earth/bullet_earth.tscn");
+{	
+
+	PackedScene plBullet = (PackedScene)GD.Load("res://scenes/earth/bullet_earth.tscn");
+
+	
 
 	private AnimatedSprite2D animatedSprite;
 	private Node2D firingPositions;
 	private Timer fireDelayTimer;
-	
-	[Export]
-	public double life = 3;
 
 	[Export]
 	public float speed = 300;
@@ -70,21 +71,8 @@ public partial class player_earth : Area2D
 		Rect2 viewRect = GetViewportRect();
 		var newPosition = Position;
 		newPosition.X = Mathf.Clamp(Position.X, 0, 1153);
+		newPosition.Y = Mathf.Clamp(Position.Y, 0, 570);
 		Position = newPosition;
 		
-	}
-
-	public void damage(int amount)
-	{
-		life -= amount;
-		EmitSignal("OnPlayerLifeChangedEventHandler", life);
-		
-
-		Console.WriteLine("Current life: ", life);
-		if (life <= 0) 
-		{
-			Console.WriteLine("Player died!");
-			QueueFree();
-		}
 	}
 }
