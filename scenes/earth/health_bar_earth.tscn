@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://7mt7muiywfth"]
+
+[ext_resource type="Script" path="res://scripts/earth/ProgressBar.cs" id="1_febq1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wj500"]
+bg_color = Color(0.6, 0.352941, 0.352941, 1)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -178.0
+offset_top = 12.0
+offset_right = 178.0
+offset_bottom = 39.0
+grow_horizontal = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_wj500")
+step = 1.0
+value = 100.0
+script = ExtResource("1_febq1")
