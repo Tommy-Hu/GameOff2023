@@ -80,7 +80,7 @@ public partial class Frog : RigidBody2D
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
 			
 			
-			GD.Print(curJumpForce);
+			//GD.Print(curJumpForce);
 			
 
 		}
@@ -112,8 +112,16 @@ public partial class Frog : RigidBody2D
 			onGround = true;
 			//collider.Disabled = false;
 		}
+	
+		if (body.Name == "SuperiorLilyPad")
+        {
+			GameManager.PlayLevel("earth", "Earth");
+
+        }
 		
-    }
+
+
+	}
 
 	private void OnFrogGroundCheckBodyExited(Node2D body)
     {
@@ -123,8 +131,13 @@ public partial class Frog : RigidBody2D
 
 	private void OnDeathBodyEntered(Node2D body)
     {
-		GD.Print("DEATH DESTROYER OF WORLDS");
-    }
+		if (body.Name == "Frog")
+		{
+			GameManager.PlayLevelFade("frog","Frog");
+	
+		}
+		
+	}
 
 	private void ScreenWrap()
     {

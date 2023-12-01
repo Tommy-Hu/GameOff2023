@@ -26,9 +26,10 @@ size = Vector2(143.409, 125.063)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a2f2w"]
 shader = ExtResource("6_vu8uy")
 shader_parameter/thunder = false
-shader_parameter/duration = null
+shader_parameter/duration = 1.0
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/radius = 0.2
+shader_parameter/halfthunder = false
 
 [sub_resource type="Theme" id="Theme_t5q3u"]
 
@@ -97,10 +98,6 @@ material = SubResource("ShaderMaterial_a2f2w")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1334.0
-offset_top = 78.0
-offset_right = 1334.0
-offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
