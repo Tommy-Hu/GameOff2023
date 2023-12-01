@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cha1q2o261qal"]
+[gd_scene load_steps=15 format=3 uid="uid://cha1q2o261qal"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_4nleg"]
 [ext_resource type="Script" path="res://scripts/CellsManager.cs" id="2_itjdd"]
 [ext_resource type="Texture2D" uid="uid://5lo4uhylrq05" path="res://sprites/level_cell_bg.png" id="2_ixtno"]
 [ext_resource type="Shader" path="res://shaders/post_processing.gdshader" id="2_seqbp"]
+[ext_resource type="PackedScene" uid="uid://jyejhx3s4pid" path="res://scenes/prefabs/player_cell.tscn" id="3_gwv4r"]
 [ext_resource type="PackedScene" uid="uid://bpeffins62t35" path="res://scenes/prefabs/cell.tscn" id="3_w22lo"]
 [ext_resource type="Script" path="res://scripts/SpriteMaskMaster.cs" id="5_3jyt6"]
 [ext_resource type="Shader" path="res://shaders/mask_shader.gdshader" id="5_rmwer"]
@@ -18,6 +19,12 @@ shader_parameter/tint = Color(0.980392, 0.854902, 0.85098, 1)
 shader = ExtResource("5_rmwer")
 shader_parameter/tint = Color(0.788235, 0.25098, 0.290196, 0.462745)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6l2s3"]
+size = Vector2(6000, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1m73v"]
+size = Vector2(20, 6000)
+
 [node name="level_cells" instance=ExtResource("1_4nleg")]
 metadata/_edit_vertical_guides_ = []
 
@@ -25,10 +32,16 @@ metadata/_edit_vertical_guides_ = []
 position_smoothing_enabled = true
 
 [node name="BG" type="Sprite2D" parent="." index="1"]
+z_index = -1000
 scale = Vector2(0.615, 0.615)
 texture = ExtResource("2_ixtno")
 
-[node name="Cells" type="Node2D" parent="." index="2"]
+[node name="Player" parent="." index="2" instance=ExtResource("3_gwv4r")]
+gravity_scale = 0.0
+speed = 100.0
+shootInterval = 2.0
+
+[node name="Cells" type="Node2D" parent="." index="3"]
 script = ExtResource("2_itjdd")
 
 [node name="Goods" type="Node2D" parent="Cells" index="0"]
@@ -1842,7 +1855,7 @@ position = Vector2(65, 94)
 [node name="Bad Cell8" parent="Cells/Bads" index="7" instance=ExtResource("3_w22lo")]
 position = Vector2(-12, -43)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" index="0"]
 material = SubResource("ShaderMaterial_rjwuj")
@@ -1852,14 +1865,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SpriteMaskMaster" type="Sprite2D" parent="." index="4"]
+[node name="SpriteMaskMaster" type="Sprite2D" parent="." index="5"]
 z_index = 1000
 material = SubResource("ShaderMaterial_55yfy")
 script = ExtResource("5_3jyt6")
 
-[node name="RNG" type="Node2D" parent="." index="5"]
+[node name="RNG" type="Node2D" parent="." index="6"]
 script = ExtResource("8_rrh8e")
 
-[node name="UILayer" type="CanvasLayer" parent="." index="6"]
+[node name="UILayer" type="CanvasLayer" parent="." index="7"]
 
 [node name="CellLevelUI" parent="UILayer" index="0" instance=ExtResource("9_8jkm5")]
+
+[node name="Wall 1" type="StaticBody2D" parent="." index="8"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall 1" index="0"]
+position = Vector2(0, 334)
+shape = SubResource("RectangleShape2D_6l2s3")
+
+[node name="Wall 2" type="StaticBody2D" parent="." index="9"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall 2" index="0"]
+position = Vector2(0, -334)
+shape = SubResource("RectangleShape2D_6l2s3")
+
+[node name="Wall 3" type="StaticBody2D" parent="." index="10"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall 3" index="0"]
+position = Vector2(-586, 0)
+shape = SubResource("RectangleShape2D_1m73v")
+
+[node name="Wall 4" type="StaticBody2D" parent="." index="11"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall 4" index="0"]
+position = Vector2(586, 0)
+shape = SubResource("RectangleShape2D_1m73v")
