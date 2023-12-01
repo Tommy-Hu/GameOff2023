@@ -27,7 +27,7 @@ public partial class bullet_earth : Area2D
 			GetParent().AddChild(BulletEffect);
 
 			var cam = GetViewport().GetCamera2D() as Cam;
-			cam.shake(0.1f, 3);
+			cam.shake(0.1f, 4);
 
 			area.Call("damage","1");
 			QueueFree();

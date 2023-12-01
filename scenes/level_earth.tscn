@@ -19,26 +19,28 @@ texture = ExtResource("1_kiqkp")
 centered = false
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Background"]
-position = Vector2(75.1955, 0.694444)
+position = Vector2(73.2407, -91.2037)
 amount = 150
-lifetime = 10.0
+lifetime = 30.0
 texture = ExtResource("2_76lv8")
 emission_shape = 3
 emission_rect_extents = Vector2(110, 100)
 direction = Vector2(0, 1)
 spread = 0.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 25.0
-initial_velocity_max = 90.0
+initial_velocity_min = 40.0
+initial_velocity_max = 65.0
 scale_amount_min = 0.5
 
 [node name="meteor_earth" parent="." instance=ExtResource("3_dbqfu")]
 position = Vector2(569, -397)
 
 [node name="Player" parent="." instance=ExtResource("4_isi0h")]
+z_index = 0
 position = Vector2(574, 386)
 
 [node name="planet_earth" parent="." instance=ExtResource("5_qfyxv")]
+z_index = 1
 
 [node name="HUD" parent="." instance=ExtResource("6_q33hx")]
 offset_top = -2.0
@@ -51,7 +53,8 @@ anchor_mode = 0
 script = ExtResource("8_3q6pp")
 
 [node name="g" type="Node2D" parent="."]
-position = Vector2(575, -564)
+z_index = -1
+position = Vector2(570, -313)
 script = ExtResource("9_slkfg")
-meteorsTilBoss = 15
+meteorsTilBoss = 20
 spawnInterval = 1.0
