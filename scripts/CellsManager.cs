@@ -9,6 +9,9 @@ public partial class CellsManager : Node2D
     public static bool lost = false;
     public static bool won = false;
 
+    public const string STAT_HEALTHY_CELLS_ATE = "HEALTHY_CELLS_ATE";
+    public const string STAT_CANCER_CELLS_ATE = "CANCER_CELLS_ATE";
+
     [Export]
     public float badInterval = 10;
     [Export]
@@ -54,6 +57,7 @@ public partial class CellsManager : Node2D
             Cell cell = batch.GetChild<Cell>((int)(GD.Randi() % (uint)batch.GetChildCount()));
             if (!cell.good) return;
             totalCancerCells++;
+
             CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
             cell.SetGood(false);
             badTimer = badInterval;
@@ -73,12 +77,17 @@ public partial class CellsManager : Node2D
         if (!cell.good)
         {
             totalCancerCells--;
+            GameManager.ChangeStat(STAT_CANCER_CELLS_ATE, 1);
             CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
             if (totalCancerCells <= 0)
             {
                 CellsManager.won = true;
                 GameManager.PlayLevel("frog", "Frog");
             }
+        }
+        else
+        {
+            GameManager.ChangeStat(STAT_HEALTHY_CELLS_ATE, 1);
         }
     }
 

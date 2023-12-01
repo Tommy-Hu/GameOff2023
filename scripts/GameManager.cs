@@ -22,6 +22,8 @@ public enum BeatType
 
 public partial class GameManager : Node2D
 {
+    public static readonly Dictionary<string, int> stats = new Dictionary<string, int>();
+
     /// <summary>
     /// Beats per minute of the music.
     /// </summary>
@@ -64,8 +66,13 @@ public partial class GameManager : Node2D
 
     [Export]
     public NodePath faderPath;
+    [Export]
+    public NodePath menuPath;
 
     private TextureProgressBar fader;
+    private MarginContainer menu;
+
+    private bool fading = false;
 
     public override void _EnterTree()
     {
@@ -83,6 +90,7 @@ public partial class GameManager : Node2D
     {
         base._Ready();
         fader = GetNode<TextureProgressBar>(faderPath);
+        menu = GetNode<MarginContainer>(menuPath);
     }
 
     /// <summary>
@@ -127,12 +135,14 @@ public partial class GameManager : Node2D
             Camera2D cam = singleton.GetViewport().GetCamera2D();
             if (cam is not null)
             {
+                singleton.fading = true;
                 Tween tween = singleton.CreateTween();
                 tween.SetTrans(Tween.TransitionType.Quad);
                 tween.TweenProperty(cam, "zoom", Vector2.One * 0.005f, ZOOM_TIME);
                 tween.TweenCallback(Callable.From(() =>
                 {
                     PlayLevelImmediate(levelName, musicName);
+                    singleton.fading = false;
                 }));
             }
             else
@@ -150,11 +160,14 @@ public partial class GameManager : Node2D
     public static void PlayLevelFade(string levelName, string musicName)
     {
         Tween tween = singleton.CreateTween();
+        singleton.fading = true;
         tween.SetTrans(Tween.TransitionType.Circ);
         tween.TweenProperty(singleton.fader, "value", 100, FADE_TIME);
         tween.TweenCallback(Callable.From(() =>
         {
+            UnloadMenu();
             PlayLevelImmediate(levelName, musicName);
+            singleton.fading = false;
         }));
         tween.TweenProperty(singleton.fader, "value", 0, FADE_TIME);
     }
@@ -260,6 +273,34 @@ public partial class GameManager : Node2D
         lastFramePos = pos;
     }
 
+    public static void RemoveStat(string key)
+    {
+        if (stats.ContainsKey(key))
+            stats.Remove(key);
+    }
+
+    public static void SetStat(string key, int value)
+    {
+        if (stats.ContainsKey(key))
+            stats[key] = value;
+        else
+            stats.Add(key, value);
+    }
+
+    /// <summary>
+    /// Adds delta to stats[key]. If the key does not exist, stats[key] will become `defaultValue + delta`.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="delta"></param>
+    /// <param name="defaultValue"></param>
+    public static void ChangeStat(string key, int delta, int defaultValue = 0)
+    {
+        if (stats.ContainsKey(key))
+            stats[key] += delta;
+        else
+            SetStat(key, delta + defaultValue);
+    }
+
     public override void _ExitTree()
     {
         base._ExitTree();
@@ -268,5 +309,38 @@ public partial class GameManager : Node2D
             OnBeat = null;// destroy all listeners
             singleton = null;
         }
+    }
+
+    public void _on_menu_gui_input(InputEvent @event)
+    {
+        if (!fading)
+        {
+            if (@event is InputEventMouseButton btn)
+            {
+                if (btn.Pressed)
+                {
+                    PlayLevelFade("electron", "Electron");
+                }
+            }
+        }
+    }
+
+    public static void LoadMenu()
+    {
+        Tween tween = singleton.CreateTween();
+        singleton.fading = true;
+        tween.SetTrans(Tween.TransitionType.Circ);
+        tween.TweenProperty(singleton.fader, "value", 100, FADE_TIME);
+        tween.TweenCallback(Callable.From(() =>
+        {
+            singleton.menu.Visible = true;
+            singleton.fading = false;
+        }));
+        tween.TweenProperty(singleton.fader, "value", 0, FADE_TIME);
+    }
+
+    public static void UnloadMenu()
+    {
+        singleton.menu.Visible = false;
     }
 }
