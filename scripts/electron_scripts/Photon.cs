@@ -26,9 +26,9 @@ public partial class Photon : CharacterBody2D
 
     private void SetRandomSpawn()
     {
-        int positionX = ((int)GD.Randi()) % 8192 - 4096;
-        int positionY = ((int)GD.Randi()) % 4096 - 2048;
-        Position = new Vector2(positionX, positionY);
+        int positionX = (int)(GD.Randi() % 8192u) - 4096;
+        int positionY = (int)(GD.Randi() % 4096u) - 2048;
+        GlobalPosition = new Vector2(positionX, positionY);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,8 +37,19 @@ public partial class Photon : CharacterBody2D
 		base._Process(delta);
         Richochet(delta);
         daSprite.Play();
-        GD.Print(GlobalRotation);
-        GlobalRotation = (Velocity / Velocity.Normalized()).X - Mathf.Pi / 2;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (Velocity.X > 0)
+        {
+            GlobalRotation = Mathf.Atan(Velocity.Y / Velocity.X);
+        }
+        else
+        {
+            GlobalRotation = Mathf.Pi + Mathf.Atan(Velocity.Y / Velocity.X);
+        }
+        GlobalRotation -= Mathf.Pi / 2;
     }
 
     private void Richochet(double delta)

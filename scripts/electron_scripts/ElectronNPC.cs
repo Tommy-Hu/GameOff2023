@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public partial class ElectronNPC : SubAtomicCharge
 {
@@ -7,6 +8,7 @@ public partial class ElectronNPC : SubAtomicCharge
     PlayerElectron player;
     [Export]
     Nitrogen1 center;
+    private AnimatedSprite2D daSprite;
 
     private const float SPIN = 1f;
     float orbitalRadius;
@@ -17,6 +19,15 @@ public partial class ElectronNPC : SubAtomicCharge
         base._Ready();
         Charge = -1;
         Freeze = true;
+        daSprite = GetChild<AnimatedSprite2D>(1);
+        CollisionShape2D shape = GetChild<ElectronA1Area2D>(2).GetChild<CollisionShape2D>(0);
+        shape.Shape = (Shape2D)shape.Shape.Duplicate();
+        ((CircleShape2D)shape.Shape).Radius = 0.5f * Nitrogen1.DetermineRadius(1);
+    }
+
+    public override void _Process(double delta)
+    {
+        daSprite.Play();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
