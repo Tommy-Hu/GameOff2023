@@ -6,7 +6,7 @@ public partial class LilyPadSpawner : Node2D
 	public PackedScene scene = GD.Load<PackedScene>("res://scenes/prefabs/lily_pad.tscn");
 	public PackedScene sceneGold = GD.Load<PackedScene>("res://scenes/prefabs/superior_lily_pad.tscn");
 	[Export]
-	public float height = 0;
+	public float height = 8000;
 	public float curHeight = 0;
 	public int curZIndex= 200;
 
