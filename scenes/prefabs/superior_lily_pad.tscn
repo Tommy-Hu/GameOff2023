@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://c47h3loklwdw"]
+
+[ext_resource type="Script" path="res://scripts/SuperiorLilyPad.cs" id="1_4t6ys"]
+[ext_resource type="Shader" path="res://shaders/LilyPad.gdshader" id="2_xtgrx"]
+[ext_resource type="Texture2D" uid="uid://cs0g28wc1rhvp" path="res://sprites/FrogAssets/lilyPad4.png" id="3_w71bn"]
+[ext_resource type="Texture2D" uid="uid://x5gfqe4hrq2h" path="res://scenes/prefabs/textures_earth/starSmall.png" id="4_mm81x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y2ktm"]
+shader = ExtResource("2_xtgrx")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yxfwx"]
+size = Vector2(170.5, 12)
+
+[sub_resource type="Curve" id="Curve_1nhhw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.463158), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="SuperiorLilyPad" type="StaticBody2D"]
+script = ExtResource("1_4t6ys")
+metadata/_edit_group_ = true
+
+[node name="LilyPadGold" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_y2ktm")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_w71bn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, -167)
+shape = SubResource("RectangleShape2D_yxfwx")
+one_way_collision = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(1, -177)
+lifetime = 3.0
+texture = ExtResource("4_mm81x")
+emission_shape = 2
+emission_sphere_radius = 128.0
+gravity = Vector2(0, 50)
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_1nhhw")
+color = Color(0.996078, 0.941176, 0, 1)
