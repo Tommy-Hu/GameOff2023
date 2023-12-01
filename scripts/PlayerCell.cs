@@ -5,8 +5,11 @@ public partial class PlayerCell : RigidBody2D
 {
     [Export]
     public float speed = 5f;
+    [Export]
+    public float shootInterval = 3f;
 
     private bool mouseWasPressed = false;
+    private float shootTimer = 3f;
 
     public override void _Ready()
     {
@@ -41,33 +44,30 @@ public partial class PlayerCell : RigidBody2D
     public override void _Process(double delta)
     {
         base._Process(delta);
-        if (Input.IsMouseButtonPressed(MouseButton.Left))
+        bool wasGreater = shootTimer > 0;
+        shootTimer -= (float)delta;
+        CellLevelUIManager.instance.SetGunCountdown((int)(100 - shootTimer * 100f / shootInterval));
+        if (shootTimer <= 0)
         {
-            if (!mouseWasPressed)
+            if (wasGreater)
+                GameManager.PlaySFX("cell_gun_cock.wav");
+            if (Input.IsMouseButtonPressed(MouseButton.Left))
             {
-                var maskScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_mask.tscn");
-                var mask = maskScn.Instantiate<SpriteMask>();
-                const bool SHOTGUN = false;
-                const float SCALE = 0.20f;
-                if (SHOTGUN)
+                shootTimer = shootInterval;
+                if (!mouseWasPressed)
                 {
-                    mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_shot_gun.png");
-                    mask.rotateSpeed = 0f;
-                    Transform2D t = Transform2D.Identity;
-                    t = t.Rotated((GetGlobalMousePosition() - GlobalPosition).Angle() + Mathf.Pi * 0.25f);
-                    t[2] += GlobalTransform[2];
-                    //t[2] += GetGlobalMousePosition();
-                    t = t.TranslatedLocal(new Vector2(1f, -1f) * (Vector2)mask.Texture.GetImage().GetSize() * 0.5f * SCALE);
-                    mask.GlobalTransform = t;
+                    GameManager.PlaySFX("cell_gun.mp3");
+                    var projScn = GD.Load<PackedScene>("res://scenes/prefabs/cell_projectile.tscn");
+                    var proj = projScn.Instantiate<CellProjectile>();
+                    GetParent().AddChild(proj);
+                    proj.destination = GetGlobalMousePosition();
+                    proj.GlobalPosition = GlobalPosition;
+                    mouseWasPressed = true;
                 }
-                else
-                {
-                    mask.Texture = ResourceLoader.Load<Texture2D>("res://sprites/reveal_gradient_0.png");
-                    mask.GlobalPosition = GetGlobalMousePosition();
-                }
-                mask.GlobalScale = Vector2.One * SCALE;
-                SpriteMaskMaster.AddMask(mask);
-                mouseWasPressed = true;
+            }
+            else
+            {
+                mouseWasPressed = false;
             }
         }
         else
