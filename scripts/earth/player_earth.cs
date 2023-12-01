@@ -3,14 +3,13 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 
 public partial class player_earth : Area2D
-{	PackedScene plBullet = (PackedScene)GD.Load("res://scenes/earth/bullet_earth.tscn");
+{	
+
+	PackedScene plBullet = (PackedScene)GD.Load("res://scenes/earth/bullet_earth.tscn");
 
 	private AnimatedSprite2D animatedSprite;
 	private Node2D firingPositions;
 	private Timer fireDelayTimer;
-	
-	[Export]
-	public double life = 3;
 
 	[Export]
 	public float speed = 300;
@@ -38,7 +37,7 @@ public partial class player_earth : Area2D
 			animatedSprite.Play("Idle");
 
 		// Check if shooting
-		if (Input.IsActionPressed("shoot") && fireDelayTimer.IsStopped())
+		if (Input.IsMouseButtonPressed(MouseButton.Left) && fireDelayTimer.IsStopped())
 		{
 			fireDelayTimer.Start(fireDelay);
 			foreach (Node2D child in firingPositions.GetChildren())
@@ -54,13 +53,13 @@ public partial class player_earth : Area2D
 	{
 		vel.X = 0;
 		vel.Y = 0;
-		if (Input.IsActionPressed("move_left"))
+		if (Input.IsKeyPressed(Key.A))
 			vel.X -= speed;
-		if (Input.IsActionPressed("move_right"))
+		if (Input.IsKeyPressed(Key.D))
 			vel.X += speed;
-		if (Input.IsActionPressed("move_up"))
+		if (Input.IsKeyPressed(Key.W))
 			vel.Y -= speed;
-		if (Input.IsActionPressed("move_down"))
+		if (Input.IsKeyPressed(Key.S))
 			vel.Y += speed;
 
 		vel = vel.Normalized() * speed;
@@ -70,21 +69,8 @@ public partial class player_earth : Area2D
 		Rect2 viewRect = GetViewportRect();
 		var newPosition = Position;
 		newPosition.X = Mathf.Clamp(Position.X, 0, 1153);
+		newPosition.Y = Mathf.Clamp(Position.Y, 0, 570);
 		Position = newPosition;
 		
-	}
-
-	public void damage(int amount)
-	{
-		life -= amount;
-		EmitSignal("OnPlayerLifeChangedEventHandler", life);
-		
-
-		Console.WriteLine("Current life: ", life);
-		if (life <= 0) 
-		{
-			Console.WriteLine("Player died!");
-			QueueFree();
-		}
 	}
 }
