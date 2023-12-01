@@ -1,0 +1,184 @@
+[gd_scene load_steps=13 format=3 uid="uid://cn3t10bsceldo"]
+
+[ext_resource type="Script" path="res://scripts/electron_scripts/MainElectron.cs" id="1_mynbe"]
+[ext_resource type="Script" path="res://scripts/electron_scripts/PlayerElectron.cs" id="2_jtffb"]
+[ext_resource type="Texture2D" uid="uid://2wjqa3d4v748" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0000.png" id="4_2kygi"]
+[ext_resource type="PackedScene" uid="uid://dysvpeittck7j" path="res://scenes/prefabs/atom.tscn" id="4_sdbnb"]
+[ext_resource type="Texture2D" uid="uid://dolohv8xljg3g" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0001.png" id="5_lufkv"]
+[ext_resource type="Texture2D" uid="uid://dwj6gcih1rsf6" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0002.png" id="6_mk7ny"]
+[ext_resource type="Texture2D" uid="uid://2dw6sio3v7uv" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0003.png" id="7_12vn4"]
+[ext_resource type="PackedScene" uid="uid://trw5bircsxia" path="res://scenes/prefabs/photon.tscn" id="8_eemxs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_livv0"]
+radius = 16.0312
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mdxg3"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_2kygi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lufkv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mk7ny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_12vn4")
+}],
+"loop": true,
+"name": &"electron_player_animation",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovrfg"]
+
+[sub_resource type="Curve2D" id="Curve2D_0a7qb"]
+
+[node name="level_electron" type="Node2D"]
+script = ExtResource("1_mynbe")
+
+[node name="PlayerElectron" type="RigidBody2D" parent="."]
+position = Vector2(-3921, 1858)
+mass = 0.01
+inertia = 1.0
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_jtffb")
+
+[node name="PlayerHitbox" type="CollisionShape2D" parent="PlayerElectron"]
+shape = SubResource("CircleShape2D_livv0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PlayerElectron"]
+sprite_frames = SubResource("SpriteFrames_mdxg3")
+animation = &"electron_player_animation"
+frame = 3
+
+[node name="Camera2D" type="Camera2D" parent="PlayerElectron"]
+visible = false
+zoom = Vector2(0.25, 0.25)
+limit_left = -4096
+limit_top = -2048
+limit_right = 4096
+limit_bottom = 2048
+
+[node name="Atoms" type="Node2D" parent="."]
+
+[node name="Cluster1" type="Node2D" parent="Atoms"]
+
+[node name="Nitrogen3" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3894, 1491)
+Charge = 2
+
+[node name="Nitrogen4" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
+position = Vector2(-2407, 1517)
+
+[node name="Nitrogen5" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3166, 1402)
+
+[node name="Cluster2" type="Node2D" parent="Atoms"]
+
+[node name="Nitrogen1" parent="Atoms/Cluster2" instance=ExtResource("4_sdbnb")]
+position = Vector2(2464, -1192)
+Charge = 8
+
+[node name="Nitrogen2" parent="Atoms/Cluster2" instance=ExtResource("4_sdbnb")]
+position = Vector2(-1698, -706)
+Charge = 1
+
+[node name="Cluster1Wall" type="Node2D" parent="Atoms"]
+position = Vector2(557, -113)
+
+[node name="Nitrogen6" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-2093, 1620)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen10" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-2099, 1302)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen11" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-1989, 1531)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen12" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-2076, 1818)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen13" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-2104, 717)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen14" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-2070, 2053)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen7" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-1976, 1433)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen8" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-1980, 1745)
+spawnElectron = false
+Charge = 2
+
+[node name="Nitrogen9" parent="Atoms/Cluster1Wall" instance=ExtResource("4_sdbnb")]
+position = Vector2(-1970, 1939)
+spawnElectron = false
+Charge = 2
+
+[node name="Photons" type="Node2D" parent="."]
+position = Vector2(683, -328)
+
+[node name="Photon1" parent="Photons" instance=ExtResource("8_eemxs")]
+position = Vector2(-4579, 1403)
+
+[node name="Camera2D" type="Camera2D" parent="Photons/Photon1"]
+rotation_smoothing_enabled = true
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="CharacterBody2D" parent="Walls"]
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(0, 2048)
+scale = Vector2(1024, 1)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(0, -2048)
+scale = Vector2(1024, 1)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(-4096, 0)
+rotation = -3.14159
+scale = Vector2(1, 512)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(4096, 0)
+rotation = -3.14159
+scale = Vector2(1, 512)
+shape = SubResource("RectangleShape2D_ovrfg")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0a7qb")
+
+[node name="MobTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
