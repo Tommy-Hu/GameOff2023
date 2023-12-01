@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 using System.Threading.Tasks.Dataflow;
 
 public partial class bullet_earth : Area2D
@@ -11,11 +12,10 @@ public partial class bullet_earth : Area2D
 	public override void _PhysicsProcess(double delta)
 	{
 		this.Position += new Vector2(0,-AMOUNT);
-	}
-
-	public void _OnVisibleOnScreenNotifier2DScreenExited()
-	{
-		QueueFree();
+		if (this.Position.Y < -15)
+		{
+			QueueFree();
+		}
 	}
 
 	private void _on_area_entered(Area2D area)

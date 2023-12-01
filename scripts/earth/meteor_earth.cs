@@ -31,6 +31,18 @@ public partial class meteor_earth : Area2D
 	{
 		speed = (float) (minSpeed + (rand.NextDouble() * maxSpeed));
 		rotationRate = (float) (minRotationRate + (rand.NextDouble() * maxRotationRate));
+		GameManager.OnBeat += onBeat;
+
+	}
+
+	public void onBeat(BeatType beattype)
+	{
+		if (beattype.HasFlag(BeatType.MainBeat))
+		{
+			vel.X += (GD.Randf() - 0.5f) * 2f * speed;
+			var cam = GetViewport().GetCamera2D() as Cam;
+			cam.shake(0.2f, 3);
+		}
 
 	}
 
@@ -40,6 +52,11 @@ public partial class meteor_earth : Area2D
 
 		vel.Y = speed;
 		Position += vel * (float)delta;
+
+		if (GlobalPosition.Y > GetViewportRect().Size.Y + 5)
+		{
+			QueueFree();
+		}
 		
 	}
 
@@ -54,7 +71,7 @@ public partial class meteor_earth : Area2D
 			QueueFree();
 		}
 	}
-
+	
 	private void _on_visible_on_screen_notifier_2d_screen_exited()
 	{
 		QueueFree();
@@ -69,6 +86,12 @@ public partial class meteor_earth : Area2D
 			QueueFree();
 		}
 	}
+
+    public override void _ExitTree()
+    {
+       GameManager.OnBeat -= onBeat;
+    }
+
 
 
 }
