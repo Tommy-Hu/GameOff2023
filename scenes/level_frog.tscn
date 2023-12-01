@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://m405luxpd4qr"]
+[gd_scene load_steps=20 format=3 uid="uid://m405luxpd4qr"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_welx0"]
 [ext_resource type="Script" path="res://scripts/Frog.cs" id="2_86pts"]
@@ -12,9 +12,10 @@
 [ext_resource type="Script" path="res://scripts/LilyPadSpawner.cs" id="11_lxju7"]
 [ext_resource type="Script" path="res://scripts/PlayerProgress.cs" id="11_snvxc"]
 [ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="12_sn8dd"]
+[ext_resource type="Script" path="res://scripts/Death.cs" id="13_byxyk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m55bd"]
-size = Vector2(127, 1)
+size = Vector2(130.963, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_867cx"]
 size = Vector2(136, 134)
@@ -30,6 +31,9 @@ shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/radius = 0.2
 
 [sub_resource type="Theme" id="Theme_t5q3u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wahqx"]
+size = Vector2(1155, 1370)
 
 [node name="FrogManager" instance=ExtResource("1_welx0")]
 position = Vector2(-186, -23)
@@ -50,8 +54,8 @@ texture = ExtResource("3_rdn5b")
 [node name="FrogGroundCheck" type="Area2D" parent="Frog" index="1"]
 
 [node name="GroundCheckSize" type="CollisionShape2D" parent="Frog/FrogGroundCheck" index="0"]
-position = Vector2(0, 34)
-scale = Vector2(0.5, 0.5)
+position = Vector2(0.360001, 34)
+scale = Vector2(0.54, 0.5)
 shape = SubResource("RectangleShape2D_m55bd")
 
 [node name="FrogCollider" type="CollisionShape2D" parent="Frog" index="2"]
@@ -93,6 +97,10 @@ material = SubResource("ShaderMaterial_a2f2w")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1334.0
+offset_top = 78.0
+offset_right = 1334.0
+offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
@@ -134,5 +142,22 @@ tint_under = Color(0, 0, 0, 1)
 tint_over = Color(0, 0, 0, 1)
 tint_progress = Color(0.219608, 0.160784, 0.0862745, 1)
 
+[node name="Death" type="Area2D" parent="." index="4"]
+position = Vector2(-70, -64)
+scale = Vector2(1.7025, 1.0259)
+script = ExtResource("13_byxyk")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Death" index="0"]
+position = Vector2(180, 1039)
+shape = SubResource("RectangleShape2D_wahqx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Death" index="1"]
+z_index = 1001
+position = Vector2(177.973, 1039.09)
+scale = Vector2(1160.75, 1365.75)
+texture = ExtResource("12_sn8dd")
+
 [connection signal="body_entered" from="Frog/FrogGroundCheck" to="Frog" method="OnFrogGroundCheckBodyEntered"]
 [connection signal="body_exited" from="Frog/FrogGroundCheck" to="Frog" method="OnFrogGroundCheckBodyExited"]
+[connection signal="body_entered" from="Death" to="Frog" method="OnDeathBodyEntered"]
