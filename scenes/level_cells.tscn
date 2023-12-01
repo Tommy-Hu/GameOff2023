@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://shaders/post_processing.gdshader" id="2_seqbp"]
 [ext_resource type="PackedScene" uid="uid://jyejhx3s4pid" path="res://scenes/prefabs/player_cell.tscn" id="3_gwv4r"]
 [ext_resource type="PackedScene" uid="uid://bpeffins62t35" path="res://scenes/prefabs/cell.tscn" id="3_w22lo"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/player_cell.tscn" id="4_f840k"]
 [ext_resource type="Script" path="res://scripts/SpriteMaskMaster.cs" id="5_3jyt6"]
 [ext_resource type="Shader" path="res://shaders/mask_shader.gdshader" id="5_rmwer"]
 [ext_resource type="Script" path="res://scripts/RNG.cs" id="8_rrh8e"]
