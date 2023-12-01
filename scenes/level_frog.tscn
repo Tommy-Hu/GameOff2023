@@ -1,8 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://m405luxpd4qr"]
+[gd_scene load_steps=21 format=3 uid="uid://m405luxpd4qr"]
 
 [ext_resource type="PackedScene" uid="uid://dy21a1lg5yxac" path="res://scenes/game_scene_root.tscn" id="1_welx0"]
 [ext_resource type="Script" path="res://scripts/Frog.cs" id="2_86pts"]
-[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="2_b5nan"]
 [ext_resource type="Texture2D" uid="uid://cp4785k8hhw8s" path="res://sprites/FrogAssets/frog_idle.png" id="3_rdn5b"]
 [ext_resource type="Script" path="res://scripts/FrogJumpDirector.cs" id="5_vxjgx"]
 [ext_resource type="Texture2D" uid="uid://bu6q7pdm5m641" path="res://sprites/FrogAssets/arrow_v01_0000.png" id="6_4ddud"]
@@ -11,19 +10,16 @@
 [ext_resource type="Script" path="res://scripts/FrogCamara2D.cs" id="8_f36vk"]
 [ext_resource type="Script" path="res://scripts/LilyPadSpawner.cs" id="11_lxju7"]
 [ext_resource type="Script" path="res://scripts/PlayerProgress.cs" id="11_snvxc"]
-[ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="12_sn8dd"]
 [ext_resource type="Script" path="res://scripts/Death.cs" id="13_byxyk"]
 [ext_resource type="Texture2D" uid="uid://dvqcpt10qoj2l" path="res://sprites/FrogAssets/frogbackground_01.png" id="13_ky75o"]
 [ext_resource type="Texture2D" uid="uid://c4h1t27l1bbpm" path="res://sprites/FrogAssets/circlemud1.png" id="15_g05w4"]
+[ext_resource type="PackedScene" uid="uid://mriwkxp7ukub" path="res://scenes/prefabs/lily_pad.tscn" id="15_sf1sk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m55bd"]
 size = Vector2(130.963, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_867cx"]
 size = Vector2(136, 134)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ikro"]
-size = Vector2(143.409, 125.063)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a2f2w"]
 shader = ExtResource("6_vu8uy")
@@ -77,25 +73,10 @@ position = Vector2(-3.8147e-06, -22)
 scale = Vector2(0.416, 0.416)
 texture = ExtResource("6_4ddud")
 
-[node name="Platforms" type="Node2D" parent="." index="1"]
-position = Vector2(-450, -118)
-
-[node name="Platform1" type="StaticBody2D" parent="Platforms" index="0"]
-position = Vector2(635, 276)
-scale = Vector2(8.4374, -0.656258)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1" index="0"]
-position = Vector2(0.711116, 0)
-shape = SubResource("RectangleShape2D_4ikro")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform1" index="1"]
-texture = ExtResource("2_b5nan")
-
-[node name="LilyPadSpawner" type="Node2D" parent="." index="2"]
+[node name="LilyPadSpawner" type="Node2D" parent="." index="1"]
 script = ExtResource("11_lxju7")
 
-[node name="FrogCamara2D" type="Camera2D" parent="." index="3"]
+[node name="FrogCamara2D" type="Camera2D" parent="." index="2"]
 position = Vector2(186, 23)
 script = ExtResource("8_f36vk")
 
@@ -130,28 +111,14 @@ offset_top = 54.0
 offset_right = 82.0
 offset_bottom = 579.0
 theme = SubResource("Theme_t5q3u")
-value = 50.0
 fill_mode = 3
 show_percentage = false
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="FrogCamara2D/Ui layer/PlayerProgress" index="2"]
-offset_left = -241.0
-offset_top = 373.0
-offset_right = -201.0
-offset_bottom = 809.0
-value = 50.0
-texture_under = ExtResource("12_sn8dd")
-texture_over = ExtResource("12_sn8dd")
-texture_progress = ExtResource("12_sn8dd")
-tint_under = Color(0, 0, 0, 1)
-tint_over = Color(0, 0, 0, 1)
-tint_progress = Color(0.219608, 0.160784, 0.0862745, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="FrogCamara2D" index="2"]
 z_index = -1
 texture = ExtResource("13_ky75o")
 
-[node name="Death" type="Area2D" parent="." index="4"]
+[node name="Death" type="Area2D" parent="." index="3"]
 position = Vector2(-70, -64)
 scale = Vector2(1.7025, 1.0259)
 script = ExtResource("13_byxyk")
@@ -179,6 +146,42 @@ gravity = Vector2(0, 0)
 scale_amount_min = 0.0
 scale_amount_max = 1.5
 color = Color(0.172549, 0.113725, 0.0352941, 1)
+
+[node name="Node2D" type="Node2D" parent="." index="4"]
+position = Vector2(0, 60)
+metadata/_edit_group_ = true
+
+[node name="LilyPad" parent="Node2D" index="0" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(-295, 107)
+
+[node name="LilyPad2" parent="Node2D" index="1" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(-104, 108)
+
+[node name="LilyPad3" parent="Node2D" index="2" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(86, 110)
+
+[node name="LilyPad4" parent="Node2D" index="3" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(274, 110)
+
+[node name="LilyPad5" parent="Node2D" index="4" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(463, 110)
+
+[node name="LilyPad6" parent="Node2D" index="5" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(650, 111)
+
+[node name="LilyPad7" parent="Node2D" index="6" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(840, 112)
+
+[node name="LilyPad8" parent="Node2D" index="7" instance=ExtResource("15_sf1sk")]
+z_index = 201
+position = Vector2(-486, 104)
 
 [connection signal="body_entered" from="Frog/FrogGroundCheck" to="Frog" method="OnFrogGroundCheckBodyEntered"]
 [connection signal="body_exited" from="Frog/FrogGroundCheck" to="Frog" method="OnFrogGroundCheckBodyExited"]
