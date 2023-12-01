@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bs1augt6gpoon"]
+[gd_scene load_steps=13 format=3 uid="uid://cn3t10bsceldo"]
 
 [ext_resource type="Script" path="res://scripts/electron_scripts/MainElectron.cs" id="1_mynbe"]
 [ext_resource type="Script" path="res://scripts/electron_scripts/PlayerElectron.cs" id="2_jtffb"]
@@ -7,14 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://dolohv8xljg3g" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0001.png" id="5_lufkv"]
 [ext_resource type="Texture2D" uid="uid://dwj6gcih1rsf6" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0002.png" id="6_mk7ny"]
 [ext_resource type="Texture2D" uid="uid://2dw6sio3v7uv" path="res://sprites/ElectronAssets/player_animation/electron_player_v01_0003.png" id="7_12vn4"]
-[ext_resource type="Texture2D" uid="uid://bu6q7pdm5m641" path="res://sprites/FrogAssets/arrow_v01_0000.png" id="7_kp7wt"]
-[ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="7_mrbg0"]
-[ext_resource type="Texture2D" uid="uid://bah5fkuxytcom" path="res://sprites/ElectronAssets/goal_animation/goal_v01_0000.png" id="9_b73x1"]
-[ext_resource type="Texture2D" uid="uid://bgtkdde816qem" path="res://sprites/ElectronAssets/goal_animation/goal_v01_0001.png" id="10_qinuh"]
-[ext_resource type="Texture2D" uid="uid://b26xqxmeh43at" path="res://sprites/ElectronAssets/goal_animation/goal_v01_0002.png" id="11_wv4el"]
-[ext_resource type="Texture2D" uid="uid://bivmndnl27pbw" path="res://sprites/ElectronAssets/goal_animation/goal_v01_0003.png" id="12_xh42l"]
-[ext_resource type="Script" path="res://scripts/electron_scripts/WinAreaSprite.cs" id="13_uhri8"]
-[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="14_iacm4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_livv0"]
 radius = 60.1332
@@ -44,57 +36,9 @@ animations = [{
 "speed": 4.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_lb7rw"]
-offsets = PackedFloat32Array(0, 0.505208, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_i5o27"]
-gradient = SubResource("Gradient_lb7rw")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3gbyl"]
-emission_shape = 6
-emission_ring_axis = Vector3(0, 0, 1)
-emission_ring_height = 1.0
-emission_ring_radius = 13.0
-emission_ring_inner_radius = 10.0
-particle_flag_disable_z = true
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 1.0
-initial_velocity_max = 5.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
-damping_min = 0.1
-damping_max = 1.0
-scale_max = 2.0
-color_ramp = SubResource("GradientTexture1D_i5o27")
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ovrfg"]
 
 [sub_resource type="Curve2D" id="Curve2D_0a7qb"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_b8kg3"]
-radius = 257.498
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_l6agn"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("9_b73x1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_qinuh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_wv4el")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_xh42l")
-}],
-"loop": true,
-"name": &"default",
-"speed": 4.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7t8sk"]
 size = Vector2(332, 319)
@@ -103,7 +47,7 @@ size = Vector2(332, 319)
 script = ExtResource("1_mynbe")
 
 [node name="PlayerElectron" type="RigidBody2D" parent="."]
-position = Vector2(-3919, 1863)
+position = Vector2(-3319, 1881)
 mass = 0.01
 inertia = 1.0
 gravity_scale = 0.0
@@ -120,37 +64,11 @@ animation = &"electron_player_animation"
 frame = 3
 
 [node name="Camera2D" type="Camera2D" parent="PlayerElectron"]
-position = Vector2(-331, -30)
-zoom = Vector2(0.4, 0.4)
+zoom = Vector2(0.5, 0.5)
 limit_left = -4096
 limit_top = -2048
 limit_right = 4096
 limit_bottom = 2048
-
-[node name="ArrowController" type="Node2D" parent="PlayerElectron"]
-
-[node name="Sprite2D" type="Sprite2D" parent="PlayerElectron/ArrowController"]
-position = Vector2(0, -132)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("7_kp7wt")
-
-[node name="ArrowController3" type="Node2D" parent="PlayerElectron"]
-
-[node name="Sprite2D" type="Sprite2D" parent="PlayerElectron/ArrowController3"]
-position = Vector2(0, -132)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("7_kp7wt")
-
-[node name="ArrowController2" type="Node2D" parent="PlayerElectron"]
-
-[node name="Sprite2D" type="Sprite2D" parent="PlayerElectron/ArrowController2"]
-position = Vector2(0, -62)
-scale = Vector2(0.5, 0.2)
-texture = ExtResource("7_kp7wt")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="PlayerElectron"]
-emitting = false
-process_material = SubResource("ParticleProcessMaterial_3gbyl")
 
 [node name="Atoms" type="Node2D" parent="."]
 
@@ -158,21 +76,14 @@ process_material = SubResource("ParticleProcessMaterial_3gbyl")
 position = Vector2(1398, -2409)
 
 [node name="Nitrogen3" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
-position = Vector2(-4573, 2828)
+position = Vector2(-4766, 3447)
 Charge = 2
+
+[node name="Nitrogen4" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
+position = Vector2(-4756, 2240)
 
 [node name="Nitrogen5" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
 position = Vector2(-5377, 1627)
-spawnElectron = false
-Charge = 2
-
-[node name="Nitrogen6" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
-position = Vector2(-5200, 1627)
-spawnElectron = false
-Charge = 2
-
-[node name="Nitrogen7" parent="Atoms/Cluster1" instance=ExtResource("4_sdbnb")]
-position = Vector2(-5018, 1627)
 spawnElectron = false
 Charge = 2
 
@@ -187,16 +98,8 @@ position = Vector2(-492, 934)
 Charge = 10
 
 [node name="Nitrogen3" parent="Atoms/Cluster2" instance=ExtResource("4_sdbnb")]
-position = Vector2(2183, 478)
+position = Vector2(2333, 149)
 Charge = 18
-
-[node name="Nitrogen4" parent="Atoms/Cluster2" instance=ExtResource("4_sdbnb")]
-position = Vector2(2994, -1758)
-Charge = 1
-
-[node name="Nitrogen5" parent="Atoms/Cluster2" instance=ExtResource("4_sdbnb")]
-position = Vector2(168, -833)
-Charge = 3
 
 [node name="Cluster1Wall" type="Node2D" parent="Atoms"]
 position = Vector2(557, -113)
@@ -288,22 +191,22 @@ Charge = 2
 position = Vector2(4160, -1982)
 
 [node name="Nitrogen2" parent="Atoms/Cluster1Wall6" instance=ExtResource("4_sdbnb")]
-position = Vector2(-4083, 617)
+position = Vector2(-3752, 647)
 spawnElectron = false
 Charge = 2
 
 [node name="Nitrogen3" parent="Atoms/Cluster1Wall6" instance=ExtResource("4_sdbnb")]
-position = Vector2(-3736, 609)
+position = Vector2(-3405, 639)
 spawnElectron = false
 Charge = 2
 
 [node name="Nitrogen4" parent="Atoms/Cluster1Wall6" instance=ExtResource("4_sdbnb")]
-position = Vector2(-3403, 612)
+position = Vector2(-3072, 642)
 spawnElectron = false
 Charge = 2
 
 [node name="Nitrogen5" parent="Atoms/Cluster1Wall6" instance=ExtResource("4_sdbnb")]
-position = Vector2(-3069, 606)
+position = Vector2(-2738, 636)
 spawnElectron = false
 Charge = 2
 
@@ -311,42 +214,22 @@ Charge = 2
 position = Vector2(6339, -1546)
 
 [node name="Nitrogen2" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-3547, 608)
+position = Vector2(-3752, 647)
 spawnElectron = false
 Charge = 2
 
 [node name="Nitrogen3" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-3200, 600)
+position = Vector2(-3405, 639)
 spawnElectron = false
 Charge = 2
 
 [node name="Nitrogen4" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-2867, 603)
+position = Vector2(-3072, 642)
 spawnElectron = false
 Charge = 2
 
 [node name="Nitrogen5" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-2533, 597)
-spawnElectron = false
-Charge = 2
-
-[node name="Nitrogen6" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-4744, 965)
-spawnElectron = false
-Charge = 2
-
-[node name="Nitrogen7" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-4397, 957)
-spawnElectron = false
-Charge = 2
-
-[node name="Nitrogen8" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-4064, 960)
-spawnElectron = false
-Charge = 2
-
-[node name="Nitrogen9" parent="Atoms/Cluster1Wall5" instance=ExtResource("4_sdbnb")]
-position = Vector2(-3730, 954)
+position = Vector2(-2738, 636)
 spawnElectron = false
 Charge = 2
 
@@ -408,19 +291,27 @@ Charge = 2
 
 [node name="SecretPath" type="Node2D" parent="Atoms"]
 
+[node name="Nitrogen7" parent="Atoms/SecretPath" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3721, -2040)
+spawnElectron = false
+
 [node name="Nitrogen9" parent="Atoms/SecretPath" instance=ExtResource("4_sdbnb")]
 position = Vector2(-3737, -1442)
-Charge = 2
+Charge = 1
+
+[node name="Nitrogen10" parent="Atoms/SecretPath" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3598, -2010)
+spawnElectron = false
+
+[node name="Nitrogen11" parent="Atoms/SecretPath" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3192, -2018)
+spawnElectron = false
 
 [node name="HorizontalWall" type="Node2D" parent="Atoms"]
 position = Vector2(1251, 135)
 
 [node name="Nitrogen6" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
 position = Vector2(-5113, -1907)
-spawnElectron = false
-
-[node name="Nitrogen7" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
-position = Vector2(-5327, -2149)
 spawnElectron = false
 
 [node name="Nitrogen8" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
@@ -437,7 +328,7 @@ spawnElectron = false
 
 [node name="Nitrogen14" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
 position = Vector2(-4361, -1905)
-Charge = 1
+spawnElectron = false
 
 [node name="Nitrogen15" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
 position = Vector2(-4181, -1904)
@@ -457,7 +348,7 @@ spawnElectron = false
 
 [node name="Nitrogen19" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
 position = Vector2(-3413, -1904)
-Charge = 1
+spawnElectron = false
 
 [node name="Nitrogen20" parent="Atoms/HorizontalWall" instance=ExtResource("4_sdbnb")]
 position = Vector2(-3224, -1903)
@@ -508,6 +399,14 @@ spawnElectron = false
 
 [node name="Nitrogen19" parent="Atoms/HorizontalWall3" instance=ExtResource("4_sdbnb")]
 position = Vector2(-3413, -1904)
+spawnElectron = false
+
+[node name="Nitrogen20" parent="Atoms/HorizontalWall3" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3224, -1903)
+spawnElectron = false
+
+[node name="Nitrogen21" parent="Atoms/HorizontalWall3" instance=ExtResource("4_sdbnb")]
+position = Vector2(-3038, -1901)
 spawnElectron = false
 
 [node name="HorizontalWall4" type="Node2D" parent="Atoms"]
@@ -582,7 +481,7 @@ spawnElectron = false
 
 [node name="Nitrogen14" parent="Atoms/HorizontalWall2" instance=ExtResource("4_sdbnb")]
 position = Vector2(-4361, -1905)
-Charge = 1
+spawnElectron = false
 
 [node name="Nitrogen15" parent="Atoms/HorizontalWall2" instance=ExtResource("4_sdbnb")]
 position = Vector2(-4181, -1904)
@@ -610,7 +509,7 @@ spawnElectron = false
 
 [node name="Nitrogen21" parent="Atoms/HorizontalWall2" instance=ExtResource("4_sdbnb")]
 position = Vector2(-3038, -1901)
-Charge = 1
+spawnElectron = false
 
 [node name="Photons" type="Node2D" parent="."]
 position = Vector2(683, -328)
@@ -647,58 +546,12 @@ curve = SubResource("Curve2D_0a7qb")
 [node name="MobTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="Goal" type="Area2D" parent="."]
-position = Vector2(3749, -1706)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
-shape = SubResource("CircleShape2D_b8kg3")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Goal"]
-sprite_frames = SubResource("SpriteFrames_l6agn")
-script = ExtResource("13_uhri8")
-
 [node name="PowerUp" type="Area2D" parent="."]
-position = Vector2(-2620, 1579)
+position = Vector2(3871, 1831)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PowerUp"]
 shape = SubResource("RectangleShape2D_7t8sk")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Bob" type="Sprite2D" parent="PowerUp"]
-position = Vector2(-0.999859, -0.999859)
-scale = Vector2(2.46875, 2.46875)
-texture = ExtResource("14_iacm4")
-
-[node name="PowerUp2" type="Area2D" parent="."]
-position = Vector2(892, 1777)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PowerUp2"]
-shape = SubResource("RectangleShape2D_7t8sk")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
-[node name="Bob" type="Sprite2D" parent="PowerUp2"]
-position = Vector2(-0.999859, -0.999859)
-scale = Vector2(2.46875, 2.46875)
-texture = ExtResource("14_iacm4")
-
-[node name="BG" type="TextureRect" parent="."]
-visible = false
-modulate = Color(0.129412, 0.129412, 0.129412, 1)
-show_behind_parent = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4096.0
-offset_top = -2048.0
-offset_right = 4096.0
-offset_bottom = 2048.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("7_mrbg0")
-
 [connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
-[connection signal="body_entered" from="Goal" to="PlayerElectron" method="OnGoalAreaEntered"]
 [connection signal="body_entered" from="PowerUp" to="PlayerElectron" method="OnPowerUpAreaEntered"]
-[connection signal="body_entered" from="PowerUp2" to="PlayerElectron" method="OnPowerUpAreaEntered"]

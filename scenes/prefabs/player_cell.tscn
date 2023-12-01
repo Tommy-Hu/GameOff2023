@@ -17,7 +17,7 @@ shader_parameter/squish = null
 offsets = PackedFloat32Array(0, 0.505208, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_lxoup"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i5o27"]
 gradient = SubResource("Gradient_lttiq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hu740"]
@@ -36,7 +36,7 @@ orbit_velocity_max = 0.0
 damping_min = 0.1
 damping_max = 1.0
 scale_max = 2.0
-color_ramp = SubResource("GradientTexture1D_lxoup")
+color_ramp = SubResource("GradientTexture1D_i5o27")
 
 [node name="Player" type="RigidBody2D"]
 max_contacts_reported = 1
