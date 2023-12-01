@@ -18,6 +18,7 @@ base_font = ExtResource("5_esfke")
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_dn8nw")
 faderPath = NodePath("../CanvasLayer/GameMargin/Fader")
+menuPath = NodePath("../CanvasLayer/GameMargin/Menu")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_nx43q")
