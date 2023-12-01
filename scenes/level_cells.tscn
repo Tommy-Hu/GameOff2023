@@ -13,7 +13,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjwuj"]
 shader = ExtResource("2_seqbp")
-shader_parameter/tint = Vector4(1.2, 0.95, 0.95, 1)
+shader_parameter/tint = Color(0.980392, 0.854902, 0.85098, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_55yfy"]
 shader = ExtResource("5_rmwer")
@@ -2109,7 +2109,8 @@ position = Vector2(-12, -43)
 [node name="Player" parent="." index="3" instance=ExtResource("4_f840k")]
 gravity_scale = 0.0
 linear_damp = 0.8
-speed = 50.0
+speed = 125.0
+shootInterval = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
 

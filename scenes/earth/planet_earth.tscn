@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxt4re23ypgj7"]
+
+[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="1_teb56"]
+
+[node name="planet_earth" type="Area2D" groups=["Earth"]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(577, 654)
+scale = Vector2(9.125, 0.703125)
+polygon = PackedVector2Array(-62.5753, -56.8889, 63.3425, -61.1555, 63.6712, 56.8889, -63.3425, 54.0444)
+
+[node name="earth" type="Sprite2D" parent="."]
+position = Vector2(577, 654)
+scale = Vector2(9.125, 0.703125)
+texture = ExtResource("1_teb56")
