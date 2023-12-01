@@ -134,13 +134,6 @@ position = Vector2(0, -132)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_kp7wt")
 
-[node name="ArrowController3" type="Node2D" parent="PlayerElectron"]
-
-[node name="Sprite2D" type="Sprite2D" parent="PlayerElectron/ArrowController3"]
-position = Vector2(0, -132)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("7_kp7wt")
-
 [node name="ArrowController2" type="Node2D" parent="PlayerElectron"]
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerElectron/ArrowController2"]
