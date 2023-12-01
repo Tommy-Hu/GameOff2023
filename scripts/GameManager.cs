@@ -5,19 +5,19 @@ using System.Collections.Generic;
 [Flags]
 public enum BeatType
 {
-    None = 0,
-    /// <summary>
-    /// The super loud beat every phrase. (every two measures)
-    /// </summary>
-    PhraseBeat = 1,
-    /// <summary>
-    /// The loud beat every measure.
-    /// </summary>
-    MainBeat = 1 << 1,
-    /// <summary>
-    /// The lighter beat 4 times per measure.
-    /// </summary>
-    QuarterBeat = 1 << 2,
+	None = 0,
+	/// <summary>
+	/// The super loud beat every phrase. (every two measures)
+	/// </summary>
+	PhraseBeat = 1,
+	/// <summary>
+	/// The loud beat every measure.
+	/// </summary>
+	MainBeat = 1 << 1,
+	/// <summary>
+	/// The lighter beat 4 times per measure.
+	/// </summary>
+	QuarterBeat = 1 << 2,
 }
 
 public partial class GameManager : Node2D
