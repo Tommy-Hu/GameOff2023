@@ -46,6 +46,7 @@ public partial class PlayerCell : RigidBody2D
         base._Process(delta);
         bool wasGreater = shootTimer > 0;
         shootTimer -= (float)delta;
+        CellLevelUIManager.instance.SetGunCountdown((int)(100 - shootTimer * 100f / shootInterval));
         if (shootTimer <= 0)
         {
             if (wasGreater)

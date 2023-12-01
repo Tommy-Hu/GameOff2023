@@ -9,6 +9,9 @@ public partial class CellsManager : Node2D
 
     [Export]
     public float badInterval = 10;
+    [Export]
+    public int loseBadCount = 10;
+
     private float badTimer = 10;
 
     private HashSet<Cell> cells = new HashSet<Cell>();
@@ -31,14 +34,14 @@ public partial class CellsManager : Node2D
         Recurse(this);
         totalAliveCells = cells.Count;
         totalCancerCells = cells.Aggregate(0, (a, c) => a + (c.good ? 0 : 1));
-        CellLevelUIManager.instance.SetCancerCount(totalCancerCells);
+        CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
         badTimer -= (float)delta;
-        CellLevelUIManager.instance.SetCancerCountdown(badTimer);
+        CellLevelUIManager.instance.SetCancerCountdown((int)(100 - badTimer * 100f / badInterval));
         if (badTimer <= 0)
         {
             // turn a good cell into a bad cell
@@ -47,7 +50,7 @@ public partial class CellsManager : Node2D
             Cell cell = batch.GetChild<Cell>((int)(GD.Randi() % (uint)batch.GetChildCount()));
             if (!cell.good) return;
             totalCancerCells++;
-            CellLevelUIManager.instance.SetCancerCount(totalCancerCells);
+            CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
             cell.SetGood(false);
             badTimer = badInterval;
         }
@@ -58,7 +61,7 @@ public partial class CellsManager : Node2D
         if (!cell.good)
         {
             totalCancerCells--;
-            CellLevelUIManager.instance.SetCancerCount(totalCancerCells);
+            CellLevelUIManager.instance.SetCancerCount(totalCancerCells, Mathf.CeilToInt((totalCancerCells * 100f) / loseBadCount));
             if (totalCancerCells <= 0)
             {
                 GameManager.PlayLevel("frog", "Frog");
