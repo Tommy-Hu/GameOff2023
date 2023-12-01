@@ -10,7 +10,7 @@ public partial class Photon : CharacterBody2D
         base._Ready();
         speed = 1000f;
         SetRandomSpawn();
-        SetRandomVelocity();    
+        SetRandomVelocity();
     }
 
     private void SetRandomVelocity()

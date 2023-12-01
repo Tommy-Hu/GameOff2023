@@ -18,15 +18,5 @@ public partial class Nitrogen1Area2D : Area2D
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		// Polling for checking whether the player is in designated radius
-		if (OverlapsBody(player))
-		{
-			parentNode.InPlayerRange(true);
-		} 
-		else
-		{
-			parentNode.InPlayerRange(false);
-		}
-
 	}
 }

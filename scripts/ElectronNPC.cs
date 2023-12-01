@@ -7,73 +7,56 @@ public partial class ElectronNPC : SubAtomicCharge
     PlayerElectron player;
     [Export]
     Nitrogen1 center;
-    bool nearPlayer = false;
-    bool previousNearPlayer = false;
+
+    private const float SPIN = 1f;
     float orbitalRadius;
-    float BASE_FORCE_CORRECTION = 20f;
-    float BASE_TANGENTIAL_CORRECTION = 250f;
+    float revolutionAngle;
 
     public override void _Ready()
     {
         base._Ready();
         Charge = -1;
-        player = (PlayerElectron)GetParent().GetParent().GetParent().GetParent().GetChild(0);
+        Freeze = true;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        if (!nearPlayer && previousNearPlayer)
-        {
-            player.RemoveElectromagneticCharge(this);
-        }
-        else if (nearPlayer && !previousNearPlayer)
+        Revolve(delta);
+    }
+
+    private void Revolve(double delta)
+    {
+        revolutionAngle += (float)delta * SPIN;
+        Vector2 newPosition = Vector2.Zero;
+        newPosition.X = center.Position.X + (float)Math.Cos(revolutionAngle)*orbitalRadius;
+        newPosition.Y = center.Position.Y + (float)Math.Sin(revolutionAngle)*orbitalRadius;
+        Position = newPosition;
+    }
+
+    public void Initialize(Nitrogen1 centerPivot, PlayerElectron thePlayer, float distanceValue, float startingAngle)
+    {
+        center = centerPivot;
+        player = thePlayer;
+        orbitalRadius = distanceValue;
+        revolutionAngle = startingAngle;
+    }
+
+    public void OnBodyInRange(Node2D body)
+    {
+        if (body == player)
         {
             player.AddElectromagneticCharge(this);
         }
-        else
-        {
-            // pass, no need modifications
-        }
-        Vector2 vectorToCenter = center.Position - Position;       
-        ApplyCentripetalForce(vectorToCenter);
-        ApplyTangentialForce(vectorToCenter);
+        
     }
 
-    public override void InPlayerRange(bool status)
+    public void OnBodyOutRange(Node2D body)
     {
-        previousNearPlayer = nearPlayer;
-        nearPlayer = status;
-    }
-
-    private void ApplyCentripetalForce(Vector2 vectorToCenter)
-    {
-        float offset = vectorToCenter.Length() - orbitalRadius;
-        if (offset > 0)
+        if (body == player)
         {
-            ApplyForce(vectorToCenter / orbitalRadius * BASE_FORCE_CORRECTION * 5);
+            player.RemoveElectromagneticCharge(this);
         }
-        else if (offset < 0)
-        {
-            float a = 1 - vectorToCenter.Length() / orbitalRadius;
-            ApplyForce(-1 * a * vectorToCenter * BASE_FORCE_CORRECTION);
-        }
-        else
-        {
-            ApplyTangentialForce(vectorToCenter);
-        }
-        GD.Print("Offset", offset);
-    }
-
-    private void ApplyTangentialForce(Vector2 vectorToCenter)
-    {
-        ApplyForce(vectorToCenter.Rotated((float)Math.PI / 2) / BASE_TANGENTIAL_CORRECTION / BASE_TANGENTIAL_CORRECTION * orbitalRadius);
-    }
-
-    public void Initialize(Nitrogen1 centerPivot, float distanceValue)
-    {
-        center = centerPivot;
-        orbitalRadius = distanceValue;
     }
 }

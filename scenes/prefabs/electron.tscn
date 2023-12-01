@@ -9,12 +9,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_170lp"]
 radius = 112.872
 
-[node name="ElectronA1" type="RigidBody2D" node_paths=PackedStringArray("center")]
+[node name="ElectronA1" type="RigidBody2D"]
 position = Vector2(464, -452)
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_178d5")
-center = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jn6wl")
@@ -28,3 +27,6 @@ script = ExtResource("3_sugbo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElectronA1Area2D"]
 shape = SubResource("CircleShape2D_170lp")
+
+[connection signal="body_entered" from="ElectronA1Area2D" to="." method="OnBodyInRange"]
+[connection signal="body_exited" from="ElectronA1Area2D" to="." method="OnBodyOutRange"]

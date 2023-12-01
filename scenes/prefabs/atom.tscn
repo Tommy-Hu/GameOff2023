@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=3 uid="uid://dysvpeittck7j"]
+
+[ext_resource type="Script" path="res://scripts/Nitrogen1.cs" id="1_hgsex"]
+[ext_resource type="Script" path="res://scripts/Nitrogen1Area2D.cs" id="2_vq2vf"]
+[ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="3_npwm2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8o8s7"]
+radius = 69.0072
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gyn87"]
+radius = 459.736
+
+[node name="Nitrogen1" type="RigidBody2D"]
+gravity_scale = 0.0
+sleeping = true
+freeze = true
+script = ExtResource("1_hgsex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8o8s7")
+
+[node name="Nitrogen1Area2D" type="Area2D" parent="."]
+script = ExtResource("2_vq2vf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Nitrogen1Area2D"]
+shape = SubResource("CircleShape2D_gyn87")
+
+[node name="Protons and Neutrons" type="Node" parent="."]
+
+[node name="PlayerSprite2" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(-19, -22)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite3" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(10, -34)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite4" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(30, -14)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite5" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(4, -2)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite11" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(30, 34)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite12" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(-40, 19)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite13" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(-18, -46)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite14" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(32, -35)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite15" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(43, 10)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite6" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(-35, -6)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite7" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(-18, 12)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite8" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(26, 10)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite9" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(7, 26)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="PlayerSprite10" type="Sprite2D" parent="Protons and Neutrons"]
+position = Vector2(-19, 33)
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("3_npwm2")
+
+[node name="Electrons" type="Node" parent="."]
+
+[connection signal="body_entered" from="." to="." method="OnHit"]
+[connection signal="body_entered" from="Nitrogen1Area2D" to="." method="OnBodyInRange"]
+[connection signal="body_exited" from="Nitrogen1Area2D" to="." method="OnBodyOutRange"]

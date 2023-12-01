@@ -10,10 +10,10 @@ public partial class MainElectron : Node2D
     }
     private void OnMobTimerTimeout()
     {
-        //// Create a new instance of the Mob scene.
-        //Photon mob = mobScene.Instantiate<Photon>();
+        // Create a new instance of the Mob scene.
+        Photon mob = mobScene.Instantiate<Photon>();
 
-        //// Spawn the mob by adding it to the Main scene.
-        //AddChild(mob);
+        // Spawn the mob by adding it to the Main scene.
+        GetChild(2).AddChild(mob);
     }
 }

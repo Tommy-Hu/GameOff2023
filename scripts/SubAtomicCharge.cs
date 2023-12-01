@@ -3,6 +3,7 @@ using System;
 
 public abstract partial class SubAtomicCharge : RigidBody2D
 {
+	[Export]
 	public int Charge;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -15,6 +16,4 @@ public abstract partial class SubAtomicCharge : RigidBody2D
 	{
 		base._PhysicsProcess(delta);
 	}
-
-	public abstract void InPlayerRange(bool status);
 }

@@ -6,42 +6,23 @@ public partial class Nitrogen1 : SubAtomicCharge
 	// Called when the node enters the scene tree for the first time.
 	PackedScene electronScene;
 	PlayerElectron player;
-	bool nearPlayer = false;
-	bool previousNearPlayer = false;
+
     private const float RADIUS_MULTIPLIER = 500f;
 	
 	public override void _Ready()
 	{
 		base._Ready();
-		Charge = 7;
 		electronScene = ResourceLoader.Load<PackedScene>("res://scenes/prefabs/electron.tscn");
 		player = (PlayerElectron) GetParent().GetParent().GetChild(0);
-        ((CircleShape2D)GetChild<Nitrogen1Area2D>(1).GetChild<CollisionShape2D>(0).Shape).Radius = SpawnElectrons() * RADIUS_MULTIPLIER;
-	}
+        ((CircleShape2D)GetChild<Nitrogen1Area2D>(1).GetChild<CollisionShape2D>(0).Shape).Radius = SpawnElectrons();
+        GD.Print("CIRCLE RADIUS", ((CircleShape2D)GetChild<Nitrogen1Area2D>(1).GetChild<CollisionShape2D>(0).Shape).Radius);
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-        if (!nearPlayer && previousNearPlayer)
-        {
-            player.RemoveElectromagneticCharge(this);
-        }
-        else if (nearPlayer && !previousNearPlayer)
-        {
-            player.AddElectromagneticCharge(this);
-        }
-		else
-		{
-			// pass, no need modifications
-		}
     }
-
-	public override void InPlayerRange(bool status)
-	{
-		previousNearPlayer = nearPlayer;
-		nearPlayer = status;
-	}
 
 	private float SpawnElectrons()
 	{
@@ -49,14 +30,15 @@ public partial class Nitrogen1 : SubAtomicCharge
 		for (int i = 0; i < Charge; i++)
         {
             ElectronNPC electron = electronScene.Instantiate<ElectronNPC>();
+
             float orbitRadius = DetermineRadius(i);
-            electron.Initialize(this, orbitRadius);
-            GetChild(3).AddChild(electron);
             float alfa = DetermineRotation(i);
-            //electron.Position = new Vector2(orbitRadius*Mathf.Cos(alfa), orbitRadius*Mathf.Sin(alfa));
+
+            electron.Initialize(this, player, orbitRadius, alfa);
+            GetChild(3).AddChild(electron);
             electron.Position = new Vector2(orbitRadius * Mathf.Cos(i*2*Mathf.Pi/Charge), orbitRadius * Mathf.Sin(i*2 * Mathf.Pi / Charge));
-            GD.Print(orbitRadius);
             biggestRadius = orbitRadius;
+            GD.Print("Electron i: ", orbitRadius);
         }
         return biggestRadius;
     }
@@ -104,5 +86,31 @@ public partial class Nitrogen1 : SubAtomicCharge
         }
 
         return rotationValue;
+    }
+
+    public void OnBodyInRange(Node2D body)
+    {
+        if (body == player)
+        {
+            player.AddElectromagneticCharge(this);
+        }
+
+    }
+
+    public void OnBodyOutRange(Node2D body)
+    {
+        if (body == player)
+        {
+            player.RemoveElectromagneticCharge(this);
+        }
+
+    }
+
+    public void OnHit(Node body)
+    {
+        if (body == player)
+        {
+            player.Hit();
+        }
     }
 }
