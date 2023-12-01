@@ -4,11 +4,13 @@ using System;
 public partial class LilyPadSpawner : Node2D
 {
 	public PackedScene scene = GD.Load<PackedScene>("res://scenes/prefabs/lily_pad.tscn");
-
+	public PackedScene sceneGold = GD.Load<PackedScene>("res://scenes/prefabs/superior_lily_pad.tscn");
 	[Export]
-	public float height = 4000;
+	public float height = 8000;
 	public float curHeight = 0;
 	public int curZIndex= 999;
+
+	public bool end = false;
 
 	public static LilyPadSpawner instance;
 
@@ -27,6 +29,15 @@ public partial class LilyPadSpawner : Node2D
 			SpawnLilyPad(curHeight, curZIndex, num);
 			curHeight += 250;
 			curZIndex -= 1;
+		}
+		else if (curHeight >= height && !end)
+        {
+			SuperiorLilyPad instance = sceneGold.Instantiate<SuperiorLilyPad>();
+
+			AddChild(instance);
+			instance.GlobalPosition = new Vector2(0, -1 * height);
+			instance.setSpriteZIndex(curZIndex);
+			end= true;
 		}
 	}
 
