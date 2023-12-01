@@ -15,6 +15,6 @@ public partial class TestGameButton : Button
 
     private void TestGameButton_Pressed()
     {
-        GameManager.PlayLevel(levelName, musicName);
+        GameManager.PlayLevelFade(levelName, musicName);
     }
 }

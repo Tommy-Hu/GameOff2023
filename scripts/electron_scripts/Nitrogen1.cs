@@ -31,11 +31,11 @@ public partial class Nitrogen1 : SubAtomicCharge
 	private float GetRadius()
 	{
         float biggestRadius = 0f;
-		for (int i = 0; i < Charge; i++)
+		for (int i = 1; i <= Charge; i++)
         {
             float orbitRadius = DetermineRadius(i);
             float alfa = DetermineRotation(i);
-            biggestRadius = Mathf.Max(biggestRadius, orbitRadius);
+            biggestRadius = orbitRadius;
             if (spawnElectron == true)
                 InstantiateElectrons(i, orbitRadius, alfa);
         }
@@ -47,48 +47,43 @@ public partial class Nitrogen1 : SubAtomicCharge
         ElectronNPC electron = electronScene.Instantiate<ElectronNPC>();
         electron.Initialize(this, player, orbitRadius, alfa);
         GetChild(3).AddChild(electron);
-        electron.Position = new Vector2(orbitRadius * Mathf.Cos(i * 2 * Mathf.Pi / Charge), orbitRadius * Mathf.Sin(i * 2 * Mathf.Pi / Charge));
     }
 
-    private static float DetermineRadius(int i)
+    public static float DetermineRadius(int i)
     {
         float distanceValue;
-        if (i == 0)
+        if (i == 1 || i == 2)
         {
             distanceValue = 1;
         }
-        else if (i == 1)
-        {
-            distanceValue = 0.5f;
-        }
         else if (i < 10)
         {
-            float proportion = (float)(i - 1) / 8;
-            distanceValue = 2 - proportion;
+            float proportion = (float)(i - 2) / 8;
+            distanceValue = 1 + proportion;
         }
         else
         {
-            float proportion = (float)(i - 9) / 8;
-            distanceValue = 3 - proportion;
+            float proportion = (float)(i - 10) / 8;
+            distanceValue = 2 + proportion;
         }
 
         return distanceValue * RADIUS_MULTIPLIER;
     }
 
-    private static float DetermineRotation(int i)
+    public static float DetermineRotation(int i)
     {
         float rotationValue;
-        if (i<2) {
+        if (i < 3) {
             rotationValue = Mathf.Pi * i;
         }
-        else if (i < 10)
+        else if (i < 11)
         {
-            float proportion = (float)(i - 1) / 8;
+            float proportion = (float)(i - 2) / 8;
             rotationValue = 2 * Mathf.Pi * proportion;
         }
         else
         {
-            float proportion = (float)(i - 9) / 8;
+            float proportion = (float)(i - 10) / 8;
             rotationValue = 2 * Mathf.Pi * proportion;
         }
 

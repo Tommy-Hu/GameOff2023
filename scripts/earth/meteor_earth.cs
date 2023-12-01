@@ -25,12 +25,33 @@ public partial class meteor_earth : Area2D
 
 	[Export]
 	public double life = 20;
+
+	public Action onDeath;
+
+	public bool isBoss = false;
 	
 
 	public override void _Ready()
 	{
 		speed = (float) (minSpeed + (rand.NextDouble() * maxSpeed));
 		rotationRate = (float) (minRotationRate + (rand.NextDouble() * maxRotationRate));
+		GameManager.OnBeat += onBeat;
+
+	}
+
+	public void onBeat(BeatType beattype)
+	{
+		if (isBoss)
+		{
+			return;
+		}
+
+		if (beattype.HasFlag(BeatType.MainBeat))
+		{
+			vel.X += (GD.Randf() - 0.5f) * 2f * speed * 0.75f;
+			var cam = GetViewport().GetCamera2D() as Cam;
+			cam.shake(0.3f, 6);
+		}
 
 	}
 
@@ -40,6 +61,11 @@ public partial class meteor_earth : Area2D
 
 		vel.Y = speed;
 		Position += vel * (float)delta;
+
+		if (GlobalPosition.Y > GetViewportRect().Size.Y + 5)
+		{
+			QueueFree();
+		}
 		
 	}
 
@@ -48,13 +74,14 @@ public partial class meteor_earth : Area2D
 		life -= AMOUNT;
 		if (life <= 0) 
 		{
+			onDeath?.Invoke();
 			var effect = plMeteorEffect.Instantiate<CpuParticles2D>();
 			effect.Position = Position;
 			GetParent().AddChild(effect);
 			QueueFree();
 		}
 	}
-
+	
 	private void _on_visible_on_screen_notifier_2d_screen_exited()
 	{
 		QueueFree();
@@ -70,6 +97,10 @@ public partial class meteor_earth : Area2D
 		}
 	}
 
+    public override void _ExitTree()
+    {
+       GameManager.OnBeat -= onBeat;
+    }
 
 }
 

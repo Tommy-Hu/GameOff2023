@@ -46,6 +46,7 @@ animations = [{
 radius = 33.0
 
 [node name="Player" type="Area2D" groups=["Player"]]
+z_index = 1
 script = ExtResource("1_y41lg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

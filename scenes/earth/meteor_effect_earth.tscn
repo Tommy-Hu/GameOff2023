@@ -8,6 +8,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="meteor_effect_earth" type="CPUParticles2D"]
 emitting = false
+amount = 20
 lifetime = 10.0
 one_shot = true
 explosiveness = 1.0
@@ -16,8 +17,8 @@ emission_shape = 1
 emission_sphere_radius = 13.0
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 15.0
-initial_velocity_max = 30.0
+initial_velocity_min = 80.0
+initial_velocity_max = 100.0
 angular_velocity_min = 70.0
 angular_velocity_max = 100.0
 scale_amount_min = 0.25

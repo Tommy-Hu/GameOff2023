@@ -8,7 +8,7 @@ public partial class Spawner : Node2D
 	[Export]
 	public float spawnInterval = 2;
 	float nextSpawnTime = 2;
-	PackedScene plMeteor ;
+	PackedScene plMeteor;
 
 
 
@@ -32,11 +32,17 @@ public partial class Spawner : Node2D
 
 			if (meteorsTilBoss == 0)
 			{
+				spawnedMeteor.isBoss = true;
 				spawnedMeteor.GlobalScale *= 5;
-				spawnedMeteor.speed = 100;
-				spawnedMeteor.life = 300;
+				spawnedMeteor.speed = 20;
+				spawnedMeteor.life = 400;
 				spawnX = GetViewportRect().Size.X / 2;
 				spawnedMeteor.damageAmount = 100;
+				spawnedMeteor.ZIndex = -2;
+				spawnedMeteor.onDeath = () =>
+				{
+					GameManager.LoadMenu();
+				};
 			}
 
 			spawnedMeteor.GlobalPosition = new Vector2(spawnX, this.GlobalPosition.Y);

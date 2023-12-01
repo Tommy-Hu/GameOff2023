@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/Cell.cs" id="1_5r3y4"]
 [ext_resource type="Shader" path="res://shaders/cell_shader.gdshader" id="1_ivm68"]
 [ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="2_wgxes"]
-[ext_resource type="Texture2D" uid="uid://bdunwct4k1yuo" path="res://scenes/prefabs/good_cell_color_ramp.tres" id="4_8ag8f"]
+[ext_resource type="Texture2D" uid="uid://c3pu2o4or7ykp" path="res://scenes/prefabs/good_cell_color_ramp.tres" id="4_8ag8f"]
 [ext_resource type="Script" path="res://scripts/SelfDestroyingParticle.cs" id="4_dqmdi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k0tje"]

@@ -1877,6 +1877,7 @@ script = ExtResource("8_rrh8e")
 [node name="UILayer" type="CanvasLayer" parent="." index="7"]
 
 [node name="CellLevelUI" parent="UILayer" index="0" instance=ExtResource("9_8jkm5")]
+deathUIPath = null
 
 [node name="Wall 1" type="StaticBody2D" parent="." index="8"]
 

@@ -6,6 +6,7 @@ public partial class PlayerElectron : SubAtomicCharge
 {
     int FORCE_ADJUSTMENT = 200;
     private AnimatedSprite2D daSprite;
+    bool powered = false;
 
 	List<SubAtomicCharge> electromagneticCharges = new() { };
 
@@ -53,8 +54,17 @@ public partial class PlayerElectron : SubAtomicCharge
         if (Input.IsKeyPressed(Key.S)) movement += Vector2.Down;
         if (Input.IsKeyPressed(Key.D)) movement += Vector2.Right;
         if (movement != Vector2.Zero) movement = movement.Normalized();
-        if (LinearVelocity.LengthSquared() < 90_000)
-            ApplyForce(movement * FORCE_ADJUSTMENT / 50);
+        if (powered)
+            ApplyForce(movement * FORCE_ADJUSTMENT / 25);
+        else
+        {
+            ApplyForce(movement * FORCE_ADJUSTMENT / 25);
+            if (LinearVelocity.LengthSquared() > 90_000)
+            {
+                LinearVelocity *= 90_000 / LinearVelocity.LengthSquared();
+            }
+        }
+            
     }
 
     private Vector2 CalculateElectromagneticPull(int multiplier) 
@@ -62,9 +72,9 @@ public partial class PlayerElectron : SubAtomicCharge
 		Vector2 forceVector = Vector2.Zero;
 		foreach (var e in electromagneticCharges)
 		{
-            float distance = Position.DistanceTo(e.Position);
+            float distance = GlobalPosition.DistanceTo(e.GlobalPosition);
 			float forceMagnitude = e.Charge / distance;
-			forceVector += FORCE_ADJUSTMENT * multiplier * forceMagnitude * (e.Position - Position).Normalized();
+			forceVector += FORCE_ADJUSTMENT * multiplier * forceMagnitude * (e.GlobalPosition - GlobalPosition).Normalized();
 		}
         return forceVector;
 	}
@@ -86,5 +96,8 @@ public partial class PlayerElectron : SubAtomicCharge
         GD.Print("You lose");
     }
 
-
+    public void OnPowerUpAreaEntered()
+    {
+        powered = true;
+    }
 }
