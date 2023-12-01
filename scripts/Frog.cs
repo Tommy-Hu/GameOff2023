@@ -5,7 +5,7 @@ public partial class Frog : RigidBody2D
 {
 	public bool jumpIncreaseing;
 	public bool jumpHeld;
-	public Sprite2D direction;
+	public Node2D direction;
 	public bool onGround = true;
 	public Sprite2D sprite;
 	public Area2D area;
@@ -51,21 +51,21 @@ public partial class Frog : RigidBody2D
 	public override void _Process(double delta)
 	{
 		if (!onGround)
-		{
+        {
 			sprite.Texture = midJump;
 		} else
-		{
+        {
 			sprite.Texture = idle;
-		}
+        }
 		ScreenWrap();
 		screenBounds = FrogCamara2D.instance.bounds;
 	}
 
-	public override void _PhysicsProcess(double delta)
-	{
+    public override void _PhysicsProcess(double delta)
+    {
 		
 
-		base._PhysicsProcess(delta);
+        base._PhysicsProcess(delta);
 
 		if (jumpHeld)
 		{
@@ -74,13 +74,13 @@ public partial class Frog : RigidBody2D
 				jumpIncreaseing = true;
 			}
 			if (curJumpForce >= jumpForceMax)
-			{
+            {
 				jumpIncreaseing = false;
 			}
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
+			direction.Scale = new Vector2(direction.Scale.X, 1 * (curJumpForce - 200) / 800+1);
 			
-			
-			GD.Print(curJumpForce);
+			//GD.Print(curJumpForce);
 			
 
 		}
@@ -97,6 +97,8 @@ public partial class Frog : RigidBody2D
 				ApplyImpulse(new Vector2((float)curJumpForce * direction.Position.Normalized().X, 1.5f * curJumpForce * direction.Position.Normalized().Y), new Vector2(0, 0));
 				curJumpForce = jumpForceMin;
 				start = true;
+				direction.Scale = new Vector2(1, 1);
+				direction.Visible = false;
 
 				GameManager.PlaySFX("FrogJump.wav");
 				
@@ -106,39 +108,53 @@ public partial class Frog : RigidBody2D
 	}
 
 	private void OnFrogGroundCheckBodyEntered(Node2D body)
-	{
+    {
 		if (this.LinearVelocity.Y >= 0)
 		{
 			onGround = true;
 			//collider.Disabled = false;
+			direction.Visible = true;
 		}
+	
+		if (body.Name == "SuperiorLilyPad")
+        {
+			GameManager.PlayLevel("earth", "Earth");
+
+        }
 		
+
+
 	}
 
 	private void OnFrogGroundCheckBodyExited(Node2D body)
-	{
+    {
 		onGround = false;
 		
 	}
 
 	private void OnDeathBodyEntered(Node2D body)
     {
-		GD.Print("DEATH DESTROYER OF WORLDS");
-    }
+		if (body.Name == "Frog")
+		{
+			GameManager.PlayLevelFade("frog","Frog");
+	
+		}
+		
+	}
 
 	private void ScreenWrap()
-	{
+    {
 		if (GlobalPosition.X < screenBounds.X)
-		{
+        {
 			GlobalPosition = new Vector2 (screenBounds.Y, GlobalPosition.Y);
-		}
+        }
 		if (GlobalPosition.X > screenBounds.Y)
-		{
+        {
 			GlobalPosition = new Vector2(screenBounds.X, GlobalPosition.Y);
 
 		}
 	
-	}
+    }
 
 	public Vector2 ToUV()
     {
