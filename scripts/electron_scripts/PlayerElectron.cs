@@ -8,7 +8,7 @@ public partial class PlayerElectron : SubAtomicCharge
     private AnimatedSprite2D daSprite;
     bool powered = false;
 
-	List<SubAtomicCharge> electromagneticCharges = new() { };
+    List<SubAtomicCharge> electromagneticCharges = new() { };
 
     public override void _Ready()
     {
@@ -64,29 +64,29 @@ public partial class PlayerElectron : SubAtomicCharge
                 LinearVelocity *= 90_000 / LinearVelocity.LengthSquared();
             }
         }
-            
+
     }
 
-    private Vector2 CalculateElectromagneticPull(int multiplier) 
-	{
-		Vector2 forceVector = Vector2.Zero;
-		foreach (var e in electromagneticCharges)
-		{
+    private Vector2 CalculateElectromagneticPull(int multiplier)
+    {
+        Vector2 forceVector = Vector2.Zero;
+        foreach (var e in electromagneticCharges)
+        {
             float distance = GlobalPosition.DistanceTo(e.GlobalPosition);
-			float forceMagnitude = e.Charge / distance;
-			forceVector += FORCE_ADJUSTMENT * multiplier * forceMagnitude * (e.GlobalPosition - GlobalPosition).Normalized();
-		}
+            float forceMagnitude = e.Charge / distance;
+            forceVector += FORCE_ADJUSTMENT * multiplier * forceMagnitude * (e.GlobalPosition - GlobalPosition).Normalized();
+        }
         return forceVector;
-	}
+    }
 
     public bool AddElectromagneticCharge(SubAtomicCharge type)
     {
         electromagneticCharges.Add(type);
         return true;
-	}
+    }
 
     public bool RemoveElectromagneticCharge(SubAtomicCharge type)
-    {        
+    {
         return electromagneticCharges.Remove(type);
     }
 
@@ -99,5 +99,11 @@ public partial class PlayerElectron : SubAtomicCharge
     public void OnPowerUpAreaEntered()
     {
         powered = true;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GameManager.OnBeat -= GameManager_OnBeat;
     }
 }
