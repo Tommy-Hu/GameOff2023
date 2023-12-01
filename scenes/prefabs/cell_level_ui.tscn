@@ -1,8 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bpewmoeofaw4a"]
+[gd_scene load_steps=11 format=3 uid="uid://bpewmoeofaw4a"]
 
 [ext_resource type="Script" path="res://scripts/CellLevelUIManager.cs" id="1_umn4w"]
 [ext_resource type="FontFile" uid="uid://cshn1wgr1g7o" path="res://fonts/Ignotum.ttf" id="2_k6at4"]
-[ext_resource type="Texture2D" uid="uid://d0d785scaay8n" path="res://sprites/radial_gradient.png" id="3_jj8kr"]
+[ext_resource type="Texture2D" uid="uid://57gvirih32in" path="res://sprites/circle.png" id="3_x0q7d"]
+[ext_resource type="Texture2D" uid="uid://dn266vbh20fef" path="res://sprites/bullet.png" id="4_8pwos"]
+[ext_resource type="Texture2D" uid="uid://s5i7ylc2b8il" path="res://sprites/single_px.png" id="5_7rgob"]
+[ext_resource type="Texture2D" uid="uid://cvqa562547pcq" path="res://sprites/bad_cell.png" id="6_43eac"]
 
 [sub_resource type="Gradient" id="Gradient_nj1ud"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -28,7 +31,7 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_umn4w")
-cancerCountLabel = NodePath("TopVBox/Header/MarginContainer/LeftTexts/CountText/CancerCellCount")
+cancerCountLabel = NodePath("RightBar/MarginContainer/VBoxContainer/CancerCellCount")
 cancerCountdownLabel = NodePath("TopVBox/Header/MarginContainer/LeftTexts/CountdownText/Countdown")
 
 [node name="TopVBox" type="VBoxContainer" parent="."]
@@ -61,15 +64,6 @@ theme_override_fonts/font = ExtResource("2_k6at4")
 theme_override_font_sizes/font_size = 35
 text = "Cancer cells "
 
-[node name="CancerCellCount" type="Label" parent="TopVBox/Header/MarginContainer/LeftTexts/CountText"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
-theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("FontVariation_i3g0f")
-theme_override_font_sizes/font_size = 40
-text = "0"
-
 [node name="CountdownText" type="HBoxContainer" parent="TopVBox/Header/MarginContainer/LeftTexts"]
 layout_mode = 2
 
@@ -95,11 +89,76 @@ alignment = 2
 
 [node name="Gun" type="MarginContainer" parent="BottomVBox"]
 layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BottomVBox/Gun"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="BottomVBox/Gun/HBoxContainer"]
+[node name="AmmoProgress" type="TextureProgressBar" parent="BottomVBox/Gun/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-texture = ExtResource("3_jj8kr")
-stretch_mode = 4
+value = 75.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("3_x0q7d")
+texture_progress = ExtResource("3_x0q7d")
+tint_under = Color(0.682353, 0.556863, 0.870588, 1)
+
+[node name="AmmoIcon" type="TextureRect" parent="BottomVBox/Gun/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+texture = ExtResource("4_8pwos")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="RightBar" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="RightBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 150
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightBar/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="RightBar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="HealthBar" type="TextureProgressBar" parent="RightBar/MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_vertical = 3
+value = 16.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("5_7rgob")
+texture_progress = ExtResource("5_7rgob")
+tint_progress = Color(0.752941, 0.827451, 0.172549, 1)
+
+[node name="CancerCellCount" type="Label" parent="RightBar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.960784, 0.172549, 0.172549, 1)
+theme_override_colors/font_outline_color = Color(0.94902, 0.94902, 0.94902, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_i3g0f")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="RightBar/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("6_43eac")
+expand_mode = 1
