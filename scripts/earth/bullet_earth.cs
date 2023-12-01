@@ -7,7 +7,7 @@ public partial class bullet_earth : Area2D
 {
 	PackedScene plBulletEffect = (PackedScene)GD.Load("res://scenes/earth/bullet_effect_earth.tscn");
 	public double speed = 500;
-	public float AMOUNT = 5;
+	public float AMOUNT = 25;
 	
 	public override void _PhysicsProcess(double delta)
 	{
@@ -27,7 +27,7 @@ public partial class bullet_earth : Area2D
 			GetParent().AddChild(BulletEffect);
 
 			var cam = GetViewport().GetCamera2D() as Cam;
-			cam.shake(0.1f, 3);
+			cam.shake(0.1f, 4);
 
 			area.Call("damage","1");
 			QueueFree();
