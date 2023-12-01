@@ -35,7 +35,7 @@ public partial class Spawner : Node2D
 				spawnedMeteor.isBoss = true;
 				spawnedMeteor.GlobalScale *= 5;
 				spawnedMeteor.speed = 20;
-				spawnedMeteor.life = 200;
+				spawnedMeteor.life = 400;
 				spawnX = GetViewportRect().Size.X / 2;
 				spawnedMeteor.damageAmount = 100;
 				spawnedMeteor.ZIndex = -2;
