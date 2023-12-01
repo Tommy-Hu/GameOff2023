@@ -5,6 +5,8 @@
 
 [node name="meteor_earth" type="Area2D" groups=["damageable"]]
 script = ExtResource("1_6mxh0")
+minSpeed = 40.0
+life = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_16uyf")

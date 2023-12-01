@@ -51,21 +51,21 @@ public partial class Frog : RigidBody2D
 	public override void _Process(double delta)
 	{
 		if (!onGround)
-        {
+		{
 			sprite.Texture = midJump;
 		} else
-        {
+		{
 			sprite.Texture = idle;
-        }
+		}
 		ScreenWrap();
 		screenBounds = FrogCamara2D.instance.bounds;
 	}
 
-    public override void _PhysicsProcess(double delta)
-    {
+	public override void _PhysicsProcess(double delta)
+	{
 		
 
-        base._PhysicsProcess(delta);
+		base._PhysicsProcess(delta);
 
 		if (jumpHeld)
 		{
@@ -74,7 +74,7 @@ public partial class Frog : RigidBody2D
 				jumpIncreaseing = true;
 			}
 			if (curJumpForce >= jumpForceMax)
-            {
+			{
 				jumpIncreaseing = false;
 			}
 			curJumpForce = jumpIncreaseing ? (curJumpForce + jumpinterval) : (curJumpForce - jumpinterval);
@@ -106,17 +106,17 @@ public partial class Frog : RigidBody2D
 	}
 
 	private void OnFrogGroundCheckBodyEntered(Node2D body)
-    {
+	{
 		if (this.LinearVelocity.Y >= 0)
 		{
 			onGround = true;
 			//collider.Disabled = false;
 		}
 		
-    }
+	}
 
 	private void OnFrogGroundCheckBodyExited(Node2D body)
-    {
+	{
 		onGround = false;
 		
 	}
@@ -127,18 +127,18 @@ public partial class Frog : RigidBody2D
     }
 
 	private void ScreenWrap()
-    {
+	{
 		if (GlobalPosition.X < screenBounds.X)
-        {
+		{
 			GlobalPosition = new Vector2 (screenBounds.Y, GlobalPosition.Y);
-        }
+		}
 		if (GlobalPosition.X > screenBounds.Y)
-        {
+		{
 			GlobalPosition = new Vector2(screenBounds.X, GlobalPosition.Y);
 
 		}
 	
-    }
+	}
 
 	public Vector2 ToUV()
     {

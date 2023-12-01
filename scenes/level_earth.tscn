@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhqk577suomm"]
+[gd_scene load_steps=10 format=3 uid="uid://dhqk577suomm"]
 
 [ext_resource type="Texture2D" uid="uid://ba4iv42g34pe0" path="res://scenes/prefabs/textures_earth/backgroundColor.png" id="1_kiqkp"]
 [ext_resource type="Texture2D" uid="uid://8886m266eks1" path="res://scenes/prefabs/textures_earth/starBig.png" id="2_76lv8"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://yxmhljisd54g" path="res://scenes/earth/player_earth.tscn" id="4_isi0h"]
 [ext_resource type="PackedScene" uid="uid://bxt4re23ypgj7" path="res://scenes/earth/planet_earth.tscn" id="5_qfyxv"]
 [ext_resource type="PackedScene" uid="uid://bjq8e545248tt" path="res://scenes/earth/HUD/hud.tscn" id="6_q33hx"]
+[ext_resource type="PackedScene" uid="uid://7mt7muiywfth" path="res://scenes/earth/health_bar_earth.tscn" id="7_fxi6a"]
+[ext_resource type="Script" path="res://scripts/earth/Cam.cs" id="8_3q6pp"]
+[ext_resource type="Script" path="res://scripts/earth/Spawner.cs" id="9_slkfg"]
 
 [node name="level_earth" type="Node2D"]
 
@@ -29,7 +32,7 @@ initial_velocity_max = 90.0
 scale_amount_min = 0.5
 
 [node name="meteor_earth" parent="." instance=ExtResource("3_dbqfu")]
-position = Vector2(573, 107)
+position = Vector2(569, -397)
 
 [node name="Player" parent="." instance=ExtResource("4_isi0h")]
 position = Vector2(574, 386)
@@ -39,3 +42,14 @@ position = Vector2(574, 386)
 [node name="HUD" parent="." instance=ExtResource("6_q33hx")]
 offset_top = -2.0
 offset_bottom = 646.0
+
+[node name="HealthBar" parent="." instance=ExtResource("7_fxi6a")]
+
+[node name="Cam" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("8_3q6pp")
+
+[node name="g" type="Node2D" parent="."]
+position = Vector2(575, -564)
+script = ExtResource("9_slkfg")
+spawnInterval = 0.5

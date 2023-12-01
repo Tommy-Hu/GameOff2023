@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxt4re23ypgj7"]
+[gd_scene load_steps=3 format=3 uid="uid://bxt4re23ypgj7"]
 
+[ext_resource type="Script" path="res://scripts/earth/planet_earth.cs" id="1_7mm5e"]
 [ext_resource type="Texture2D" uid="uid://b0mgfktia2mvq" path="res://icon.svg" id="1_teb56"]
 
 [node name="planet_earth" type="Area2D" groups=["Earth"]]
+script = ExtResource("1_7mm5e")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(577, 654)
